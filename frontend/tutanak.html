@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
+<script src="config.js"></script>
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -477,6 +478,7 @@
             win.document.write(`
                 <html>
                     <head>
+<script src="config.js"></script>
                         <title>Tutanak YazdÄ±r</title>
                         <style>
                             body { background: #f3f4f6; padding: 24px; }
@@ -506,7 +508,7 @@
 
         async function personelleriYukle() {
             try {
-                const res = await fetch('https://112-lojistik-production.up.railway.app/api/lojistik/personeller', { cache: 'no-store' });
+                const res = await fetch(\'\/api/lojistik/personeller', { cache: 'no-store' });
                 const data = await res.json();
                 if (!res.ok) throw new Error();
                 tumPersoneller = Array.isArray(data) ? data : [];
@@ -524,4 +526,6 @@
     </script>
 </body>
 </html>
+
+
 

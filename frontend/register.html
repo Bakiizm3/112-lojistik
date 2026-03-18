@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
+<script src="config.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Konya 112 Lojistik | KayÄ±t Ol</title>
@@ -248,7 +249,7 @@
             btn.disabled = true;
             spin.classList.remove('hidden');
             try {
-                const res = await fetch('https://112-lojistik-production.up.railway.app/api/auth/kayit-ol', {
+                const res = await fetch(\'\/api/auth/kayit-ol', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ ad_soyad, tc_no, sifre, sifre_tekrar })
@@ -272,5 +273,7 @@
     </script>
 </body>
 </html>
+
+
 
 

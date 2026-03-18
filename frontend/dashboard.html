@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
+<script src="config.js"></script>
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -243,7 +244,7 @@
         async function durumdakiAraclariGetir(durum) {
             if (Array.isArray(aracDurumCache[durum])) return aracDurumCache[durum];
 
-            const res = await fetch('https://112-lojistik-production.up.railway.app/api/lojistik/araclar', { cache: 'no-store' });
+            const res = await fetch(\'\/api/lojistik/araclar', { cache: 'no-store' });
             if (!res.ok) throw new Error();
 
             const araclar = await res.json();
@@ -463,4 +464,6 @@
     </script>
 </body>
 </html>
+
+
 

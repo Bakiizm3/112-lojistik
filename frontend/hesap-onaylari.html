@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
+<script src="config.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -241,7 +242,7 @@
             if (!confirm(soru)) return;
 
             const actor = getCurrentUser();
-            const res = await fetch('https://112-lojistik-production.up.railway.app/api/auth/onay-guncelle', {
+            const res = await fetch(\'\/api/auth/onay-guncelle', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ hedef_id: id, islem, onay: islem === 'onayla', actor_tc_no: actor?.tc_no || '' })
@@ -254,7 +255,7 @@
 
         async function yukle() {
             try {
-                const res = await fetch('https://112-lojistik-production.up.railway.app/api/lojistik/personeller');
+                const res = await fetch(\'\/api/lojistik/personeller');
                 tum = await res.json();
                 ciz();
             } catch (e) {
@@ -268,5 +269,7 @@
     </script>
 </body>
 </html>
+
+
 
 

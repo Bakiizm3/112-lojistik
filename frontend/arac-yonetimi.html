@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
+<script src="config.js"></script>
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -212,13 +213,13 @@
         }
 
         async function yukle() {
-            const iRes = await fetch('https://112-lojistik-production.up.railway.app/api/lojistik/istasyonlar');
+            const iRes = await fetch(\'\/api/lojistik/istasyonlar');
             const istasyonlar = await iRes.json();
             const sortedIstasyonlar = [...istasyonlar].sort((a, b) => String(a.istasyon_adi || '').localeCompare(String(b.istasyon_adi || ''), 'tr'));
             document.getElementById('istasyon').innerHTML = '<option value="">-- Ä°stasyon SeÃ§ilmedi --</option>' + 
                 sortedIstasyonlar.map(i => `<option value="${i.istasyon_adi}">${i.istasyon_adi}</option>`).join('');
 
-            const aRes = await fetch('https://112-lojistik-production.up.railway.app/api/lojistik/araclar');
+            const aRes = await fetch(\'\/api/lojistik/araclar');
             tumAraclar = await aRes.json();
             tabloCiz(tumAraclar);
         }
@@ -333,7 +334,7 @@
             };
 
             try {
-                const res = await fetch('https://112-lojistik-production.up.railway.app/api/lojistik/arac-kaydet', {
+                const res = await fetch(\'\/api/lojistik/arac-kaydet', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(veri)
@@ -416,4 +417,6 @@
     </script>
 </body>
 </html>
+
+
 
