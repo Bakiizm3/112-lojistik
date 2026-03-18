@@ -21,7 +21,8 @@ app.get('/', (req, res) => {
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/lojistik', require('./routes/lojistikRoutes'));
 
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`🚀 Sistem Hazır: http://localhost:${PORT}`);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Sistem Hazir: http://0.0.0.0:${PORT}`);
 });
