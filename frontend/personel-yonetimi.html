@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
@@ -83,23 +83,23 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                 <div class="lg:col-span-7">
                     <div class="border-l-4 border-red-600 pl-4 py-1">
-                        <h2 class="text-3xl lg:text-4xl font-black text-slate-900 uppercase tracking-tight">Personel Kayıt ve Yetkilendirme</h2>
-                        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Personel Yönetim Paneli</p>
+                        <h2 class="text-3xl lg:text-4xl font-black text-slate-900 uppercase tracking-tight">Personel KayÄ±t ve Yetkilendirme</h2>
+                        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Personel YÃ¶netim Paneli</p>
                     </div>
                 </div>
                 <div class="lg:col-span-5 flex flex-col gap-3 lg:items-end">
                     <div class="relative w-full lg:max-w-md">
-                        <input type="text" id="aramaKutusu" onkeyup="tabloFiltrele()" placeholder="Ad Soyad, TC No veya İstasyon Ara..."
+                        <input type="text" id="aramaKutusu" onkeyup="tabloFiltrele()" placeholder="Ad Soyad, TC No veya Ä°stasyon Ara..."
                             class="w-full p-4 pl-11 rounded-2xl border border-slate-300 outline-none focus:border-slate-900 text-sm bg-white/95 shadow-sm">
-                        <span class="absolute left-4 top-4 text-slate-400">🔍</span>
+                        <span class="absolute left-4 top-4 text-slate-400">ğŸ”</span>
                     </div>
-                    <p id="sayac" class="text-[11px] font-black text-slate-500 tracking-wide">Görünen: 0 / Toplam: 0</p>
+                    <p id="sayac" class="text-[11px] font-black text-slate-500 tracking-wide">GÃ¶rÃ¼nen: 0 / Toplam: 0</p>
                 </div>
             </div>
         </section>
 
         <section id="uyariPaneli" class="hidden panel-card p-4 lg:p-5 border border-red-200 bg-red-50/90">
-            <p id="uyariMetni" class="text-sm font-black text-red-700 tracking-wide">Burayı Kullanmak İçin Yetkiniz Yoktur!</p>
+            <p id="uyariMetni" class="text-sm font-black text-red-700 tracking-wide">BurayÄ± Kullanmak Ä°Ã§in Yetkiniz Yoktur!</p>
         </section>
 
         <section id="personelYonetimPanel" class="panel-card p-6 lg:p-7">
@@ -121,28 +121,28 @@
                 </div>
 
                 <div class="flex flex-col">
-                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">Görev (Opsiyonel)</label>
+                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">GÃ¶rev (Opsiyonel)</label>
                     <select id="gorev" class="form-chip p-4 rounded-2xl font-bold text-slate-600 outline-none">
-                        <option value="">-- Görev Seçilmedi --</option>
+                        <option value="">-- GÃ¶rev SeÃ§ilmedi --</option>
                         <option value="ATT">ATT</option>
                         <option value="Paramedik">Paramedik</option>
-                        <option value="Şoför">Şoför</option>
+                        <option value="ÅofÃ¶r">ÅofÃ¶r</option>
                         <option value="Doktor">Doktor</option>
-                        <option value="Hemşire">Hemşire</option>
-                        <option value="Diğer">Diğer</option>
+                        <option value="HemÅŸire">HemÅŸire</option>
+                        <option value="DiÄŸer">DiÄŸer</option>
                     </select>
                 </div>
 
                 <div class="flex flex-col">
-                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">İstasyon (Opsiyonel)</label>
+                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">Ä°stasyon (Opsiyonel)</label>
                     <select id="istasyon" class="form-chip p-4 rounded-2xl font-bold text-slate-600 outline-none">
-                        <option value="">-- İstasyon Seçilmedi --</option>
+                        <option value="">-- Ä°stasyon SeÃ§ilmedi --</option>
                     </select>
                 </div>
 
                 <div class="flex gap-2">
                     <button id="islemBtn" onclick="kaydet()" class="w-full bg-slate-900 text-white px-6 py-4 rounded-2xl font-black shadow-lg hover:bg-black transition uppercase text-[10px] tracking-widest">KAYDET</button>
-                    <button id="iptalBtn" onclick="formSifirla()" class="hidden bg-white text-slate-700 px-4 py-4 rounded-2xl font-bold transition border border-slate-300 hover:bg-slate-100">✖</button>
+                    <button id="iptalBtn" onclick="formSifirla()" class="hidden bg-white text-slate-700 px-4 py-4 rounded-2xl font-bold transition border border-slate-300 hover:bg-slate-100">âœ–</button>
                 </div>
             </div>
         </section>
@@ -152,10 +152,10 @@
                 <table class="w-full text-left" id="anaTablo">
                     <thead class="thead-dark text-white text-[10px] font-black uppercase tracking-widest">
                         <tr>
-                            <th onclick="siralamayiDegistir('ad_soyad')" class="px-8 py-5 cursor-pointer select-none">Ad Soyad <span id="sort_ad_soyad" class="text-slate-300">↕</span></th>                            <th onclick="siralamayiDegistir('gorev')" class="px-8 py-5 cursor-pointer select-none">Görev <span id="sort_gorev" class="text-slate-300">⇕</span></th>                            <th onclick="siralamayiDegistir('tc_no')" class="px-8 py-5 cursor-pointer select-none">TC No <span id="sort_tc_no" class="text-slate-300">↕</span></th>
-                            <th onclick="siralamayiDegistir('istasyon_adi')" class="px-8 py-5 cursor-pointer select-none">İstasyon <span id="sort_istasyon_adi" class="text-slate-300">↕</span></th>
-                            <th class="px-8 py-5">Şifre</th>
-                            <th id="yonetimBasligi" class="px-8 py-5 text-right">Yönetim</th>
+                            <th onclick="siralamayiDegistir('ad_soyad')" class="px-8 py-5 cursor-pointer select-none">Ad Soyad <span id="sort_ad_soyad" class="text-slate-300">â†•</span></th>                            <th onclick="siralamayiDegistir('gorev')" class="px-8 py-5 cursor-pointer select-none">GÃ¶rev <span id="sort_gorev" class="text-slate-300">â‡•</span></th>                            <th onclick="siralamayiDegistir('tc_no')" class="px-8 py-5 cursor-pointer select-none">TC No <span id="sort_tc_no" class="text-slate-300">â†•</span></th>
+                            <th onclick="siralamayiDegistir('istasyon_adi')" class="px-8 py-5 cursor-pointer select-none">Ä°stasyon <span id="sort_istasyon_adi" class="text-slate-300">â†•</span></th>
+                            <th class="px-8 py-5">Åifre</th>
+                            <th id="yonetimBasligi" class="px-8 py-5 text-right">YÃ¶netim</th>
                         </tr>
                     </thead>
                     <tbody id="liste" class="divide-y divide-slate-100 font-bold text-slate-700 bg-white/90"></tbody>
@@ -167,33 +167,33 @@
     <div id="permModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 p-4 overflow-y-auto">
         <div class="max-w-xl mx-auto mt-10 panel-card p-6 lg:p-7">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-black text-slate-900 uppercase tracking-wide">Yetki Düzenleme</h3>
-                <button onclick="kapatPerm()" class="text-slate-500 hover:text-slate-900 text-xl leading-none">×</button>
+                <h3 class="text-lg font-black text-slate-900 uppercase tracking-wide">Yetki DÃ¼zenleme</h3>
+                <button onclick="kapatPerm()" class="text-slate-500 hover:text-slate-900 text-xl leading-none">Ã—</button>
             </div>
             <p id="permBaslik" class="text-sm text-slate-600 font-bold mb-4" style="word-break: break-all;">-</p>
 
             <div class="grid grid-cols-1 gap-4 text-sm font-semibold text-slate-700">
                 <div>
-                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 mb-2 block">Yönetim Kademesi</label>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 mb-2 block">YÃ¶netim Kademesi</label>
                     <select id="p_yonetimSeviyesi" class="form-chip w-full rounded-xl px-4 py-3 font-bold outline-none" onchange="yonetimKademeDegisti()">
                         <option value="personel">Personel</option>
                         <option value="yetkili">Yetkili</option>
-                        <option value="mudur">Müdür</option>
-                        <option value="root">Sistem Üst Yetkili</option>
+                        <option value="mudur">MÃ¼dÃ¼r</option>
+                        <option value="root">Sistem Ãœst Yetkili</option>
                     </select>
                 </div>
                 <p class="text-xs text-slate-500 font-semibold">
-                    Modüller (Ana Sayfa, Filo ve Araç, Tutanak) tüm personel tarafından görülebilir.
+                    ModÃ¼ller (Ana Sayfa, Filo ve AraÃ§, Tutanak) tÃ¼m personel tarafÄ±ndan gÃ¶rÃ¼lebilir.
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <label class="form-chip rounded-xl px-4 py-3 flex items-center gap-3"><input id="p_istasyonYonetim" type="checkbox" class="w-4 h-4"> İstasyon Ekle/Sil</label>
-                    <label class="form-chip rounded-xl px-4 py-3 flex items-center gap-3"><input id="p_aracYonetim" type="checkbox" class="w-4 h-4"> Araç Ekle/Sil</label>
+                    <label class="form-chip rounded-xl px-4 py-3 flex items-center gap-3"><input id="p_istasyonYonetim" type="checkbox" class="w-4 h-4"> Ä°stasyon Ekle/Sil</label>
+                    <label class="form-chip rounded-xl px-4 py-3 flex items-center gap-3"><input id="p_aracYonetim" type="checkbox" class="w-4 h-4"> AraÃ§ Ekle/Sil</label>
                     <label class="form-chip rounded-xl px-4 py-3 flex items-center gap-3"><input id="p_personelYonetim" type="checkbox" class="w-4 h-4"> Personel Ekle/Sil</label>
                 </div>
             </div>
 
             <div class="mt-6 flex gap-2 justify-end">
-                <button onclick="kapatPerm()" class="bg-white text-slate-700 px-4 py-3 rounded-xl font-bold transition border border-slate-300 hover:bg-slate-100">İptal</button>
+                <button onclick="kapatPerm()" class="bg-white text-slate-700 px-4 py-3 rounded-xl font-bold transition border border-slate-300 hover:bg-slate-100">Ä°ptal</button>
                 <button onclick="permKaydet()" class="bg-slate-900 text-white px-6 py-3 rounded-xl font-black shadow-lg hover:bg-black transition uppercase text-[10px] tracking-widest">Yetkileri Kaydet</button>
             </div>
         </div>
@@ -228,7 +228,7 @@
         function getCurrentTier() {
             const user = getCurrentUser();
             if (!user) return 'personel';
-            if (user.rol === 'Süper Admin') return 'root';
+            if (user.rol === 'SÃ¼per Admin') return 'root';
             const tier = (user.perm?.yonetimSeviyesi || 'personel').toString().toLowerCase();
             return ['root', 'mudur', 'yetkili', 'personel'].includes(tier) ? tier : 'personel';
         }
@@ -280,7 +280,7 @@
             const hasPersonelPanel = ['root', 'mudur', 'yetkili'].includes(tier) || !!perm.personelYonetim;
 
             if (!hasPersonelPanel) {
-                showUyari('Burayı Kullanmak İçin Yetkiniz Yoktur!');
+                showUyari('BurayÄ± Kullanmak Ä°Ã§in Yetkiniz Yoktur!');
                 const panel = document.getElementById('personelYonetimPanel');
                 if (panel) panel.classList.add('hidden');
                 return false;
@@ -365,11 +365,11 @@
                 const el = document.getElementById(`sort_${alan}`);
                 if (!el) return;
                 if (alan !== aktifSiralama.alan) {
-                    el.innerText = '↕';
+                    el.innerText = 'â†•';
                     el.className = 'text-slate-300';
                     return;
                 }
-                el.innerText = aktifSiralama.yon === 'asc' ? '↑' : '↓';
+                el.innerText = aktifSiralama.yon === 'asc' ? 'â†‘' : 'â†“';
                 el.className = 'text-white';
             });
         }
@@ -386,17 +386,17 @@
 
         async function yukle() {
             try {
-                const iRes = await fetch('http://localhost:3000/api/lojistik/istasyonlar');
+                const iRes = await fetch('/api/lojistik/istasyonlar');
                 const istasyonlar = await iRes.json();
                 const sortedIst = [...istasyonlar].sort((a, b) => String(a.istasyon_adi || '').localeCompare(String(b.istasyon_adi || ''), 'tr'));
-                document.getElementById('istasyon').innerHTML = '<option value="">-- İstasyon Seçilmedi --</option>' +
+                document.getElementById('istasyon').innerHTML = '<option value="">-- Ä°stasyon SeÃ§ilmedi --</option>' +
                     sortedIst.map(i => `<option value="${i.istasyon_adi}">${i.istasyon_adi}</option>`).join('');
 
-                const pRes = await fetch('http://localhost:3000/api/lojistik/personeller');
+                const pRes = await fetch('/api/lojistik/personeller');
                 tumPersoneller = await pRes.json();
                 tabloCiz(tumPersoneller);
             } catch (error) {
-                alert('Personel listesi yüklenemedi.');
+                alert('Personel listesi yÃ¼klenemedi.');
             }
         }
 
@@ -412,16 +412,16 @@
                 const adSoyadSafe = (p.ad_soyad || '').replace(/'/g, '');
                 const sifreEtiketi = p.sifre_var
                     ? (p.sifre_degistirmeli
-                        ? '<span class="text-[9px] font-black bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full uppercase">Sıfırlandı</span>'
+                        ? '<span class="text-[9px] font-black bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full uppercase">SÄ±fÄ±rlandÄ±</span>'
                         : '<span class="text-[9px] font-black bg-green-100 text-green-700 px-2 py-0.5 rounded-full uppercase">Aktif</span>')
-                    : '<span class="text-[9px] font-black bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full uppercase">Şifre Yok</span>';
+                    : '<span class="text-[9px] font-black bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full uppercase">Åifre Yok</span>';
 
                 const yonetimKolonu = showActions ? `
                         <td class="px-8 py-5 text-right space-x-2">
-                            <button onclick="duzenleHazirla(${p.id})" class="action-link perm">Düzenle</button>
+                            <button onclick="duzenleHazirla(${p.id})" class="action-link perm">DÃ¼zenle</button>
                             ${showPermButton ? `<button onclick="permAcById(${p.id})" class="action-link perm">Yetki</button>` : ''}
-                            ${showResetPasswordButton ? `<button onclick="sifreSifirla(${p.id}, '${adSoyadSafe}')" class="action-link" style="color:#92400e;background:#fffbeb;border-color:#fde68a">Şifre Sıfırla</button>` : ''}
-                            <button onclick="sil(${p.id})" class="action-link delete">Kaldır</button>
+                            ${showResetPasswordButton ? `<button onclick="sifreSifirla(${p.id}, '${adSoyadSafe}')" class="action-link" style="color:#92400e;background:#fffbeb;border-color:#fde68a">Åifre SÄ±fÄ±rla</button>` : ''}
+                            <button onclick="sil(${p.id})" class="action-link delete">KaldÄ±r</button>
                         </td>` : '';
 
                 tablo.innerHTML += `
@@ -435,13 +435,13 @@
                     </tr>`;
             });
 
-                    document.getElementById('sayac').innerText = `Görünen: ${sirali.length} / Toplam: ${tumPersoneller.length}`;
+                    document.getElementById('sayac').innerText = `GÃ¶rÃ¼nen: ${sirali.length} / Toplam: ${tumPersoneller.length}`;
                     siralamaIkonlariniGuncelle();
         }
 
         async function kaydet() {
             if (!canManagePanel()) {
-                alert('Bu işlem için yetkiniz yoktur.');
+                alert('Bu iÅŸlem iÃ§in yetkiniz yoktur.');
                 return;
             }
 
@@ -456,7 +456,7 @@
                 return;
             }
 
-            const res = await fetch('http://localhost:3000/api/lojistik/personel-kaydet', {
+            const res = await fetch('/api/lojistik/personel-kaydet', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: id || null, ad_soyad, tc_no: tc_no || null, gorev: gorev || null, istasyon_adi: istasyon_adi || null, actor: getActorPayload() })
@@ -464,7 +464,7 @@
 
             const data = await res.json();
             if (!res.ok) {
-                alert(data.mesaj || 'Kayıt yapılamadı.');
+                alert(data.mesaj || 'KayÄ±t yapÄ±lamadÄ±.');
                 return;
             }
 
@@ -474,20 +474,20 @@
 
         async function duzenleHazirla(id) {
             if (!canManagePanel()) {
-                alert('Bu işlem için yetkiniz yoktur.');
+                alert('Bu iÅŸlem iÃ§in yetkiniz yoktur.');
                 return;
             }
 
             const personel = tumPersoneller.find((p) => Number(p.id) === Number(id));
             if (!personel) return;
 
-            document.getElementById('formBaslik').innerText = 'Personel Düzenle: ' + personel.ad_soyad;
+            document.getElementById('formBaslik').innerText = 'Personel DÃ¼zenle: ' + personel.ad_soyad;
             document.getElementById('editId').value = id;
             document.getElementById('adSoyad').value = personel.ad_soyad || '';
             document.getElementById('tcNo').value = personel.tc_no || '';
             document.getElementById('gorev').value = personel.gorev || '';
             document.getElementById('istasyon').value = personel.istasyon_adi || '';
-            document.getElementById('islemBtn').innerText = 'GÜNCELLE';
+            document.getElementById('islemBtn').innerText = 'GÃœNCELLE';
             document.getElementById('iptalBtn').classList.remove('hidden');
         }
 
@@ -504,19 +504,19 @@
 
         async function sil(id) {
             if (!canManagePanel()) {
-                alert('Bu işlem için yetkiniz yoktur.');
+                alert('Bu iÅŸlem iÃ§in yetkiniz yoktur.');
                 return;
             }
 
             if (!confirm('Personel silinsin mi?')) return;
-            const res = await fetch(`http://localhost:3000/api/lojistik/personel-sil/${id}`, {
+            const res = await fetch(`/api/lojistik/personel-sil/${id}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ actor: getActorPayload() })
             });
             const data = await res.json();
             if (!res.ok) {
-                alert(data.mesaj || 'Silme işlemi başarısız.');
+                alert(data.mesaj || 'Silme iÅŸlemi baÅŸarÄ±sÄ±z.');
                 return;
             }
             yukle();
@@ -534,16 +534,16 @@
         }
 
         async function sifreSifirla(id, adSoyad) {
-            if (!canManagePermissions()) { alert('Bu işlem için yetkiniz yoktur.'); return; }
-            if (!confirm(`"${adSoyad}" adlı personelin şifresi sıfırlansın mı?\nPersonel bir sonraki girişte yeni şifre belirleyecektir.`)) return;
+            if (!canManagePermissions()) { alert('Bu iÅŸlem iÃ§in yetkiniz yoktur.'); return; }
+            if (!confirm(`"${adSoyad}" adlÄ± personelin ÅŸifresi sÄ±fÄ±rlansÄ±n mÄ±?\nPersonel bir sonraki giriÅŸte yeni ÅŸifre belirleyecektir.`)) return;
             const actor = getCurrentUser();
-            const res = await fetch('http://localhost:3000/api/auth/sifre-sifirla', {
+            const res = await fetch('/api/auth/sifre-sifirla', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ hedef_id: id, actor_tc_no: actor?.tc_no || '' })
             });
             const data = await res.json();
-            if (!res.ok) { alert(data.mesaj || 'Şifre sıfırlanamadı.'); return; }
+            if (!res.ok) { alert(data.mesaj || 'Åifre sÄ±fÄ±rlanamadÄ±.'); return; }
             alert(data.mesaj);
             yukle();
         }
@@ -556,7 +556,7 @@
 
         function permAc(personel) {
             if (!canManagePermissions()) {
-                showUyari('Burayı Kullanmak İçin Yetkiniz Yoktur!');
+                showUyari('BurayÄ± Kullanmak Ä°Ã§in Yetkiniz Yoktur!');
                 return;
             }
 
@@ -592,7 +592,7 @@
 
         async function permKaydet() {
             if (!canManagePermissions()) {
-                alert('Bu işlem için yetkiniz yoktur.');
+                alert('Bu iÅŸlem iÃ§in yetkiniz yoktur.');
                 return;
             }
 
@@ -602,7 +602,7 @@
             const selectedTier = document.getElementById('p_yonetimSeviyesi').value;
 
             if (myTier === 'mudur' && (selectedTier === 'mudur' || selectedTier === 'root')) {
-                alert('Müdür seviyesi için bu kademe atanamaz.');
+                alert('MÃ¼dÃ¼r seviyesi iÃ§in bu kademe atanamaz.');
                 return;
             }
 
@@ -617,7 +617,7 @@
                 yonetimSeviyesi: selectedTier
             };
 
-            const res = await fetch(`http://localhost:3000/api/lojistik/personel-perm/${aktifPersonelId}`, {
+            const res = await fetch(`/api/lojistik/personel-perm/${aktifPersonelId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ perm, actor: getActorPayload() })
@@ -625,7 +625,7 @@
 
             const data = await res.json();
             if (!res.ok) {
-                alert(data.mesaj || 'Yetki güncellenemedi.');
+                alert(data.mesaj || 'Yetki gÃ¼ncellenemedi.');
                 return;
             }
 
