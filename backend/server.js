@@ -17,12 +17,32 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(frontendPath, 'main.html'));
 });
 
+app.get('/health', (req, res) => {
+    res.status(200).json({ ok: true });
+});
+
 // --- DİĞER API ROTALARI ---
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/lojistik', require('./routes/lojistikRoutes'));
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, '0.0.0.0', () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`Sistem Hazir: http://0.0.0.0:${PORT}`);
 });
+
+function shutdown(signal) {
+    console.log(`${signal} alindi, sunucu kapatiliyor...`);
+    server.close(() => {
+        console.log('Sunucu guvenli sekilde kapatildi.');
+        process.exit(0);
+    });
+
+    setTimeout(() => {
+        console.error('Zorunlu cikis: sunucu zamaninda kapanmadi.');
+        process.exit(1);
+    }, 10000).unref();
+}
+
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT'));
