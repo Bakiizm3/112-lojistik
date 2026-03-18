@@ -186,6 +186,33 @@ async function ensureIstasyonTable() {
     }
 }
 
+async function ensureStokTable() {
+    await db.query(`
+        CREATE TABLE IF NOT EXISTS tbl_stok (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            malzeme_adi VARCHAR(120) NOT NULL,
+            mevcut_stok INT NOT NULL DEFAULT 0,
+            kritik_esik INT NOT NULL DEFAULT 10,
+            birim VARCHAR(40) NULL,
+            tedarikci VARCHAR(120) NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `);
+
+    const [columns] = await db.query({
+        sql: "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'tbl_stok'",
+        timeout: 5000
+    });
+
+    const columnNames = columns.map((c) => c.COLUMN_NAME);
+    if (!columnNames.includes('birim')) {
+        await db.query('ALTER TABLE tbl_stok ADD COLUMN birim VARCHAR(40) NULL');
+    }
+    if (!columnNames.includes('tedarikci')) {
+        await db.query('ALTER TABLE tbl_stok ADD COLUMN tedarikci VARCHAR(120) NULL');
+    }
+}
+
 function normalizeDateTimeInput(value) {
     const raw = (value || '').toString().trim();
     if (!raw) return null;
@@ -392,6 +419,7 @@ exports.getDashboardData = async (req, res) => {
         await ensureIslemLogTable();
         await ensurePersonelTable();
         await ensureIstasyonTable();
+        await ensureStokTable();
 
         const days = Math.min(Math.max(Number(req.query.days) || 7, 1), 30);
 
