@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="config.js"></script>
-    <title>Konya 112 Lojistik | Sisteme GiriÅŸ</title>
+    <title>Konya 112 Lojistik | Sisteme Giriş</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -284,22 +284,22 @@
         <section class="login-card">
             <div class="brand">
                 <div class="logo" aria-hidden="true">112</div>
-                <h1 class="hero-title">Lojistik YÃ¶netim</h1>
-                <p class="institution-title">T.C. Konya Ä°l Ambulans Servisi</p>
-                <p class="subtitle">Yetkili personel eriÅŸimi iÃ§in kullanÄ±cÄ± adÄ± veya TC kimlik numarasÄ± ile oturum aÃ§Ä±n.</p>
+                <h1 class="hero-title">Lojistik Yönetim</h1>
+                <p class="institution-title">T.C. Konya İl Ambulans Servisi</p>
+                <p class="subtitle">Yetkili personel erişimi için kullanıcı adı veya TC kimlik numarası ile oturum açın.</p>
             </div>
 
             <form id="loginForm" autocomplete="off">
                 <div class="field-wrap">
-                    <label class="field-label">KullanÄ±cÄ± AdÄ± / TC No</label>
+                    <label class="field-label">Kullanıcı Adı / TC No</label>
                     <input type="text" id="tcNo" autocomplete="username" class="field" placeholder="TC Kimlik No">
                 </div>
 
                 <div class="field-wrap">
-                    <label class="field-label">Åifre</label>
+                    <label class="field-label">�ifre</label>
                     <div class="relative">
-                        <input type="password" id="sifre" autocomplete="current-password" class="field pr-11" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢">
-                        <span onclick="sifreGoster()" class="eye">ğŸ‘</span>
+                        <input type="password" id="sifre" autocomplete="current-password" class="field pr-11" placeholder="••••••••">
+                        <span onclick="sifreGoster()" class="eye">ğ���</span>
                     </div>
                 </div>
 
@@ -308,15 +308,15 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
                     </svg>
-                    Sisteme GiriÅŸ Yap
+                    Sisteme Giriş Yap
                 </button>
             </form>
 
             <div id="uyariMesaji" class="hidden notify"></div>
 
             <div class="security-panel">
-                <div class="security-title">GÃ¼venli BaÄŸlantÄ±</div>
-                <p class="security-text">Bu sistem yalnÄ±zca yetkili personel iÃ§indir. TÃ¼m eriÅŸimler kayÄ±t altÄ±na alÄ±nmaktadÄ±r.</p>
+                <div class="security-title">Güvenli Bağlantı</div>
+                <p class="security-text">Bu sistem yalnızca yetkili personel içindir. Tüm erişimler kayıt altına alınmaktadır.</p>
             </div>
         </section>
     </main>
@@ -351,13 +351,13 @@
             const btn = document.getElementById('girisBtn');
             const spin = document.getElementById('spinIcon');
             if (!tc_no || !sifre) {
-                uyariGoster('KullanÄ±cÄ± adÄ± ve ÅŸifre zorunludur.', 'hata');
+                uyariGoster('Kullanıcı adı ve şifre zorunludur.', 'hata');
                 return;
             }
             btn.disabled = true;
             spin.classList.remove('hidden');
             try {
-                const res = await fetch('${API_BASE}/api/auth/login', {
+                const res = await fetch(`${API_BASE}/api/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ tc_no, sifre })
@@ -365,27 +365,27 @@
                 const data = await res.json();
                 if (data.ilk_giris) {
                     sessionStorage.setItem('ilk_giris_id', data.personel_id);
-                    uyariGoster('Åifrenizi henÃ¼z belirlemediniz. YÃ¶nlendiriliyorsunuz...', 'basari');
+                    uyariGoster('�ifrenizi henüz belirlemediniz. Yönlendiriliyorsunuz...', 'basari');
                     setTimeout(() => { window.location.href = 'set-password.html'; }, 1200);
                     return;
                 }
                 if (data.sifre_degistirmeli) {
                     localStorage.setItem('token', data.token);
                     sessionStorage.setItem('sifre_degistirmeli', '1');
-                    uyariGoster('Åifrenizi gÃ¼ncellemeniz gerekiyor. YÃ¶nlendiriliyorsunuz...', 'basari');
+                    uyariGoster('�ifrenizi güncellemeniz gerekiyor. Yönlendiriliyorsunuz...', 'basari');
                     setTimeout(() => { window.location.href = 'set-password.html'; }, 1200);
                     return;
                 }
                 if (res.ok && data.token) {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('kullanici', JSON.stringify(data.kullanici));
-                    uyariGoster('GiriÅŸ baÅŸarÄ±lÄ±! YÃ¶nlendiriliyorsunuz...', 'basari');
+                    uyariGoster('Giriş başarılı! Yönlendiriliyorsunuz...', 'basari');
                     setTimeout(() => { window.location.href = 'main.html'; }, 1000);
                 } else {
-                    uyariGoster(data.mesaj || 'GiriÅŸ baÅŸarÄ±sÄ±z.', 'hata');
+                    uyariGoster(data.mesaj || 'Giriş başarısız.', 'hata');
                 }
             } catch (err) {
-                uyariGoster('Sunucuya baÄŸlanÄ±lamadÄ±. Sistemin aÃ§Ä±k olduÄŸundan emin olun.', 'hata');
+                uyariGoster('Sunucuya bağlanılamadı. Sistemin açık olduğundan emin olun.', 'hata');
             } finally {
                 btn.disabled = false;
                 spin.classList.add('hidden');

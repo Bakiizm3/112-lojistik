@@ -97,23 +97,23 @@
         <section class="panel-card p-6 lg:p-7">
             <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
                 <div class="border-l-4 border-red-600 pl-4 py-1">
-                    <h1 class="text-3xl lg:text-4xl font-black text-slate-900 uppercase tracking-tight">Ä°stasyon KayÄ±t ve YÃ¶netim</h1>
-                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Ä°stasyon YÃ¶netim Paneli</p>
+                    <h1 class="text-3xl lg:text-4xl font-black text-slate-900 uppercase tracking-tight">İstasyon Kayıt ve Yönetim</h1>
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">İstasyon Yönetim Paneli</p>
                 </div>
                 <div class="w-full md:w-auto flex flex-col md:items-end gap-2">
                     <div class="relative w-full md:w-80">
-                        <input type="text" id="aramaKutusu" oninput="istasyonAraDegisti()" placeholder="Ä°stasyon ismi giriniz" class="w-full p-3 pl-10 rounded-2xl border border-slate-300 outline-none focus:border-slate-900 text-sm bg-white/95 shadow-sm font-semibold text-slate-700">
-                        <span class="absolute left-3.5 top-3 text-slate-400">ğŸ”</span>
+                        <input type="text" id="aramaKutusu" oninput="istasyonAraDegisti()" placeholder="İstasyon ismi giriniz" class="w-full p-3 pl-10 rounded-2xl border border-slate-300 outline-none focus:border-slate-900 text-sm bg-white/95 shadow-sm font-semibold text-slate-700">
+                        <span class="absolute left-3.5 top-3 text-slate-400">ğ���</span>
                     </div>
-                    <p id="istSayaci" class="text-[11px] font-black text-slate-500 tracking-wide">Toplam Ä°stasyon: 0</p>
+                    <p id="istSayaci" class="text-[11px] font-black text-slate-500 tracking-wide">Toplam İstasyon: 0</p>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-6 gap-4 items-end">
                 <input type="hidden" id="editIstId">
                 <div class="md:col-span-3 flex flex-col">
-                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">Ä°stasyon Ä°smi *</label>
-                    <input type="text" id="istAd" placeholder="Yeni Ä°stasyon Ä°smi..." class="form-chip p-4 rounded-2xl outline-none text-base font-semibold">
+                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">İstasyon İsmi *</label>
+                    <input type="text" id="istAd" placeholder="Yeni İstasyon İsmi..." class="form-chip p-4 rounded-2xl outline-none text-base font-semibold">
                 </div>
                 <div class="md:col-span-2 flex flex-col">
                     <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">Adres (Opsiyonel)</label>
@@ -121,7 +121,7 @@
                 </div>
                 <div class="flex gap-2">
                     <button id="islemBtn" onclick="kaydetIstasyon()" class="w-full bg-slate-900 text-white px-8 py-4 rounded-2xl font-black shadow-lg hover:bg-black transition uppercase text-[10px] tracking-widest">EKLE</button>
-                    <button id="iptalBtn" onclick="formSifirla()" class="hidden bg-white text-slate-700 px-4 py-4 rounded-2xl font-bold transition border border-slate-300 hover:bg-slate-100">âœ–</button>
+                    <button id="iptalBtn" onclick="formSifirla()" class="hidden bg-white text-slate-700 px-4 py-4 rounded-2xl font-bold transition border border-slate-300 hover:bg-slate-100">✖</button>
                 </div>
             </div>
         </section>
@@ -130,7 +130,7 @@
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
                     <thead class="thead-dark text-white text-[10px] uppercase font-black tracking-widest">
-                        <tr><th onclick="siralaIstasyonTikla('istasyon_adi')" class="px-8 py-5 cursor-pointer select-none">Ä°stasyon Ä°smi <span id="sort_istasyon_adi" class="text-slate-300">â†•</span></th><th onclick="siralaIstasyonTikla('istasyon_adresi')" class="px-8 py-5 cursor-pointer select-none">Adres <span id="sort_istasyon_adresi" class="text-slate-300">â†•</span></th><th class="px-8 py-5 text-right">Eylem</th></tr>
+                        <tr><th onclick="siralaIstasyonTikla('istasyon_adi')" class="px-8 py-5 cursor-pointer select-none">İstasyon İsmi <span id="sort_istasyon_adi" class="text-slate-300">↕</span></th><th onclick="siralaIstasyonTikla('istasyon_adresi')" class="px-8 py-5 cursor-pointer select-none">Adres <span id="sort_istasyon_adresi" class="text-slate-300">↕</span></th><th class="px-8 py-5 text-right">Eylem</th></tr>
                     </thead>
                     <tbody id="liste" class="divide-y divide-slate-100 bg-white/90"></tbody>
                 </table>
@@ -155,7 +155,7 @@
         function getCurrentTier() {
             const user = getCurrentUser();
             if (!user) return 'personel';
-            if (user.rol === 'SÃ¼per Admin') return 'root';
+            if (user.rol === 'Süper Admin') return 'root';
             const tier = (user.perm?.yonetimSeviyesi || 'personel').toString().toLowerCase();
             return ['root', 'mudur', 'yetkili', 'personel'].includes(tier) ? tier : 'personel';
         }
@@ -172,14 +172,14 @@
         async function yukle() {
             try {
                 const res = await fetch(\'\/api/lojistik/istasyonlar');
-                if (!res.ok) throw new Error('Ä°stasyon listesi alÄ±namadÄ±.');
+                if (!res.ok) throw new Error('İstasyon listesi alınamadı.');
 
                 const data = await res.json();
                 tumIstasyonlar = Array.isArray(data) ? data : [];
-                document.getElementById('istSayaci').innerText = `Toplam Ä°stasyon: ${data.length}`;
+                document.getElementById('istSayaci').innerText = `Toplam İstasyon: ${data.length}`;
                 tabloyuCiz();
             } catch (error) {
-                alert('Ä°stasyon listesi yÃ¼klenemedi.');
+                alert('İstasyon listesi yüklenemedi.');
             }
         }
 
@@ -207,10 +207,10 @@
                 const el = document.getElementById(`sort_${alan}`);
                 if (!el) return;
                 if (istSortState.alan === alan) {
-                    el.innerText = istSortState.yon === 'asc' ? 'â†‘' : 'â†“';
+                    el.innerText = istSortState.yon === 'asc' ? '↑' : '↓';
                     el.className = 'text-white';
                 } else {
-                    el.innerText = 'â†•';
+                    el.innerText = '↕';
                     el.className = 'text-slate-300';
                 }
             });
@@ -229,7 +229,7 @@
             sirali.forEach(i => {
                 const temizAd = String(i.istasyon_adi || '').replace(/'/g, "\\'");
                 const temizAdres = String(i.istasyon_adresi || '').replace(/'/g, "\\'");
-                l.innerHTML += `<tr class="table-row"><td class="px-8 py-5 text-sm font-bold text-slate-700 uppercase tracking-tight">${i.istasyon_adi}</td><td class="px-8 py-5 text-sm font-semibold text-slate-500">${i.istasyon_adresi || '-'}</td><td class="px-8 py-5 text-right"><button onclick="duzenleHazirla(${i.id}, '${temizAd}', '${temizAdres}')" class="edit-pill">DÃœZENLE</button><button onclick="sil(${i.id})" class="delete-pill">SÄ°L</button></td></tr>`;
+                l.innerHTML += `<tr class="table-row"><td class="px-8 py-5 text-sm font-bold text-slate-700 uppercase tracking-tight">${i.istasyon_adi}</td><td class="px-8 py-5 text-sm font-semibold text-slate-500">${i.istasyon_adresi || '-'}</td><td class="px-8 py-5 text-right"><button onclick="duzenleHazirla(${i.id}, '${temizAd}', '${temizAdres}')" class="edit-pill">DÜZENLE</button><button onclick="sil(${i.id})" class="delete-pill">SİL</button></td></tr>`;
             });
             guncelleIstasyonSortRozeti();
         }
@@ -262,7 +262,7 @@
 
             const data = await res.json();
             if (!res.ok) {
-                alert(data.mesaj || 'Ä°ÅŸlem yapÄ±lamadÄ±.');
+                alert(data.mesaj || 'İşlem yapılamadı.');
                 return;
             }
 
@@ -274,7 +274,7 @@
             document.getElementById('editIstId').value = id;
             document.getElementById('istAd').value = (ad || '').toLocaleUpperCase('tr');
             document.getElementById('istAdres').value = adres || '';
-            document.getElementById('islemBtn').innerText = 'GÃœNCELLE';
+            document.getElementById('islemBtn').innerText = 'GÜNCELLE';
             document.getElementById('iptalBtn').classList.remove('hidden');
             document.querySelector('section.panel-card').classList.add('edit-mode');
         }
@@ -289,7 +289,7 @@
         }
 
         async function sil(id) {
-            if(confirm("Bu istasyonu silmek istediÄŸinizden emin misiniz?")) {
+            if(confirm("Bu istasyonu silmek istediğinizden emin misiniz?")) {
                 const res = await fetch(`/api/lojistik/istasyon-sil/${id}`, {
                     method:'DELETE',
                     headers: {'Content-Type': 'application/json'},
@@ -297,7 +297,7 @@
                 });
                 const data = await res.json();
                 if (!res.ok) {
-                    alert(data.mesaj || 'Ä°stasyon silinemedi.');
+                    alert(data.mesaj || 'İstasyon silinemedi.');
                     return;
                 }
                 yukle();

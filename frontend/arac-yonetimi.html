@@ -89,24 +89,24 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                 <div class="lg:col-span-7">
                     <div class="border-l-4 border-red-600 pl-4 py-1">
-                        <h2 class="text-3xl lg:text-4xl font-black text-slate-900 uppercase tracking-tight">AraÃ§ KayÄ±t ve YÃ¶netim</h2>
-                        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">ARAÃ‡ YÃ–NETÄ°M PANELÄ°</p>
+                        <h2 class="text-3xl lg:text-4xl font-black text-slate-900 uppercase tracking-tight">Araç Kayıt ve Yönetim</h2>
+                        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">ARAÇ YÖNETİM PANELİ</p>
                     </div>
                 </div>
                 <div class="lg:col-span-5 flex flex-col gap-3 lg:items-end">
                     <div class="relative w-full lg:max-w-md">
-                        <input type="text" id="aramaKutusu" onkeyup="tabloFiltrele()" placeholder="Plaka, Model YÄ±lÄ± veya Ä°stasyon Ara..."
+                        <input type="text" id="aramaKutusu" onkeyup="tabloFiltrele()" placeholder="Plaka, Model Yılı veya İstasyon Ara..."
                             class="w-full p-4 pl-11 rounded-2xl border border-slate-300 outline-none focus:border-slate-900 text-sm bg-white/95 shadow-sm">
-                        <span class="absolute left-4 top-4 text-slate-400">ğŸ”</span>
+                        <span class="absolute left-4 top-4 text-slate-400">ğ���</span>
                     </div>
-                    <p id="aracSayaci" class="text-[11px] font-black text-slate-500 tracking-wide">GÃ¶rÃ¼nen: 0 / Toplam: 0</p>
+                    <p id="aracSayaci" class="text-[11px] font-black text-slate-500 tracking-wide">Görünen: 0 / Toplam: 0</p>
                 </div>
             </div>
         </section>
 
         <section id="formAlani" class="panel-card p-6 lg:p-7">
             <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
-                <h3 id="formBaslik" class="text-[11px] font-black text-slate-500 uppercase tracking-[0.18em]">Yeni AraÃ§ TanÄ±mla</h3>
+                <h3 id="formBaslik" class="text-[11px] font-black text-slate-500 uppercase tracking-[0.18em]">Yeni Araç Tanımla</h3>
                 <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">* Zorunlu Alan</span>
             </div>
 
@@ -118,16 +118,16 @@
                 </div>
 
                 <div class="flex flex-col">
-                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">AraÃ§ Tipi *</label>
+                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">Araç Tipi *</label>
                     <select id="arac_tipi" class="form-chip p-4 rounded-2xl font-bold text-slate-600 outline-none">
                         <option value="Ambulans">Ambulans</option>
-                        <option value="Hizmet AracÄ±">Hizmet AracÄ±</option>
-                        <option value="UMKE AracÄ±">UMKE AracÄ±</option>
+                        <option value="Hizmet Aracı">Hizmet Aracı</option>
+                        <option value="UMKE Aracı">UMKE Aracı</option>
                     </select>
                 </div>
 
                 <div class="flex flex-col">
-                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">Model YÄ±lÄ± *</label>
+                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">Model Yılı *</label>
                     <input type="number" id="model_yili" min="1900" max="2100" placeholder="Zorunlu Alan" class="form-chip p-4 rounded-2xl font-black outline-none">
                 </div>
 
@@ -137,9 +137,9 @@
                 </div>
 
                 <div class="flex flex-col">
-                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">Ä°stasyon (Opsiyonel)</label>
+                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">İstasyon (Opsiyonel)</label>
                     <select id="istasyon" class="form-chip p-4 rounded-2xl font-bold text-slate-600 outline-none">
-                        <option value="">-- Ä°stasyon SeÃ§ilmedi --</option>
+                        <option value="">-- İstasyon Seçilmedi --</option>
                     </select>
                 </div>
 
@@ -150,7 +150,7 @@
 
                 <div class="flex gap-2">
                     <button id="islemButon" onclick="kaydet()" class="w-full bg-slate-900 text-white px-6 py-4 rounded-2xl font-black shadow-lg hover:bg-black transition uppercase text-[10px] tracking-widest">KAYDET</button>
-                    <button id="iptalButon" onclick="formSifirla()" class="hidden bg-white text-slate-700 px-4 py-4 rounded-2xl font-bold transition border border-slate-300 hover:bg-slate-100">âœ–</button>
+                    <button id="iptalButon" onclick="formSifirla()" class="hidden bg-white text-slate-700 px-4 py-4 rounded-2xl font-bold transition border border-slate-300 hover:bg-slate-100">✖</button>
                 </div>
             </div>
         </section>
@@ -162,11 +162,11 @@
                         <tr>
                             <th class="px-8 py-5">Tip</th>
                             <th class="px-8 py-5">Plaka</th>
-                            <th onclick="siralaTikla('model_yili')" class="px-8 py-5 cursor-pointer select-none">Model YÄ±lÄ± <span id="sort_model_yili" class="text-slate-300">â†•</span></th>
-                            <th onclick="siralaTikla('muayene_tarihi')" class="px-8 py-5 cursor-pointer select-none">Muayene Tarihi <span id="sort_muayene_tarihi" class="text-slate-300">â†•</span></th>
-                            <th onclick="siralaTikla('istasyon_adi')" class="px-8 py-5 cursor-pointer select-none">Ä°stasyon <span id="sort_istasyon_adi" class="text-slate-300">â†•</span></th>
-                            <th onclick="siralaTikla('kilometre')" class="px-8 py-5 cursor-pointer select-none">KM <span id="sort_kilometre" class="text-slate-300">â†•</span></th>
-                            <th class="px-8 py-5 text-right">YÃ¶netim</th>
+                            <th onclick="siralaTikla('model_yili')" class="px-8 py-5 cursor-pointer select-none">Model Yılı <span id="sort_model_yili" class="text-slate-300">↕</span></th>
+                            <th onclick="siralaTikla('muayene_tarihi')" class="px-8 py-5 cursor-pointer select-none">Muayene Tarihi <span id="sort_muayene_tarihi" class="text-slate-300">↕</span></th>
+                            <th onclick="siralaTikla('istasyon_adi')" class="px-8 py-5 cursor-pointer select-none">İstasyon <span id="sort_istasyon_adi" class="text-slate-300">↕</span></th>
+                            <th onclick="siralaTikla('kilometre')" class="px-8 py-5 cursor-pointer select-none">KM <span id="sort_kilometre" class="text-slate-300">↕</span></th>
+                            <th class="px-8 py-5 text-right">Yönetim</th>
                         </tr>
                     </thead>
                     <tbody id="liste" class="divide-y divide-slate-100 font-bold text-slate-700 bg-white/90"></tbody>
@@ -191,7 +191,7 @@
         function getCurrentTier() {
             const user = getCurrentUser();
             if (!user) return 'personel';
-            if (user.rol === 'SÃ¼per Admin') return 'root';
+            if (user.rol === 'Süper Admin') return 'root';
             const tier = (user.perm?.yonetimSeviyesi || 'personel').toString().toLowerCase();
             return ['root', 'mudur', 'yetkili', 'personel'].includes(tier) ? tier : 'personel';
         }
@@ -216,7 +216,7 @@
             const iRes = await fetch(\'\/api/lojistik/istasyonlar');
             const istasyonlar = await iRes.json();
             const sortedIstasyonlar = [...istasyonlar].sort((a, b) => String(a.istasyon_adi || '').localeCompare(String(b.istasyon_adi || ''), 'tr'));
-            document.getElementById('istasyon').innerHTML = '<option value="">-- Ä°stasyon SeÃ§ilmedi --</option>' + 
+            document.getElementById('istasyon').innerHTML = '<option value="">-- İstasyon Seçilmedi --</option>' + 
                 sortedIstasyonlar.map(i => `<option value="${i.istasyon_adi}">${i.istasyon_adi}</option>`).join('');
 
             const aRes = await fetch(\'\/api/lojistik/araclar');
@@ -238,8 +238,8 @@
                         <td class="px-8 py-5 text-sm text-slate-500">${a.istasyon_adi || 'Belirtilmedi'}</td>
                         <td class="px-8 py-5 text-sm text-slate-500">${a.kilometre === null || a.kilometre === undefined || a.kilometre === '' ? 'Belirtilmedi' : a.kilometre}</td>
                         <td class="px-8 py-5 text-right space-x-4">
-                            <button onclick='duzenleHazirla(${JSON.stringify(a)})' class="action-link edit">DÃ¼zenle</button>
-                            <button onclick="sil(${a.id})" class="action-link delete">KaldÄ±r</button>
+                            <button onclick='duzenleHazirla(${JSON.stringify(a)})' class="action-link edit">Düzenle</button>
+                            <button onclick="sil(${a.id})" class="action-link delete">Kaldır</button>
                         </td>
                     </tr>`;
             });
@@ -291,21 +291,21 @@
                 const el = document.getElementById(`sort_${key}`);
                 if (!el) return;
                 if (sortState.alan === key) {
-                    el.innerText = sortState.yon === 'asc' ? 'â†‘' : 'â†“';
+                    el.innerText = sortState.yon === 'asc' ? '↑' : '↓';
                     el.className = 'text-white';
                 } else {
-                    el.innerText = 'â†•';
+                    el.innerText = '↕';
                     el.className = 'text-slate-300';
                 }
             });
         }
 
         function sadeceHarfler(metin) {
-            return (metin || '').toString().toLocaleLowerCase('tr').replace(/[^a-zA-ZÃ§ÄŸÄ±Ã¶ÅŸÃ¼Ã‡ÄÄ°Ã–ÅÃœ]/g, '');
+            return (metin || '').toString().toLocaleLowerCase('tr').replace(/[^a-zA-ZçğıöşüÇ�İÖ�Ü]/g, '');
         }
 
         function guncelleSayac(gorunen, toplam) {
-            document.getElementById('aracSayaci').innerText = `GÃ¶rÃ¼nen: ${gorunen} / Toplam: ${toplam}`;
+            document.getElementById('aracSayaci').innerText = `Görünen: ${gorunen} / Toplam: ${toplam}`;
         }
 
         async function kaydet() {
@@ -318,7 +318,7 @@
             const kilometre = document.getElementById('km').value;
 
             if (!plaka || !arac_tipi || !model_yili || !muayene_tarihi) {
-                alert("LÃ¼tfen yÄ±ldÄ±zlÄ± alanlarÄ± doldurun! (Plaka, AraÃ§ Tipi, Model YÄ±lÄ±, Muayene Tarihi)");
+                alert("Lütfen yıldızlı alanları doldurun! (Plaka, Araç Tipi, Model Yılı, Muayene Tarihi)");
                 return;
             }
 
@@ -350,12 +350,12 @@
                     alert("Hata: " + data.mesaj);
                 }
             } catch (err) {
-                alert("Sunucuya baÄŸlanÄ±lamadÄ±!");
+                alert("Sunucuya bağlanılamadı!");
             }
         }
 
         function duzenleHazirla(arac) {
-            document.getElementById('formBaslik').innerText = "AracÄ± DÃ¼zenle: " + arac.plaka;
+            document.getElementById('formBaslik').innerText = "Aracı Düzenle: " + arac.plaka;
             document.getElementById('formAlani').classList.add('edit-mode');
             document.getElementById('editId').value = arac.id;
             document.getElementById('plaka').value = (arac.plaka || '').toString().toUpperCase();
@@ -364,12 +364,12 @@
             document.getElementById('muayene_tarihi').value = arac.muayene_tarihi ? String(arac.muayene_tarihi).slice(0, 10) : '';
             document.getElementById('istasyon').value = arac.istasyon_adi || "";
             document.getElementById('km').value = arac.kilometre ?? '';
-            document.getElementById('islemButon').innerText = "GÃœNCELLEMEYÄ° KAYDET";
+            document.getElementById('islemButon').innerText = "GÜNCELLEMEYİ KAYDET";
             document.getElementById('iptalButon').classList.remove('hidden');
         }
 
         function formSifirla() {
-            document.getElementById('formBaslik').innerText = "Yeni AraÃ§ TanÄ±mla";
+            document.getElementById('formBaslik').innerText = "Yeni Araç Tanımla";
             document.getElementById('formAlani').classList.remove('edit-mode');
             document.getElementById('editId').value = "";
             document.getElementById('plaka').value = "";
@@ -381,7 +381,7 @@
         }
 
         async function sil(id) {
-            if(confirm("Sistemden kaldÄ±rÄ±lsÄ±n mÄ±?")) {
+            if(confirm("Sistemden kaldırılsın mı?")) {
                 const res = await fetch(`/api/lojistik/arac-sil/${id}`, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
@@ -391,7 +391,7 @@
                 if(res.ok) {
                     yukle(); // Listeyi yenile
                 } else {
-                    alert("Silme iÅŸlemi baÅŸarÄ±sÄ±z oldu.");
+                    alert("Silme işlemi başarısız oldu.");
                 }
             }
         }

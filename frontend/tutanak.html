@@ -49,37 +49,37 @@
 <body class="bg-slate-50 p-6 lg:p-8 font-sans text-slate-800">
     <div class="max-w-7xl mx-auto space-y-6">
         <div class="border-l-4 border-red-600 pl-4">
-            <h2 class="text-2xl font-black text-slate-800 uppercase tracking-tight">Tutanak Ä°ÅŸlemleri</h2>
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Åablon SeÃ§, Doldur, HazÄ±r Belgeyi YazdÄ±r</p>
+            <h2 class="text-2xl font-black text-slate-800 uppercase tracking-tight">Tutanak İşlemleri</h2>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">�ablon Seç, Doldur, Hazır Belgeyi Yazdır</p>
         </div>
 
         <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
             <section class="bg-white p-6 rounded-2xl shadow-xl border border-slate-200">
                 <div class="mb-5">
-                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-2">Tutanak TÃ¼rÃ¼</label>
+                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-2">Tutanak Türü</label>
                     <select id="sablonSec" onchange="sablonDegisti()" class="w-full border-2 p-3 rounded-xl outline-none focus:border-red-500 bg-slate-50 font-semibold text-slate-700">
-                        <option value="malzeme_teslim">Malzeme Teslim TutanaÄŸÄ±</option>
-                        <option value="arac_olay">AraÃ§ Olay (Kaza/ArÄ±za) TutanaÄŸÄ±</option>
-                        <option value="nobet_devir">NÃ¶bet Devir Teslim TutanaÄŸÄ±</option>
-                        <option value="eksik_malzeme">Eksik Malzeme Bildirim TutanaÄŸÄ±</option>
+                        <option value="malzeme_teslim">Malzeme Teslim Tutanağı</option>
+                        <option value="arac_olay">Araç Olay (Kaza/Arıza) Tutanağı</option>
+                        <option value="nobet_devir">Nöbet Devir Teslim Tutanağı</option>
+                        <option value="eksik_malzeme">Eksik Malzeme Bildirim Tutanağı</option>
                     </select>
                 </div>
 
                 <div id="formAlanlari" class="space-y-4"></div>
 
                 <div class="mt-6 flex gap-2">
-                    <button onclick="belgeHazirla()" class="flex-1 bg-slate-900 hover:bg-black text-white py-3 rounded-xl font-black transition tracking-widest uppercase text-xs">Belgeyi HazÄ±rla</button>
-                    <button id="yazdirBtn" onclick="yazdir()" class="hidden bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-black transition tracking-widest uppercase text-xs">YazdÄ±r</button>
+                    <button onclick="belgeHazirla()" class="flex-1 bg-slate-900 hover:bg-black text-white py-3 rounded-xl font-black transition tracking-widest uppercase text-xs">Belgeyi Hazırla</button>
+                    <button id="yazdirBtn" onclick="yazdir()" class="hidden bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-black transition tracking-widest uppercase text-xs">Yazdır</button>
                 </div>
             </section>
 
             <section class="bg-white p-6 rounded-2xl shadow-xl border border-slate-200">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-sm font-black uppercase tracking-widest text-slate-500">HazÄ±r Tutanak Ã–nizleme</h3>
-                    <span id="hazirDurum" class="text-xs font-bold text-slate-400">HenÃ¼z oluÅŸturulmadÄ±</span>
+                    <h3 class="text-sm font-black uppercase tracking-widest text-slate-500">Hazır Tutanak Önizleme</h3>
+                    <span id="hazirDurum" class="text-xs font-bold text-slate-400">Henüz oluşturulmadı</span>
                 </div>
                 <div id="onizleme" class="min-h-[240px] bg-slate-50 border border-dashed border-slate-300 rounded-xl p-4 text-sm text-slate-400 flex items-center justify-center">
-                    Åablon seÃ§ip bilgileri girerek "Belgeyi HazÄ±rla" butonuna basÄ±n.
+                    �ablon seçip bilgileri girerek "Belgeyi Hazırla" butonuna basın.
                 </div>
             </section>
         </div>
@@ -90,8 +90,8 @@
         let sonBelgeHtml = '';
 
         const MALZEME_LISTESI = [
-            'Oksijen Maskesi (YetiÅŸkin) - 5 Adet',
-            'EnjektÃ¶r 10cc (YeÅŸil UÃ§lu) - 2 Kutu',
+            'Oksijen Maskesi (Yetişkin) - 5 Adet',
+            'Enjektör 10cc (Yeşil Uçlu) - 2 Kutu',
             'Turnike - 10 Adet',
             'Steril Eldiven - 4 Kutu',
             'Atel Seti - 1 Set',
@@ -99,11 +99,11 @@
         ];
 
         const DEVIR_LISTESI = [
-            'AraÃ§ anahtarÄ± ve ruhsat',
-            'Narkotik dolap anahtarÄ±',
+            'Araç anahtarı ve ruhsat',
+            'Narkotik dolap anahtarı',
             'El telsizi',
-            'Tablet / form cihazÄ±',
-            'GÃ¼nlÃ¼k vaka defteri'
+            'Tablet / form cihazı',
+            'Günlük vaka defteri'
         ];
 
         const TEMPLATES = {
@@ -113,7 +113,7 @@
                     { key: 'teslimEden', type: 'personel', label: 'Teslim Eden Personel', required: true },
                     { key: 'tarih', type: 'date', label: 'Tarih', required: true },
                     { key: 'saat', type: 'time', label: 'Saat', required: true },
-                    { key: 'istasyon', type: 'text', label: 'Ä°stasyon / Birim', required: true },
+                    { key: 'istasyon', type: 'text', label: 'İstasyon / Birim', required: true },
                     { key: 'malzemeler', type: 'checklist', label: 'Verilen Malzemeler', options: MALZEME_LISTESI, required: true },
                     { key: 'diger', type: 'textarea', label: 'Ek Not (Opsiyonel)' }
                 ],
@@ -122,56 +122,56 @@
                     return `
                         <div class="doc-sheet">
                             <h3>T.C.</h3>
-                            <h3>KONYA Ä°L SAÄLIK MÃœDÃœRLÃœÄÃœ</h3>
+                            <h3>KONYA İL SA�LIK MÜDÜRLÜ�Ü</h3>
                             <h3>Lojistik Birimi</h3>
-                            <h4 style="margin-top:10px;">MALZEME TESLÄ°M TUTANAÄI</h4>
+                            <h4 style="margin-top:10px;">MALZEME TESLİM TUTANA�I</h4>
                             <p style="margin-top:18px; text-align:justify; text-indent:36px;">
-                                ${escapeHtml(formatDateTR(v.tarih))} tarihinde saat ${escapeHtml(v.saat)} itibarÄ±yla ${escapeHtml(v.istasyon)} biriminde,
-                                aÅŸaÄŸÄ±da belirtilen malzemeler ${escapeHtml(v.teslimEden)} tarafÄ±ndan ${escapeHtml(v.teslimAlan)} personeline teslim edilmiÅŸtir.
+                                ${escapeHtml(formatDateTR(v.tarih))} tarihinde saat ${escapeHtml(v.saat)} itibarıyla ${escapeHtml(v.istasyon)} biriminde,
+                                aşağıda belirtilen malzemeler ${escapeHtml(v.teslimEden)} tarafından ${escapeHtml(v.teslimAlan)} personeline teslim edilmiştir.
                             </p>
                             <table>
-                                <tr><th style="width:55px;">No</th><th>Malzeme DetayÄ±</th></tr>
+                                <tr><th style="width:55px;">No</th><th>Malzeme Detayı</th></tr>
                                 ${items}
                             </table>
                             ${v.diger ? `<p style="margin-top:14px;"><strong>Ek Not:</strong> ${escapeHtml(v.diger)}</p>` : ''}
                             <div class="doc-sign">
-                                <div>Teslim Eden<br><br>${escapeHtml(v.teslimEden)}<br>Ä°mza</div>
-                                <div>Teslim Alan<br><br>${escapeHtml(v.teslimAlan)}<br>Ä°mza</div>
+                                <div>Teslim Eden<br><br>${escapeHtml(v.teslimEden)}<br>İmza</div>
+                                <div>Teslim Alan<br><br>${escapeHtml(v.teslimAlan)}<br>İmza</div>
                             </div>
                         </div>`;
                 }
             },
             arac_olay: {
                 fields: [
-                    { key: 'olayTipi', type: 'select', label: 'Olay Tipi', options: ['Kaza', 'ArÄ±za'], required: true },
-                    { key: 'plaka', type: 'text', label: 'AraÃ§ PlakasÄ±', required: true },
-                    { key: 'istasyon', type: 'text', label: 'Ä°stasyon', required: true },
-                    { key: 'surucu', type: 'personel', label: 'SÃ¼rÃ¼cÃ¼/Personel', required: true },
+                    { key: 'olayTipi', type: 'select', label: 'Olay Tipi', options: ['Kaza', 'Arıza'], required: true },
+                    { key: 'plaka', type: 'text', label: 'Araç Plakası', required: true },
+                    { key: 'istasyon', type: 'text', label: 'İstasyon', required: true },
+                    { key: 'surucu', type: 'personel', label: 'Sürücü/Personel', required: true },
                     { key: 'tarih', type: 'date', label: 'Olay Tarihi', required: true },
                     { key: 'saat', type: 'time', label: 'Olay Saati', required: true },
                     { key: 'yer', type: 'text', label: 'Olay Yeri', required: true },
-                    { key: 'aciklama', type: 'textarea', label: 'Olay AÃ§Ä±klamasÄ±', required: true }
+                    { key: 'aciklama', type: 'textarea', label: 'Olay Açıklaması', required: true }
                 ],
                 build: (v) => `
                     <div class="doc-sheet">
                         <h3>T.C.</h3>
-                        <h3>KONYA Ä°L SAÄLIK MÃœDÃœRLÃœÄÃœ</h3>
-                        <h4 style="margin-top:10px;">ARAÃ‡ ${escapeHtml(v.olayTipi).toUpperCase()} TUTANAÄI</h4>
+                        <h3>KONYA İL SA�LIK MÜDÜRLÜ�Ü</h3>
+                        <h4 style="margin-top:10px;">ARAÇ ${escapeHtml(v.olayTipi).toUpperCase()} TUTANA�I</h4>
                         <p style="margin-top:18px; text-align:justify; text-indent:36px;">
-                            ${escapeHtml(v.plaka)} plakalÄ± araÃ§ ile ${escapeHtml(v.istasyon)} istasyonuna baÄŸlÄ± ekip tarafÄ±ndan
-                            ${escapeHtml(formatDateTR(v.tarih))} ${escapeHtml(v.saat)} tarihinde ${escapeHtml(v.yer)} mevkiinde ${escapeHtml(v.olayTipi.toLowerCase())} olayÄ± meydana gelmiÅŸtir.
+                            ${escapeHtml(v.plaka)} plakalı araç ile ${escapeHtml(v.istasyon)} istasyonuna bağlı ekip tarafından
+                            ${escapeHtml(formatDateTR(v.tarih))} ${escapeHtml(v.saat)} tarihinde ${escapeHtml(v.yer)} mevkiinde ${escapeHtml(v.olayTipi.toLowerCase())} olayı meydana gelmiştir.
                         </p>
                         <table>
-                            <tr><th style="width:220px;">SÃ¼rÃ¼cÃ¼/Personel</th><td>${escapeHtml(v.surucu)}</td></tr>
-                            <tr><th>AraÃ§ PlakasÄ±</th><td>${escapeHtml(v.plaka)}</td></tr>
-                            <tr><th>Ä°stasyon</th><td>${escapeHtml(v.istasyon)}</td></tr>
+                            <tr><th style="width:220px;">Sürücü/Personel</th><td>${escapeHtml(v.surucu)}</td></tr>
+                            <tr><th>Araç Plakası</th><td>${escapeHtml(v.plaka)}</td></tr>
+                            <tr><th>İstasyon</th><td>${escapeHtml(v.istasyon)}</td></tr>
                             <tr><th>Olay Tarih-Saat</th><td>${escapeHtml(formatDateTR(v.tarih))} ${escapeHtml(v.saat)}</td></tr>
                             <tr><th>Olay Yeri</th><td>${escapeHtml(v.yer)}</td></tr>
                             <tr><th>Detay</th><td>${escapeHtml(v.aciklama)}</td></tr>
                         </table>
                         <div class="doc-sign">
-                            <div>DÃ¼zenleyen<br><br>${escapeHtml(v.surucu)}<br>Ä°mza</div>
-                            <div>Amir OnayÄ±<br><br>................................<br>Ä°mza</div>
+                            <div>Düzenleyen<br><br>${escapeHtml(v.surucu)}<br>İmza</div>
+                            <div>Amir Onayı<br><br>................................<br>İmza</div>
                         </div>
                     </div>`,
             },
@@ -179,22 +179,22 @@
                 fields: [
                     { key: 'devreden', type: 'personel', label: 'Devreden Personel', required: true },
                     { key: 'devralan', type: 'personel', label: 'Devralan Personel', required: true },
-                    { key: 'istasyon', type: 'text', label: 'Ä°stasyon', required: true },
+                    { key: 'istasyon', type: 'text', label: 'İstasyon', required: true },
                     { key: 'tarih', type: 'date', label: 'Devir Tarihi', required: true },
                     { key: 'saat', type: 'time', label: 'Devir Saati', required: true },
                     { key: 'devirMaddeleri', type: 'checklist', label: 'Devir Teslim Kalemleri', options: DEVIR_LISTESI, required: true },
-                    { key: 'not', type: 'textarea', label: 'AÃ§Ä±klama / Not' }
+                    { key: 'not', type: 'textarea', label: 'Açıklama / Not' }
                 ],
                 build: (v) => {
                     const items = (v.devirMaddeleri || []).map((m, i) => `<tr><td>${i + 1}</td><td>${escapeHtml(m)}</td></tr>`).join('');
                     return `
                         <div class="doc-sheet">
                             <h3>T.C.</h3>
-                            <h3>KONYA Ä°L SAÄLIK MÃœDÃœRLÃœÄÃœ</h3>
-                            <h4 style="margin-top:10px;">NÃ–BET DEVÄ°R TESLÄ°M TUTANAÄI</h4>
+                            <h3>KONYA İL SA�LIK MÜDÜRLÜ�Ü</h3>
+                            <h4 style="margin-top:10px;">NÖBET DEVİR TESLİM TUTANA�I</h4>
                             <p style="margin-top:18px; text-align:justify; text-indent:36px;">
                                 ${escapeHtml(v.istasyon)} istasyonunda ${escapeHtml(formatDateTR(v.tarih))} ${escapeHtml(v.saat)} tarihinde,
-                                nÃ¶bet devir iÅŸlemi ${escapeHtml(v.devreden)} tarafÄ±ndan ${escapeHtml(v.devralan)} personeline yapÄ±lmÄ±ÅŸtÄ±r.
+                                nöbet devir işlemi ${escapeHtml(v.devreden)} tarafından ${escapeHtml(v.devralan)} personeline yapılmıştır.
                             </p>
                             <table>
                                 <tr><th style="width:55px;">No</th><th>Devir Kalemi</th></tr>
@@ -202,8 +202,8 @@
                             </table>
                             ${v.not ? `<p style="margin-top:14px;"><strong>Not:</strong> ${escapeHtml(v.not)}</p>` : ''}
                             <div class="doc-sign">
-                                <div>Devreden<br><br>${escapeHtml(v.devreden)}<br>Ä°mza</div>
-                                <div>Devralan<br><br>${escapeHtml(v.devralan)}<br>Ä°mza</div>
+                                <div>Devreden<br><br>${escapeHtml(v.devreden)}<br>İmza</div>
+                                <div>Devralan<br><br>${escapeHtml(v.devralan)}<br>İmza</div>
                             </div>
                         </div>`;
                 }
@@ -211,29 +211,29 @@
             eksik_malzeme: {
                 fields: [
                     { key: 'bildiren', type: 'personel', label: 'Bildirimi Yapan Personel', required: true },
-                    { key: 'istasyon', type: 'text', label: 'Ä°stasyon', required: true },
+                    { key: 'istasyon', type: 'text', label: 'İstasyon', required: true },
                     { key: 'tarih', type: 'date', label: 'Tarih', required: true },
                     { key: 'saat', type: 'time', label: 'Saat', required: true },
-                    { key: 'oncelik', type: 'select', label: 'Aciliyet', options: ['Normal', 'Ã–ncelikli', 'Acil'], required: true },
+                    { key: 'oncelik', type: 'select', label: 'Aciliyet', options: ['Normal', 'Öncelikli', 'Acil'], required: true },
                     { key: 'eksikListesi', type: 'textarea', label: 'Eksik Malzeme Listesi', required: true },
-                    { key: 'aciklama', type: 'textarea', label: 'AÃ§Ä±klama' }
+                    { key: 'aciklama', type: 'textarea', label: 'Açıklama' }
                 ],
                 build: (v) => `
                     <div class="doc-sheet">
                         <h3>T.C.</h3>
-                        <h3>KONYA Ä°L SAÄLIK MÃœDÃœRLÃœÄÃœ</h3>
-                        <h4 style="margin-top:10px;">EKSÄ°K MALZEME BÄ°LDÄ°RÄ°M TUTANAÄI</h4>
+                        <h3>KONYA İL SA�LIK MÜDÜRLÜ�Ü</h3>
+                        <h4 style="margin-top:10px;">EKSİK MALZEME BİLDİRİM TUTANA�I</h4>
                         <table>
                             <tr><th style="width:220px;">Bildirimi Yapan</th><td>${escapeHtml(v.bildiren)}</td></tr>
-                            <tr><th>Ä°stasyon</th><td>${escapeHtml(v.istasyon)}</td></tr>
+                            <tr><th>İstasyon</th><td>${escapeHtml(v.istasyon)}</td></tr>
                             <tr><th>Tarih-Saat</th><td>${escapeHtml(formatDateTR(v.tarih))} ${escapeHtml(v.saat)}</td></tr>
                             <tr><th>Aciliyet</th><td>${escapeHtml(v.oncelik)}</td></tr>
                             <tr><th>Eksik Malzemeler</th><td>${escapeHtml(v.eksikListesi).replaceAll('\n', '<br>')}</td></tr>
-                            <tr><th>AÃ§Ä±klama</th><td>${escapeHtml(v.aciklama || '-')}</td></tr>
+                            <tr><th>Açıklama</th><td>${escapeHtml(v.aciklama || '-')}</td></tr>
                         </table>
                         <div class="doc-sign">
-                            <div>Bildirimi Yapan<br><br>${escapeHtml(v.bildiren)}<br>Ä°mza</div>
-                            <div>Teslim Alan Birim<br><br>................................<br>Ä°mza</div>
+                            <div>Bildirimi Yapan<br><br>${escapeHtml(v.bildiren)}<br>İmza</div>
+                            <div>Teslim Alan Birim<br><br>................................<br>İmza</div>
                         </div>
                     </div>`,
             }
@@ -278,7 +278,7 @@
                     continue;
                 }
 
-                // AynÄ± isimde birden fazla kayÄ±t varsa boÅŸ olmayan istasyonu tercih et.
+                // Aynı isimde birden fazla kayıt varsa boş olmayan istasyonu tercih et.
                 const eski = map.get(ad);
                 if (!eski.istasyon && ist) {
                     map.set(ad, { ad, istasyon: ist });
@@ -314,7 +314,7 @@
                         <label class="block text-xs font-bold text-slate-500 uppercase mb-2">${field.label} ${req}</label>
                         <input id="f_${field.key}" type="text" data-personel-field="1" autocomplete="off" class="w-full border-2 p-3 rounded-xl outline-none focus:border-red-500 bg-slate-50 font-semibold text-slate-700" placeholder="En az 2 harf ile personel ara...">
                         <div id="f_${field.key}_oneriler" class="hidden absolute z-20 mt-1 w-full bg-white border border-slate-200 rounded-xl shadow-lg max-h-44 overflow-y-auto"></div>
-                        <p class="mt-1 text-[11px] text-slate-400 font-semibold">Liste, yazdÄ±kÃ§a daraltÄ±lÄ±r.</p>
+                        <p class="mt-1 text-[11px] text-slate-400 font-semibold">Liste, yazdıkça daraltılır.</p>
                     </div>`;
             }
 
@@ -363,14 +363,14 @@
                 return `
                     <div>
                         <label class="block text-xs font-bold text-slate-500 uppercase mb-2">${field.label} ${req}</label>
-                        <textarea id="f_${field.key}" rows="3" class="w-full border-2 p-3 rounded-xl outline-none focus:border-red-500 bg-slate-50 font-semibold text-slate-700" placeholder="Bilgiyi yazÄ±n..."></textarea>
+                        <textarea id="f_${field.key}" rows="3" class="w-full border-2 p-3 rounded-xl outline-none focus:border-red-500 bg-slate-50 font-semibold text-slate-700" placeholder="Bilgiyi yazın..."></textarea>
                     </div>`;
             }
 
             return `
                 <div>
                     <label class="block text-xs font-bold text-slate-500 uppercase mb-2">${field.label} ${req}</label>
-                    <input id="f_${field.key}" type="text" class="w-full border-2 p-3 rounded-xl outline-none focus:border-red-500 bg-slate-50 font-semibold text-slate-700" placeholder="Bilgiyi yazÄ±n...">
+                    <input id="f_${field.key}" type="text" class="w-full border-2 p-3 rounded-xl outline-none focus:border-red-500 bg-slate-50 font-semibold text-slate-700" placeholder="Bilgiyi yazın...">
                 </div>`;
         }
 
@@ -433,17 +433,17 @@
             for (const f of t.fields) {
                 if (f.type === 'checklist') {
                     const arr = [...document.querySelectorAll(`.f_${f.key}:checked`)].map((x) => x.value);
-                    if (f.required && !arr.length) throw new Error(`${f.label} alanÄ±nda en az bir seÃ§im yapÄ±n.`);
+                    if (f.required && !arr.length) throw new Error(`${f.label} alanında en az bir seçim yapın.`);
                     values[f.key] = arr;
                     continue;
                 }
 
                 const el = document.getElementById(`f_${f.key}`);
                 const val = (el?.value || '').toString().trim();
-                if (f.required && !val) throw new Error(`${f.label} alanÄ± zorunludur.`);
+                if (f.required && !val) throw new Error(`${f.label} alanı zorunludur.`);
 
                 if (f.type === 'personel' && val && !personelListedeVarMi(val)) {
-                    throw new Error(`${f.label} iÃ§in listeden geÃ§erli bir personel seÃ§in.`);
+                    throw new Error(`${f.label} için listeden geçerli bir personel seçin.`);
                 }
 
                 values[f.key] = val;
@@ -460,11 +460,11 @@
 
                 document.getElementById('onizleme').className = '';
                 document.getElementById('onizleme').innerHTML = html;
-                document.getElementById('hazirDurum').innerText = 'HazÄ±r';
+                document.getElementById('hazirDurum').innerText = 'Hazır';
                 document.getElementById('hazirDurum').className = 'text-xs font-bold text-green-700';
                 document.getElementById('yazdirBtn').classList.remove('hidden');
             } catch (e) {
-                alert(e.message || 'Belge hazÄ±rlanamadÄ±.');
+                alert(e.message || 'Belge hazırlanamadı.');
             }
         }
 
@@ -479,7 +479,7 @@
                 <html>
                     <head>
 <script src="config.js"></script>
-                        <title>Tutanak YazdÄ±r</title>
+                        <title>Tutanak Yazdır</title>
                         <style>
                             body { background: #f3f4f6; padding: 24px; }
                             .doc-sheet {

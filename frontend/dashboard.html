@@ -59,8 +59,8 @@
         <section class="panel p-4 lg:p-5">
             <div class="flex items-end justify-between gap-4">
                 <div class="border-l-4 border-red-600 pl-4 py-1">
-                    <h2 class="text-2xl lg:text-3xl font-black text-slate-900 uppercase tracking-tight">Genel Takip EkranÄ±</h2>
-                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Kritik Durum OdaklÄ± YÃ¶netim</p>
+                    <h2 class="text-2xl lg:text-3xl font-black text-slate-900 uppercase tracking-tight">Genel Takip Ekranı</h2>
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Kritik Durum Odaklı Yönetim</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button id="btnYenile" onclick="yenile()" class="chip bg-slate-900 text-white border-slate-900 flex items-center gap-1">
@@ -72,27 +72,27 @@
         </section>
 
         <section class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-3">
-            <div onclick="detayAc('kpi_aktif')" class="panel p-4 border-green-200 border-2 clickable"><p class="text-[10px] font-black text-green-700 uppercase">Aktif AraÃ§</p><p id="kpi_aktif" class="text-3xl font-black mt-1 text-green-700">0</p></div>
-            <div onclick="detayAc('kpi_bakim')" class="panel p-4 border-yellow-200 border-2 clickable"><p class="text-[10px] font-black text-yellow-700 uppercase">BakÄ±mdaki AraÃ§lar</p><p id="kpi_bakim" class="text-3xl font-black mt-1 text-yellow-700">0</p></div>
-            <div onclick="detayAc('kpi_arizali')" class="panel p-4 border-red-200 border-2 clickable"><p class="text-[10px] font-black text-red-600 uppercase">ArÄ±zalÄ± AraÃ§lar</p><p id="kpi_arizali" class="text-3xl font-black mt-1 text-red-700">0</p></div>
-            <div onclick="detayAc('kpi_pasif')" class="panel p-4 border-slate-300 border-2 clickable"><p class="text-[10px] font-black text-slate-600 uppercase">Pasif AraÃ§lar</p><p id="kpi_pasif" class="text-3xl font-black mt-1 text-slate-700">0</p></div>
+            <div onclick="detayAc('kpi_aktif')" class="panel p-4 border-green-200 border-2 clickable"><p class="text-[10px] font-black text-green-700 uppercase">Aktif Araç</p><p id="kpi_aktif" class="text-3xl font-black mt-1 text-green-700">0</p></div>
+            <div onclick="detayAc('kpi_bakim')" class="panel p-4 border-yellow-200 border-2 clickable"><p class="text-[10px] font-black text-yellow-700 uppercase">Bakımdaki Araçlar</p><p id="kpi_bakim" class="text-3xl font-black mt-1 text-yellow-700">0</p></div>
+            <div onclick="detayAc('kpi_arizali')" class="panel p-4 border-red-200 border-2 clickable"><p class="text-[10px] font-black text-red-600 uppercase">Arızalı Araçlar</p><p id="kpi_arizali" class="text-3xl font-black mt-1 text-red-700">0</p></div>
+            <div onclick="detayAc('kpi_pasif')" class="panel p-4 border-slate-300 border-2 clickable"><p class="text-[10px] font-black text-slate-600 uppercase">Pasif Araçlar</p><p id="kpi_pasif" class="text-3xl font-black mt-1 text-slate-700">0</p></div>
             <div onclick="detayAc('kpi_kritik')" class="panel p-4 border-yellow-200 border-2 clickable"><p class="text-[10px] font-black text-yellow-700 uppercase">Kritik Stok</p><p id="kpi_kritik" class="text-3xl font-black mt-1 text-yellow-700">0</p></div>
-            <div onclick="detayAc('kpi_24')" class="panel p-4 clickable"><p class="text-[10px] font-black text-slate-500 uppercase">Son 24 Saat Ä°ÅŸlem</p><p id="kpi_24" class="text-3xl font-black mt-1">0</p></div>
+            <div onclick="detayAc('kpi_24')" class="panel p-4 clickable"><p class="text-[10px] font-black text-slate-500 uppercase">Son 24 Saat İşlem</p><p id="kpi_24" class="text-3xl font-black mt-1">0</p></div>
         </section>
 
         <section class="grid grid-cols-1 xl:grid-cols-12 gap-4 h-full overflow-hidden">
             <div class="panel p-4 xl:col-span-7 overflow-hidden">
                 <div class="flex items-center justify-between mb-3">
                     <h3 class="text-sm font-black uppercase tracking-widest text-slate-500">Kritik Durumlar</h3>
-                    <span id="uyariToplam" class="text-xs font-black text-red-600">0 Kritik UyarÄ±</span>
+                    <span id="uyariToplam" class="text-xs font-black text-red-600">0 Kritik Uyarı</span>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 h-[calc(100%-36px)] overflow-hidden">
                     <div onclick="detayAc('muayene')" class="border border-amber-200 rounded-xl p-3 bg-amber-50/60 overflow-auto clickable">
-                        <p class="text-[11px] font-black uppercase text-amber-700 mb-2">Muayenesi YaklaÅŸan</p>
+                        <p class="text-[11px] font-black uppercase text-amber-700 mb-2">Muayenesi Yaklaşan</p>
                         <div id="u_muayene" class="space-y-2"></div>
                     </div>
                     <div onclick="detayAc('ariza')" class="border border-red-200 rounded-xl p-3 bg-red-50/60 overflow-auto clickable">
-                        <p class="text-[11px] font-black uppercase text-red-700 mb-2">ArÄ±zalÄ± AraÃ§lar</p>
+                        <p class="text-[11px] font-black uppercase text-red-700 mb-2">Arızalı Araçlar</p>
                         <div id="u_ariza" class="space-y-2"></div>
                     </div>
                     <div onclick="detayAc('stok')" class="border border-yellow-200 rounded-xl p-3 bg-yellow-50/70 overflow-auto clickable">
@@ -107,17 +107,17 @@
             </div>
 
             <div class="panel p-4 xl:col-span-5 overflow-hidden grid grid-rows-[auto_auto_1fr] gap-3">
-                <h3 class="text-sm font-black uppercase tracking-widest text-slate-500">HÄ±zlÄ± Ä°ÅŸlemler</h3>
+                <h3 class="text-sm font-black uppercase tracking-widest text-slate-500">Hızlı İşlemler</h3>
                 <div class="grid grid-cols-2 gap-2">
-                    <button onclick="git('arac-yonetimi.html')" class="text-left border border-slate-200 rounded-xl px-4 py-3 font-bold hover:bg-slate-50">+ Yeni AraÃ§ Ekle</button>
-                    <button onclick="git('istasyon-yonetimi.html')" class="text-left border border-slate-200 rounded-xl px-4 py-3 font-bold hover:bg-slate-50">+ Yeni Ä°stasyon Ekle</button>
+                    <button onclick="git('arac-yonetimi.html')" class="text-left border border-slate-200 rounded-xl px-4 py-3 font-bold hover:bg-slate-50">+ Yeni Araç Ekle</button>
+                    <button onclick="git('istasyon-yonetimi.html')" class="text-left border border-slate-200 rounded-xl px-4 py-3 font-bold hover:bg-slate-50">+ Yeni İstasyon Ekle</button>
                     <button onclick="git('personel-yonetimi.html')" class="text-left border border-slate-200 rounded-xl px-4 py-3 font-bold hover:bg-slate-50">+ Personel Ekle</button>
-                    <button onclick="git('tutanak.html')" class="text-left border border-slate-200 rounded-xl px-4 py-3 font-bold hover:bg-slate-50">+ Tutanak OluÅŸtur</button>
+                    <button onclick="git('tutanak.html')" class="text-left border border-slate-200 rounded-xl px-4 py-3 font-bold hover:bg-slate-50">+ Tutanak Oluştur</button>
                 </div>
 
                 <div class="border border-slate-200 rounded-xl overflow-hidden">
                     <div class="px-4 py-3 bg-slate-50 border-b border-slate-200">
-                        <p class="text-[11px] font-black uppercase tracking-widest text-slate-600">Son Ä°ÅŸlemler (Son 10)</p>
+                        <p class="text-[11px] font-black uppercase tracking-widest text-slate-600">Son İşlemler (Son 10)</p>
                     </div>
                     <div id="logRows" class="max-h-[260px] overflow-y-auto divide-y divide-slate-100 text-sm"></div>
                 </div>
@@ -129,20 +129,20 @@
         <div class="max-w-xl mx-auto mt-12 panel p-5">
             <div class="flex items-center justify-between mb-3">
                 <h4 id="detayBaslik" class="text-sm font-black uppercase tracking-widest text-slate-600">Detay</h4>
-                <button onclick="detayKapat()" class="text-xl text-slate-500 hover:text-slate-900">Ã—</button>
+                <button onclick="detayKapat()" class="text-xl text-slate-500 hover:text-slate-900">×</button>
             </div>
             <div id="detayIcerik" class="max-h-[55vh] overflow-y-auto space-y-2 text-sm"></div>
         </div>
     </div>
 
     <div id="aracOverlay" class="hidden fixed inset-0 z-[60] bg-slate-900/40">
-        <iframe id="aracOverlayFrame" class="w-full h-full bg-transparent" title="AraÃ§ KayÄ±t Paneli"></iframe>
+        <iframe id="aracOverlayFrame" class="w-full h-full bg-transparent" title="Araç Kayıt Paneli"></iframe>
     </div>
 
     <script>
         let days = 7;
         let tumData = null;
-        let aracDurumCache = { Aktif: null, 'BakÄ±mda': null, 'Pasif': null };
+        let aracDurumCache = { Aktif: null, 'Bakımda': null, 'Pasif': null };
 
         function parseDurumlar(value) {
             const liste = Array.isArray(value)
@@ -151,19 +151,19 @@
 
             const secenekler = [
                 { key: 'aktif', label: 'Aktif' },
-                { key: 'bakimda', label: 'BakÄ±mda' },
-                { key: 'arizali', label: 'ArÄ±zalÄ±' },
+                { key: 'bakimda', label: 'Bakımda' },
+                { key: 'arizali', label: 'Arızalı' },
                 { key: 'pasif', label: 'Pasif' }
             ];
             const normalizeDurumAnahtari = (v) => String(v || '')
                 .trim()
                 .toLocaleLowerCase('tr')
-                .replaceAll('Ä±', 'i')
-                .replaceAll('ÄŸ', 'g')
-                .replaceAll('Ã¼', 'u')
-                .replaceAll('ÅŸ', 's')
-                .replaceAll('Ã¶', 'o')
-                .replaceAll('Ã§', 'c');
+                .replaceAll('ı', 'i')
+                .replaceAll('ğ', 'g')
+                .replaceAll('ü', 'u')
+                .replaceAll('ş', 's')
+                .replaceAll('ö', 'o')
+                .replaceAll('ç', 'c');
             return secenekler
                 .filter((durum) =>
                     liste.some((x) => {
@@ -189,11 +189,11 @@
         function etiketHedef(log) {
             const tablo = log?.hedef_tablo || '-';
             const map = {
-                'tbl_araclar': 'AraÃ§lar',
-                'tbl_istasyonlar': 'Ä°stasyonlar',
+                'tbl_araclar': 'Araçlar',
+                'tbl_istasyonlar': 'İstasyonlar',
                 'tbl_personeller': 'Personeller',
-                'tbl_arac_kayitlari': 'AraÃ§ KayÄ±tlarÄ±',
-                'tbl_islem_loglari': 'Ä°ÅŸlem LoglarÄ±'
+                'tbl_arac_kayitlari': 'Araç Kayıtları',
+                'tbl_islem_loglari': 'İşlem Logları'
             };
             const ad = map[tablo] || tablo;
             return log?.hedef_id ? `${ad} #${log.hedef_id}` : ad;
@@ -270,7 +270,7 @@
             const safeDetay = escapeHtml(detayText || '');
             const jsPlaka = jsStrEscape(plaka);
 
-            return `<button type="button" onclick="aracKayitPanelineGit('${jsPlaka}')" class="w-full text-left px-3 py-2 rounded-lg border font-semibold ${cls} hover:brightness-95 transition">${safePlaka}${safeDetay ? ` <span class="text-[11px] opacity-80">â€¢ ${safeDetay}</span>` : ''}</button>`;
+            return `<button type="button" onclick="aracKayitPanelineGit('${jsPlaka}')" class="w-full text-left px-3 py-2 rounded-lg border font-semibold ${cls} hover:brightness-95 transition">${safePlaka}${safeDetay ? ` <span class="text-[11px] opacity-80">• ${safeDetay}</span>` : ''}</button>`;
         }
 
         async function detayAc(tip) {
@@ -282,68 +282,68 @@
             let satirlarHtml = [];
 
             if (tip === 'muayene') {
-                baslik = 'Muayenesi YaklaÅŸan AraÃ§lar';
-                satirlarHtml = (a.muayeneYaklasan || []).map((x) => aracSatiriHtml(x.plaka, `${x.istasyon_adi} â€¢ ${x.kalan_gun} gÃ¼n`, 'amber'));
+                baslik = 'Muayenesi Yaklaşan Araçlar';
+                satirlarHtml = (a.muayeneYaklasan || []).map((x) => aracSatiriHtml(x.plaka, `${x.istasyon_adi} • ${x.kalan_gun} gün`, 'amber'));
             } else if (tip === 'ariza' || tip === 'kpi_arizali') {
-                baslik = 'ArÄ±zalÄ± AraÃ§lar';
+                baslik = 'Arızalı Araçlar';
                 satirlarHtml = (a.arizaliAktif || []).map((x) => aracSatiriHtml(x.plaka, x.istasyon_adi, 'red'));
             } else if (tip === 'stok' || tip === 'kpi_kritik') {
                 baslik = 'Kritik Stok Kalemleri';
-                satirlarHtml = (a.kritikStoklar || []).map((x) => `<div class="px-3 py-2 rounded-lg bg-yellow-50 border border-yellow-200 font-semibold text-yellow-800">${escapeHtml(x.malzeme_adi)} â€¢ ${Number(x.mevcut_stok || 0)}/${Number(x.kritik_esik || 0)}</div>`);
+                satirlarHtml = (a.kritikStoklar || []).map((x) => `<div class="px-3 py-2 rounded-lg bg-yellow-50 border border-yellow-200 font-semibold text-yellow-800">${escapeHtml(x.malzeme_adi)} • ${Number(x.mevcut_stok || 0)}/${Number(x.kritik_esik || 0)}</div>`);
             } else if (tip === 'eksik') {
-                baslik = 'Eksik Veri DurumlarÄ±';
+                baslik = 'Eksik Veri Durumları';
                 satirlarHtml = [
-                    ...(a.istasyonsuzAraclar || []).map((x) => aracSatiriHtml(x.plaka, 'Ä°stasyon bilgisi eksik', 'slate')),
+                    ...(a.istasyonsuzAraclar || []).map((x) => aracSatiriHtml(x.plaka, 'İstasyon bilgisi eksik', 'slate')),
                     ...(a.adrssizIstasyonlar || []).map((x) => `<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 font-semibold text-slate-700">Adres eksik: ${escapeHtml(x.istasyon_adi)}</div>`)
                 ];
             } else if (tip === 'kpi_aktif') {
-                baslik = 'Aktif AraÃ§lar';
+                baslik = 'Aktif Araçlar';
                 document.getElementById('detayBaslik').innerText = baslik;
-                document.getElementById('detayIcerik').innerHTML = '<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 font-semibold">AraÃ§lar yÃ¼kleniyor...</div>';
+                document.getElementById('detayIcerik').innerHTML = '<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 font-semibold">Araçlar yükleniyor...</div>';
                 document.getElementById('detayModal').classList.remove('hidden');
 
                 try {
                     const aktifAraclar = await durumdakiAraclariGetir('Aktif');
                     satirlarHtml = aktifAraclar.map((x) => aracSatiriHtml(x.plaka, x.istasyon_adi, 'slate'));
                 } catch (e) {
-                    satirlarHtml = ['<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-red-500 font-semibold">Aktif araÃ§lar alÄ±namadÄ±.</div>'];
+                    satirlarHtml = ['<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-red-500 font-semibold">Aktif araçlar alınamadı.</div>'];
                 }
             } else if (tip === 'kpi_bakim') {
-                baslik = 'BakÄ±mdaki AraÃ§lar';
+                baslik = 'Bakımdaki Araçlar';
                 document.getElementById('detayBaslik').innerText = baslik;
-                document.getElementById('detayIcerik').innerHTML = '<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 font-semibold">AraÃ§lar yÃ¼kleniyor...</div>';
+                document.getElementById('detayIcerik').innerHTML = '<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 font-semibold">Araçlar yükleniyor...</div>';
                 document.getElementById('detayModal').classList.remove('hidden');
 
                 try {
-                    const bakimdakiAraclar = await durumdakiAraclariGetir('BakÄ±mda');
+                    const bakimdakiAraclar = await durumdakiAraclariGetir('Bakımda');
                     satirlarHtml = bakimdakiAraclar.map((x) => aracSatiriHtml(x.plaka, x.istasyon_adi, 'slate'));
                 } catch (e) {
-                    satirlarHtml = ['<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-red-500 font-semibold">BakÄ±mdaki araÃ§lar alÄ±namadÄ±.</div>'];
+                    satirlarHtml = ['<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-red-500 font-semibold">Bakımdaki araçlar alınamadı.</div>'];
                 }
             } else if (tip === 'kpi_pasif') {
-                baslik = 'Pasif AraÃ§lar';
+                baslik = 'Pasif Araçlar';
                 document.getElementById('detayBaslik').innerText = baslik;
-                document.getElementById('detayIcerik').innerHTML = '<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 font-semibold">AraÃ§lar yÃ¼kleniyor...</div>';
+                document.getElementById('detayIcerik').innerHTML = '<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 font-semibold">Araçlar yükleniyor...</div>';
                 document.getElementById('detayModal').classList.remove('hidden');
 
                 try {
                     const pasifAraclar = await durumdakiAraclariGetir('Pasif');
                     satirlarHtml = pasifAraclar.map((x) => aracSatiriHtml(x.plaka, x.istasyon_adi, 'slate'));
                 } catch (e) {
-                    satirlarHtml = ['<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-red-500 font-semibold">Pasif araÃ§lar alÄ±namadÄ±.</div>'];
+                    satirlarHtml = ['<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-red-500 font-semibold">Pasif araçlar alınamadı.</div>'];
                 }
             } else if (tip === 'kpi_24') {
-                baslik = 'Son 24 Saat Ä°ÅŸlemler';
+                baslik = 'Son 24 Saat İşlemler';
                 const limit = Date.now() - (24 * 60 * 60 * 1000);
                 satirlarHtml = logs
                     .filter((l) => new Date(l.created_at).getTime() >= limit)
-                    .map((l) => `<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 font-semibold text-slate-700">${escapeHtml(l.islem_tipi || '-')} â€¢ ${escapeHtml(l.actor_ad_soyad || '-')} â€¢ ${tarihSaat(l.created_at)}</div>`);
+                    .map((l) => `<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 font-semibold text-slate-700">${escapeHtml(l.islem_tipi || '-')} • ${escapeHtml(l.actor_ad_soyad || '-')} • ${tarihSaat(l.created_at)}</div>`);
             }
 
             document.getElementById('detayBaslik').innerText = baslik;
             document.getElementById('detayIcerik').innerHTML = satirlarHtml.length
                 ? satirlarHtml.join('')
-                : '<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 font-semibold">GÃ¶sterilecek detay yok.</div>';
+                : '<div class="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 font-semibold">Gösterilecek detay yok.</div>';
             document.getElementById('detayModal').classList.remove('hidden');
         }
 
@@ -357,26 +357,26 @@
             renderItems(
                 'u_muayene',
                 muayeneList,
-                (x) => `<div class="alert-item bg-amber-100 text-amber-800">${x.plaka} <span class="text-amber-700">(${x.istasyon_adi})</span><br><span class="font-black">${x.kalan_gun} gÃ¼n kaldÄ±</span></div>`,
-                'Kritik kayÄ±t yok'
+                (x) => `<div class="alert-item bg-amber-100 text-amber-800">${x.plaka} <span class="text-amber-700">(${x.istasyon_adi})</span><br><span class="font-black">${x.kalan_gun} gün kaldı</span></div>`,
+                'Kritik kayıt yok'
             );
 
             renderItems(
                 'u_ariza',
                 arizaList,
                 (x) => `<div class="alert-item bg-red-100 text-red-800">${x.plaka} <span class="text-red-700">(${x.istasyon_adi})</span></div>`,
-                'Kritik kayÄ±t yok'
+                'Kritik kayıt yok'
             );
 
             renderItems(
                 'u_stok',
                 stokList,
-                (x) => `<div class="alert-item bg-yellow-100 text-yellow-800">${x.malzeme_adi}<br><span class="font-black">${x.mevcut_stok} / eÅŸik ${x.kritik_esik}</span></div>`,
-                'Kritik kayÄ±t yok'
+                (x) => `<div class="alert-item bg-yellow-100 text-yellow-800">${x.malzeme_adi}<br><span class="font-black">${x.mevcut_stok} / eşik ${x.kritik_esik}</span></div>`,
+                'Kritik kayıt yok'
             );
 
             const eksik = [
-                ...(a.istasyonsuzAraclar || []).slice(0, 3).map((x) => `AraÃ§ istasyonsuz: ${x.plaka}`),
+                ...(a.istasyonsuzAraclar || []).slice(0, 3).map((x) => `Araç istasyonsuz: ${x.plaka}`),
                 ...(a.adrssizIstasyonlar || []).slice(0, 3).map((x) => `Adres eksik: ${x.istasyon_adi}`)
             ];
 
@@ -388,7 +388,7 @@
             );
 
             const toplam = muayeneList.length + arizaList.length + (a.kritikStoklar || []).length + (a.istasyonsuzAraclar || []).length + (a.adrssizIstasyonlar || []).length;
-            document.getElementById('uyariToplam').innerText = `${toplam} Kritik UyarÄ±`;
+            document.getElementById('uyariToplam').innerText = `${toplam} Kritik Uyarı`;
         }
 
         function loglariCiz(data) {
@@ -402,7 +402,7 @@
                         <p class="text-xs text-slate-500">${r.actor_ad_soyad || '-'}</p>
                     </div>
                 `).join('')
-                : '<div class="px-4 py-4 text-sm text-slate-400 font-semibold">KayÄ±t yok.</div>';
+                : '<div class="px-4 py-4 text-sm text-slate-400 font-semibold">Kayıt yok.</div>';
         }
 
         function kpiCiz(data) {
@@ -435,12 +435,12 @@
                 const res = await fetch(`/api/lojistik/dashboard?days=${days}`, { cache: 'no-store' });
                 if (!res.ok) throw new Error();
                 tumData = await res.json();
-                aracDurumCache = { Aktif: null, 'BakÄ±mda': null, 'Pasif': null };
+                aracDurumCache = { Aktif: null, 'Bakımda': null, 'Pasif': null };
                 kpiCiz(tumData);
                 uyarilariCiz(tumData);
                 loglariCiz(tumData);
             } catch (e) {
-                alert('Dashboard verisi alÄ±namadÄ±.');
+                alert('Dashboard verisi alınamadı.');
             } finally {
                 if (btn) { btn.disabled = false; btn.classList.remove('opacity-70'); }
                 if (ikon) ikon.classList.remove('animate-spin');

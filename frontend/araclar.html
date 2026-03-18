@@ -14,7 +14,7 @@
         <div class="flex items-center gap-3">
             <div class="relative w-80 max-w-[50vw]">
                 <input id="aramaKutusu" oninput="aramaDegisti()" type="text" placeholder="Plaka, istasyon, durum, muayene, km..." class="w-full bg-white border border-slate-300 rounded-lg pl-10 pr-3 py-2 text-sm font-semibold text-slate-700 outline-none focus:border-slate-900">
-                <span class="absolute left-3 top-2.5 text-slate-400">ğŸ”</span>
+                <span class="absolute left-3 top-2.5 text-slate-400">ğ���</span>
             </div>
             <button id="yenileBtn" onclick="yenileTikla()" class="bg-[#1e293b] text-white px-8 py-2 rounded-lg text-sm font-bold shadow-md hover:bg-black transition uppercase tracking-widest">
                 Yenile
@@ -26,12 +26,12 @@
         <table class="w-full text-left">
             <thead class="bg-slate-50 border-b border-slate-200 text-slate-400 text-[10px] uppercase font-black tracking-widest">
                 <tr>
-                    <th onclick="siralaTikla('plaka')" class="px-6 py-5 cursor-pointer select-none">Plaka <span id="sort_plaka" class="text-slate-300">â†•</span></th>
-                    <th onclick="siralaTikla('istasyon_adi')" class="px-6 py-5 cursor-pointer select-none">Ä°stasyon <span id="sort_istasyon_adi" class="text-slate-300">â†•</span></th>
-                    <th onclick="siralaTikla('muayene_tarihi')" class="px-6 py-5 cursor-pointer select-none">Muayene Tarihi <span id="sort_muayene_tarihi" class="text-slate-300">â†•</span></th>
-                    <th onclick="siralaTikla('kilometre')" class="px-6 py-5 cursor-pointer select-none">Kilometre <span id="sort_kilometre" class="text-slate-300">â†•</span></th>
-                    <th onclick="siralaTikla('durum')" class="px-6 py-5 cursor-pointer select-none">Durum <span id="sort_durum" class="text-slate-300">â†•</span></th>
-                    <th class="px-6 py-5 text-center">Ä°ÅŸlem Bildirimi</th>
+                    <th onclick="siralaTikla('plaka')" class="px-6 py-5 cursor-pointer select-none">Plaka <span id="sort_plaka" class="text-slate-300">↕</span></th>
+                    <th onclick="siralaTikla('istasyon_adi')" class="px-6 py-5 cursor-pointer select-none">İstasyon <span id="sort_istasyon_adi" class="text-slate-300">↕</span></th>
+                    <th onclick="siralaTikla('muayene_tarihi')" class="px-6 py-5 cursor-pointer select-none">Muayene Tarihi <span id="sort_muayene_tarihi" class="text-slate-300">↕</span></th>
+                    <th onclick="siralaTikla('kilometre')" class="px-6 py-5 cursor-pointer select-none">Kilometre <span id="sort_kilometre" class="text-slate-300">↕</span></th>
+                    <th onclick="siralaTikla('durum')" class="px-6 py-5 cursor-pointer select-none">Durum <span id="sort_durum" class="text-slate-300">↕</span></th>
+                    <th class="px-6 py-5 text-center">İşlem Bildirimi</th>
                 </tr>
             </thead>
             <tbody id="aracTablosu" class="divide-y divide-slate-100 text-sm font-bold text-slate-700">
@@ -45,46 +45,46 @@
         <div class="w-full max-w-[1200px] mx-auto my-2 sm:my-4 bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden max-h-[94vh] flex flex-col">
             <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
                 <div>
-                    <h3 class="text-xl font-black text-slate-900 uppercase tracking-wide">AraÃ§ KayÄ±t Paneli</h3>
+                    <h3 class="text-xl font-black text-slate-900 uppercase tracking-wide">Araç Kayıt Paneli</h3>
                     <p id="kayitPanelBaslik" class="text-xs font-bold text-slate-500 mt-1">-</p>
                 </div>
-                <button onclick="kayitPanelKapat()" class="text-slate-500 hover:text-slate-900 text-2xl leading-none">Ã—</button>
+                <button onclick="kayitPanelKapat()" class="text-slate-500 hover:text-slate-900 text-2xl leading-none">×</button>
             </div>
 
             <div class="p-4 sm:p-6 grid grid-cols-1 xl:grid-cols-2 gap-6 overflow-y-auto">
                 <section class="space-y-4">
-                    <h4 class="text-[11px] font-black uppercase tracking-widest text-slate-500">Yeni KayÄ±t Ekle</h4>
+                    <h4 class="text-[11px] font-black uppercase tracking-widest text-slate-500">Yeni Kayıt Ekle</h4>
                     <div>
-                        <label class="text-xs font-bold text-slate-500">KayÄ±t Tipi</label>
+                        <label class="text-xs font-bold text-slate-500">Kayıt Tipi</label>
                         <select id="kayitTipi" class="mt-1 w-full border border-slate-300 rounded-xl px-4 py-3 font-bold text-slate-700 outline-none focus:border-slate-900">
-                            <option value="ariza">ArÄ±za KaydÄ±</option>
-                            <option value="kaza">Kaza KaydÄ±</option>
-                            <option value="servis">Servis KaydÄ±</option>
+                            <option value="ariza">Arıza Kaydı</option>
+                            <option value="kaza">Kaza Kaydı</option>
+                            <option value="servis">Servis Kaydı</option>
                         </select>
                     </div>
                     <div>
-                        <label class="text-xs font-bold text-slate-500">KayÄ±t Tarihi ve Saati</label>
+                        <label class="text-xs font-bold text-slate-500">Kayıt Tarihi ve Saati</label>
                         <input id="kayitTarihi" type="datetime-local" class="mt-1 w-full border border-slate-300 rounded-xl px-4 py-3 font-bold text-slate-700 outline-none focus:border-slate-900">
                     </div>
                     <div>
-                        <label class="text-xs font-bold text-slate-500">Personel SeÃ§imi</label>
-                        <button id="personelSecBtn" type="button" onclick="personelSecimToggle()" class="mt-1 w-full border border-slate-300 rounded-xl px-4 py-3 font-bold text-slate-700 text-left hover:border-slate-900 transition">Personel SeÃ§ (0)</button>
+                        <label class="text-xs font-bold text-slate-500">Personel Seçimi</label>
+                        <button id="personelSecBtn" type="button" onclick="personelSecimToggle()" class="mt-1 w-full border border-slate-300 rounded-xl px-4 py-3 font-bold text-slate-700 text-left hover:border-slate-900 transition">Personel Seç (0)</button>
                         <div id="personelSecimPanel" class="hidden mt-2 border border-slate-200 rounded-xl p-3 bg-slate-50">
                             <input id="personelArama" oninput="personelAramaDegisti()" type="text" placeholder="Ad soyad ile ara..." class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 outline-none focus:border-slate-900">
                             <div id="personelSecimListe" class="mt-2 max-h-40 overflow-y-auto bg-white border border-slate-200 rounded-lg divide-y divide-slate-100"></div>
                         </div>
-                        <p id="personelSeciliBilgi" class="mt-1 text-[11px] font-semibold text-slate-500">SeÃ§ili personel yok.</p>
+                        <p id="personelSeciliBilgi" class="mt-1 text-[11px] font-semibold text-slate-500">Seçili personel yok.</p>
                     </div>
                     <div>
-                        <label class="text-xs font-bold text-slate-500">AÃ§Ä±klama</label>
-                        <textarea id="kayitAciklama" rows="5" class="mt-1 w-full border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-700 outline-none focus:border-slate-900" placeholder="Araca dair detaylarÄ± yazÄ±n..."></textarea>
+                        <label class="text-xs font-bold text-slate-500">Açıklama</label>
+                        <textarea id="kayitAciklama" rows="5" class="mt-1 w-full border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-700 outline-none focus:border-slate-900" placeholder="Araca dair detayları yazın..."></textarea>
                     </div>
-                    <button onclick="kayitEkle()" class="w-full bg-slate-900 text-white py-3 rounded-xl font-black uppercase text-[11px] tracking-widest hover:bg-black transition">KaydÄ± Ekle</button>
+                    <button onclick="kayitEkle()" class="w-full bg-slate-900 text-white py-3 rounded-xl font-black uppercase text-[11px] tracking-widest hover:bg-black transition">Kaydı Ekle</button>
                     <p id="kayitMesaj" class="text-xs font-bold text-slate-500"></p>
                 </section>
 
                 <section>
-                    <h4 class="text-[11px] font-black uppercase tracking-widest text-slate-500 mb-4">GeÃ§miÅŸ KayÄ±tlar</h4>
+                    <h4 class="text-[11px] font-black uppercase tracking-widest text-slate-500 mb-4">Geçmiş Kayıtlar</h4>
                     <div class="border border-slate-200 rounded-xl overflow-auto max-h-[56vh]">
                         <table class="w-full min-w-[760px] text-left">
                             <thead class="bg-slate-50 text-[10px] uppercase tracking-widest text-slate-400 font-black">
@@ -93,8 +93,8 @@
                                     <th class="px-4 py-3">Tip</th>
                                     <th class="px-4 py-3">Giren Personel</th>
                                     <th class="px-4 py-3">Personeller</th>
-                                    <th class="px-4 py-3">AÃ§Ä±klama</th>
-                                    <th class="px-4 py-3 text-right">Ä°ÅŸlem</th>
+                                    <th class="px-4 py-3">Açıklama</th>
+                                    <th class="px-4 py-3 text-right">İşlem</th>
                                 </tr>
                             </thead>
                             <tbody id="kayitGecmisi" class="divide-y divide-slate-100 text-sm text-slate-700"></tbody>
@@ -117,8 +117,8 @@
         let aramaKelime = '';
         const DURUM_SECENEKLERI = [
             { key: 'aktif', label: 'Aktif' },
-            { key: 'bakimda', label: 'BakÄ±mda' },
-            { key: 'arizali', label: 'ArÄ±zalÄ±' },
+            { key: 'bakimda', label: 'Bakımda' },
+            { key: 'arizali', label: 'Arızalı' },
             { key: 'pasif', label: 'Pasif' }
         ];
         const pageParams = new URLSearchParams(window.location.search || '');
@@ -167,7 +167,7 @@
         }
 
         function kayitTipiEtiket(tip) {
-            if (tip === 'ariza') return 'ArÄ±za';
+            if (tip === 'ariza') return 'Arıza';
             if (tip === 'kaza') return 'Kaza';
             if (tip === 'servis') return 'Servis';
             return tip || '-';
@@ -185,7 +185,7 @@
         function getCurrentTier() {
             const user = getCurrentUser();
             if (!user) return 'personel';
-            if (user.rol === 'SÃ¼per Admin') return 'root';
+            if (user.rol === 'Süper Admin') return 'root';
             const tier = (user.perm?.yonetimSeviyesi || 'personel').toString().toLowerCase();
             return ['root', 'mudur', 'yetkili', 'personel'].includes(tier) ? tier : 'personel';
         }
@@ -207,11 +207,11 @@
             const secilenler = yonetilenPersoneller.filter((p) => seciliPersonelIdleri.includes(Number(p.id)));
             const btn = document.getElementById('personelSecBtn');
             const bilgi = document.getElementById('personelSeciliBilgi');
-            if (btn) btn.innerText = `Personel SeÃ§ (${secilenler.length})`;
+            if (btn) btn.innerText = `Personel Seç (${secilenler.length})`;
             if (bilgi) {
                 bilgi.innerText = secilenler.length
                     ? secilenler.map((p) => p.ad_soyad).join(', ')
-                    : 'SeÃ§ili personel yok.';
+                    : 'Seçili personel yok.';
             }
         }
 
@@ -225,7 +225,7 @@
                 : yonetilenPersoneller;
 
             if (!filtreli.length) {
-                liste.innerHTML = '<p class="px-3 py-3 text-xs font-semibold text-slate-400">Personel bulunamadÄ±.</p>';
+                liste.innerHTML = '<p class="px-3 py-3 text-xs font-semibold text-slate-400">Personel bulunamadı.</p>';
                 return;
             }
 
@@ -309,12 +309,12 @@
             return String(value || '')
                 .trim()
                 .toLocaleLowerCase('tr')
-                .replaceAll('Ä±', 'i')
-                .replaceAll('ÄŸ', 'g')
-                .replaceAll('Ã¼', 'u')
-                .replaceAll('ÅŸ', 's')
-                .replaceAll('Ã¶', 'o')
-                .replaceAll('Ã§', 'c');
+                .replaceAll('ı', 'i')
+                .replaceAll('ğ', 'g')
+                .replaceAll('ü', 'u')
+                .replaceAll('ş', 's')
+                .replaceAll('ö', 'o')
+                .replaceAll('ç', 'c');
         }
 
         function parseDurumlar(value) {
@@ -350,7 +350,7 @@
                 ? 'border-current bg-white/70 text-current'
                 : 'border-slate-300 text-transparent';
 
-            return `<button type="button" onclick="durumSec(${id}, '${secenek.key}')" data-durum="${secenek.key}" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-black tracking-widest transition-all ${butonSinif}"><span class="inline-flex items-center justify-center w-4 h-4 rounded-full border text-[10px] leading-none ${ikonSinif}">âœ“</span><span>${durumEtiketi(secenek.key).toLocaleUpperCase('tr')}</span></button>`;
+            return `<button type="button" onclick="durumSec(${id}, '${secenek.key}')" data-durum="${secenek.key}" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-black tracking-widest transition-all ${butonSinif}"><span class="inline-flex items-center justify-center w-4 h-4 rounded-full border text-[10px] leading-none ${ikonSinif}">✓</span><span>${durumEtiketi(secenek.key).toLocaleUpperCase('tr')}</span></button>`;
         }
 
         function durumSecenekleriHtml(id, aktifDurumlar) {
@@ -426,10 +426,10 @@
                 const el = document.getElementById(`sort_${k}`);
                 if (!el) return;
                 if (sortState.alan === k) {
-                    el.innerText = sortState.yon === 'asc' ? 'â†‘' : 'â†“';
+                    el.innerText = sortState.yon === 'asc' ? '↑' : '↓';
                     el.className = 'text-slate-700';
                 } else {
-                    el.innerText = 'â†•';
+                    el.innerText = '↕';
                     el.className = 'text-slate-300';
                 }
             });
@@ -482,7 +482,7 @@
                 const mevcutNorm = normalizeIstasyon(mevcutIstasyon);
                 const seciliOption = mevcutIstasyon
                     ? `<option value="${mevcutIstasyon}" selected>${mevcutIstasyon}</option>`
-                    : '<option value="" selected>Ä°stasyon SeÃ§ilmedi</option>';
+                    : '<option value="" selected>İstasyon Seçilmedi</option>';
 
                 const digerOptions = tumIstasyonlar
                     .filter(i => normalizeIstasyon(i.istasyon_adi) !== mevcutNorm)
@@ -506,7 +506,7 @@
                         <td class="px-6 py-5 text-slate-500 text-xs font-black">${muayene}</td>
                         <td class="px-6 py-5 flex items-center space-x-2">
                             <span id="km-text-${arac.id}">${Number(arac.kilometre || 0).toLocaleString()} KM</span>
-                            <button onclick="kmSor(${arac.id}, ${Number(arac.kilometre || 0)})" class="text-slate-300 hover:text-blue-500 transition">âœ</button>
+                            <button onclick="kmSor(${arac.id}, ${Number(arac.kilometre || 0)})" class="text-slate-300 hover:text-blue-500 transition">�</button>
                         </td>
                         <td class="px-6 py-5">
                             <input id="dur-${arac.id}" type="hidden" value="${escapeHtml(serializeDurumlar(arac.durum || ''))}">
@@ -515,7 +515,7 @@
                             </div>
                         </td>
                         <td class="px-6 py-5 text-center">
-                            <span id="bildirim-${arac.id}" class="text-[10px] text-slate-300 italic font-medium">HazÄ±r</span>
+                            <span id="bildirim-${arac.id}" class="text-[10px] text-slate-300 italic font-medium">Hazır</span>
                         </td>
                     </tr>`;
             });
@@ -577,7 +577,7 @@
 
             const eskiMetin = btn.innerText;
             btn.disabled = true;
-            btn.innerText = 'YÃ¼kleniyor...';
+            btn.innerText = 'Yükleniyor...';
             btn.classList.add('opacity-70', 'cursor-not-allowed');
 
             try {
@@ -590,7 +590,7 @@
         }
 
         async function kmSor(id, eskikm) {
-            const yeni = prompt("GÃ¼ncel Kilometre Girin:", eskikm);
+            const yeni = prompt("Güncel Kilometre Girin:", eskikm);
             if(yeni !== null && yeni !== "" && !isNaN(yeni)) {
                 const kmText = document.getElementById(`km-text-${id}`);
                 if (kmText) kmText.innerText = `${Number(yeni).toLocaleString()} KM`;
@@ -633,10 +633,10 @@
                         localStorage.setItem('lojistik_dashboard_refresh', String(Date.now()));
                     } catch (e) {}
 
-                    bildirim.innerText = "âœ“ GÃœNCELLENDÄ°";
+                    bildirim.innerText = "✓ GÜNCELLENDİ";
                     bildirim.className = "text-[10px] text-green-600 font-black tracking-tighter";
                     
-                    // 2 saniye sonra tabloyu yenile ve bildirimi sÄ±fÄ±rla
+                    // 2 saniye sonra tabloyu yenile ve bildirimi sıfırla
                     setTimeout(() => {
                         araclariYukle();
                     }, 1500);
@@ -649,14 +649,14 @@
                     if (input) input.value = oncekiDurum;
                     guncelleDurumSecenekleri(id, oncekiDurum);
                 }
-                bildirim.innerText = "âœ• HATA OLUÅTU";
+                bildirim.innerText = "✕ HATA OLU�TU";
                 bildirim.className = "text-[10px] text-red-600 font-black";
             }
         }
 
         function kayitPanelAc(arac) {
             aktifKayitArac = arac;
-            document.getElementById('kayitPanelBaslik').innerText = `${arac.plaka} | ${arac.istasyon_adi || 'Ä°stasyon Belirtilmedi'}`;
+            document.getElementById('kayitPanelBaslik').innerText = `${arac.plaka} | ${arac.istasyon_adi || 'İstasyon Belirtilmedi'}`;
             document.getElementById('kayitTarihi').value = nowDateTimeLocal();
             document.getElementById('kayitAciklama').value = '';
             document.getElementById('kayitMesaj').innerText = '';
@@ -683,14 +683,14 @@
         async function kayitGecmisiYukle() {
             if (!aktifKayitArac) return;
             const tbody = document.getElementById('kayitGecmisi');
-            tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-slate-400 text-xs">YÃ¼kleniyor...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-slate-400 text-xs">Yükleniyor...</td></tr>';
             try {
                 const res = await fetch(`/api/lojistik/arac-kayitlari/${aktifKayitArac.id}?t=${Date.now()}`, { cache: 'no-store' });
                 const kayitlar = await res.json();
                 if (!res.ok) throw new Error();
 
                 if (!kayitlar.length) {
-                    tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-slate-400 text-xs">KayÄ±t bulunamadÄ±.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-slate-400 text-xs">Kayıt bulunamadı.</td></tr>';
                     return;
                 }
 
@@ -699,7 +699,7 @@
                 kayitlar.forEach(k => {
                     const islemButtons = isAuthorized
                         ? `<div class="flex justify-end gap-2">
-                                <button onclick="kayitDuzenle(${k.id})" class="text-[10px] font-black uppercase px-2 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">DÃ¼zenle</button>
+                                <button onclick="kayitDuzenle(${k.id})" class="text-[10px] font-black uppercase px-2 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Düzenle</button>
                                 <button onclick="kayitSil(${k.id})" class="text-[10px] font-black uppercase px-2 py-1 rounded-full bg-red-50 text-red-700 border border-red-200">Sil</button>
                            </div>`
                         : '<span class="text-[10px] text-slate-300">-</span>';
@@ -724,24 +724,24 @@
                         </tr>`;
                 });
             } catch (e) {
-                tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-red-500 text-xs">GeÃ§miÅŸ kayÄ±tlar yÃ¼klenemedi.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-red-500 text-xs">Geçmiş kayıtlar yüklenemedi.</td></tr>';
             }
         }
 
         async function kayitDuzenle(kayitId) {
             if (!canEditDeleteKayit()) {
-                alert('Bu iÅŸlem iÃ§in yetkiniz yoktur.');
+                alert('Bu işlem için yetkiniz yoktur.');
                 return;
             }
 
-            const onay = confirm('DÃœZENLEME iÅŸlemi loglara kaydedilecektir. Devam etmek istiyor musunuz?');
+            const onay = confirm('DÜZENLEME işlemi loglara kaydedilecektir. Devam etmek istiyor musunuz?');
             if (!onay) return;
 
-            const tip = prompt('KayÄ±t tipi girin (ariza/kaza/servis):', 'ariza');
+            const tip = prompt('Kayıt tipi girin (ariza/kaza/servis):', 'ariza');
             if (!tip) return;
-            const tarih = prompt('KayÄ±t tarihi ve saati girin (YYYY-MM-DD HH:mm):', nowDateTimeLocal().replace('T', ' '));
+            const tarih = prompt('Kayıt tarihi ve saati girin (YYYY-MM-DD HH:mm):', nowDateTimeLocal().replace('T', ' '));
             if (!tarih) return;
-            const aciklama = prompt('Yeni aÃ§Ä±klama girin:');
+            const aciklama = prompt('Yeni açıklama girin:');
             if (!aciklama) return;
 
             try {
@@ -751,20 +751,20 @@
                     body: JSON.stringify({ kayit_tipi: tip.toLowerCase(), kayit_tarihi: tarih, aciklama, actor: getActorPayload() })
                 });
                 const data = await res.json();
-                if (!res.ok) throw new Error(data.mesaj || 'KayÄ±t gÃ¼ncellenemedi.');
+                if (!res.ok) throw new Error(data.mesaj || 'Kayıt güncellenemedi.');
                 await kayitGecmisiYukle();
             } catch (e) {
-                alert('KayÄ±t gÃ¼ncellenemedi.');
+                alert('Kayıt güncellenemedi.');
             }
         }
 
         async function kayitSil(kayitId) {
             if (!canEditDeleteKayit()) {
-                alert('Bu iÅŸlem iÃ§in yetkiniz yoktur.');
+                alert('Bu işlem için yetkiniz yoktur.');
                 return;
             }
 
-            const onay = confirm('SÄ°LME iÅŸlemi loglara kaydedilecektir. Devam etmek istiyor musunuz?');
+            const onay = confirm('SİLME işlemi loglara kaydedilecektir. Devam etmek istiyor musunuz?');
             if (!onay) return;
 
             try {
@@ -774,10 +774,10 @@
                     body: JSON.stringify({ actor: getActorPayload() })
                 });
                 const data = await res.json();
-                if (!res.ok) throw new Error(data.mesaj || 'KayÄ±t silinemedi.');
+                if (!res.ok) throw new Error(data.mesaj || 'Kayıt silinemedi.');
                 await kayitGecmisiYukle();
             } catch (e) {
-                alert('KayÄ±t silinemedi.');
+                alert('Kayıt silinemedi.');
             }
         }
 
@@ -797,13 +797,13 @@
                 .join('\n');
             if (!selected_personel_adlari) {
                 const infoText = (document.getElementById('personelSeciliBilgi')?.innerText || '').trim();
-                if (infoText && infoText !== 'SeÃ§ili personel yok.') selected_personel_adlari = infoText.replace(/\s*,\s*/g, '\n');
+                if (infoText && infoText !== 'Seçili personel yok.') selected_personel_adlari = infoText.replace(/\s*,\s*/g, '\n');
             }
             const mesaj = document.getElementById('kayitMesaj');
             const actor = getActorPayload();
 
             if (!kayit_tipi || !kayit_tarihi || !aciklama) {
-                mesaj.innerText = 'LÃ¼tfen tÃ¼m alanlarÄ± doldurun.';
+                mesaj.innerText = 'Lütfen tüm alanları doldurun.';
                 mesaj.className = 'text-xs font-bold text-red-600';
                 return;
             }
@@ -825,16 +825,16 @@
                     })
                 });
                 const data = await res.json();
-                if (!res.ok) throw new Error(data.mesaj || 'KayÄ±t eklenemedi.');
+                if (!res.ok) throw new Error(data.mesaj || 'Kayıt eklenemedi.');
 
-                mesaj.innerText = 'KayÄ±t baÅŸarÄ±yla eklendi.';
+                mesaj.innerText = 'Kayıt başarıyla eklendi.';
                 mesaj.className = 'text-xs font-bold text-green-600';
                 document.getElementById('kayitAciklama').value = '';
                 seciliPersonelIdleri = [];
                 seciliPersonelGuncelle();
                 await kayitGecmisiYukle();
             } catch (e) {
-                mesaj.innerText = 'KayÄ±t eklenemedi.';
+                mesaj.innerText = 'Kayıt eklenemedi.';
                 mesaj.className = 'text-xs font-bold text-red-600';
             }
         }
