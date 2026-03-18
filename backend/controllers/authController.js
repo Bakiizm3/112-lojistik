@@ -63,7 +63,32 @@ function actorInfoFromRow(row) {
     };
 }
 
+async function ensurePersonelTable() {
+    try {
+        await db.query(`
+            CREATE TABLE IF NOT EXISTS tbl_personeller (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                ad_soyad VARCHAR(120) NULL,
+                tc_no VARCHAR(20) UNIQUE NOT NULL,
+                gorev VARCHAR(100) NULL,
+                istasyon_adi VARCHAR(100) NULL,
+                sifre_hash VARCHAR(255) NULL,
+                onay_durumu TINYINT(1) NOT NULL DEFAULT 1,
+                sifre_degistirmeli TINYINT(1) NOT NULL DEFAULT 0,
+                kayit_durumu VARCHAR(20) NOT NULL DEFAULT 'onayli',
+                perm_json TEXT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                INDEX idx_tc_no (tc_no),
+                INDEX idx_kayit_durumu (kayit_durumu)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        `);
+    } catch (e) {
+        console.error('ensurePersonelTable hata:', e.message);
+    }
+}
+
 async function ensureAuthColumns() {
+    await ensurePersonelTable();
     const [cols] = await db.query(
         "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='tbl_personeller'"
     );
@@ -136,7 +161,14 @@ async function ensureRootUser() {
 }
 
 // Uygulama başladığında root'u hazırla; migration gecikirse kısa aralıklarla tekrar dene.
-setTimeout(() => {
+setTimeout(async () => {
+    try {
+        await ensurePersonelTable();
+        await ensureAuthColumns();
+    } catch (e) {
+        console.error('Schema hazırlama hatası:', e.message);
+    }
+    
     ensureRootUser();
 
     let deneme = 0;
