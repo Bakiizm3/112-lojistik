@@ -356,7 +356,7 @@
             btn.disabled = true;
             spin.classList.remove('hidden');
             try {
-                const res = await fetch('/api/auth/login', {
+                const res = await fetch('https://112-lojistik-production.up.railway.app/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ tc_no, sifre })
@@ -397,4 +397,5 @@
     </script>
 </body>
 </html>
+
 

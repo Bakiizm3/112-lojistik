@@ -506,7 +506,7 @@
 
         async function personelleriYukle() {
             try {
-                const res = await fetch('/api/lojistik/personeller', { cache: 'no-store' });
+                const res = await fetch('https://112-lojistik-production.up.railway.app/api/lojistik/personeller', { cache: 'no-store' });
                 const data = await res.json();
                 if (!res.ok) throw new Error();
                 tumPersoneller = Array.isArray(data) ? data : [];
@@ -524,3 +524,4 @@
     </script>
 </body>
 </html>
+

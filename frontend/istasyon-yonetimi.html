@@ -170,7 +170,7 @@
 
         async function yukle() {
             try {
-                const res = await fetch('/api/lojistik/istasyonlar');
+                const res = await fetch('https://112-lojistik-production.up.railway.app/api/lojistik/istasyonlar');
                 if (!res.ok) throw new Error('Ä°stasyon listesi alÄ±namadÄ±.');
 
                 const data = await res.json();
@@ -252,7 +252,7 @@
                     body: JSON.stringify({istasyon_adi: ad, istasyon_adresi: adres || null, actor: getActorPayload()})
                 });
             } else {
-                res = await fetch('/api/lojistik/istasyon-ekle', {
+                res = await fetch('https://112-lojistik-production.up.railway.app/api/lojistik/istasyon-ekle', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({istasyon_adi: ad, istasyon_adresi: adres || null, actor: getActorPayload()})
@@ -317,3 +317,4 @@
     </script>
 </body>
 </html>
+

@@ -386,13 +386,13 @@
 
         async function yukle() {
             try {
-                const iRes = await fetch('/api/lojistik/istasyonlar');
+                const iRes = await fetch('https://112-lojistik-production.up.railway.app/api/lojistik/istasyonlar');
                 const istasyonlar = await iRes.json();
                 const sortedIst = [...istasyonlar].sort((a, b) => String(a.istasyon_adi || '').localeCompare(String(b.istasyon_adi || ''), 'tr'));
                 document.getElementById('istasyon').innerHTML = '<option value="">-- Ä°stasyon SeÃ§ilmedi --</option>' +
                     sortedIst.map(i => `<option value="${i.istasyon_adi}">${i.istasyon_adi}</option>`).join('');
 
-                const pRes = await fetch('/api/lojistik/personeller');
+                const pRes = await fetch('https://112-lojistik-production.up.railway.app/api/lojistik/personeller');
                 tumPersoneller = await pRes.json();
                 tabloCiz(tumPersoneller);
             } catch (error) {
@@ -456,7 +456,7 @@
                 return;
             }
 
-            const res = await fetch('/api/lojistik/personel-kaydet', {
+            const res = await fetch('https://112-lojistik-production.up.railway.app/api/lojistik/personel-kaydet', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: id || null, ad_soyad, tc_no: tc_no || null, gorev: gorev || null, istasyon_adi: istasyon_adi || null, actor: getActorPayload() })
@@ -537,7 +537,7 @@
             if (!canManagePermissions()) { alert('Bu iÅŸlem iÃ§in yetkiniz yoktur.'); return; }
             if (!confirm(`"${adSoyad}" adlÄ± personelin ÅŸifresi sÄ±fÄ±rlansÄ±n mÄ±?\nPersonel bir sonraki giriÅŸte yeni ÅŸifre belirleyecektir.`)) return;
             const actor = getCurrentUser();
-            const res = await fetch('/api/auth/sifre-sifirla', {
+            const res = await fetch('https://112-lojistik-production.up.railway.app/api/auth/sifre-sifirla', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ hedef_id: id, actor_tc_no: actor?.tc_no || '' })
@@ -646,3 +646,4 @@
     </script>
 </body>
 </html>
+
