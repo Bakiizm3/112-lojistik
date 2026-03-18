@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --page-bg: #edf2f9;
+            --ink: #1a2a42;
+            --muted: #60738f;
+            --line: #d5e0ee;
+            --panel-top: #f9fbff;
+            --panel-bottom: #eef3fa;
+            --navy: #233a5d;
+            --navy-2: #1b2f4d;
+            --red: #b91c1c;
+            --red-2: #8f1414;
+            --soft-blue: #e8effa;
+        }
+        body {
+            font-family: 'Sora', sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 0% 0%, rgba(35, 58, 93, 0.08), transparent 28%),
+                radial-gradient(circle at 100% 0%, rgba(185, 28, 28, 0.07), transparent 28%),
+                linear-gradient(180deg, #f7f9fd 0%, var(--page-bg) 100%);
+        }
+        .panel-card {
+            background: linear-gradient(160deg, var(--panel-top) 0%, var(--panel-bottom) 100%);
+            border: 1px solid var(--line);
+            box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+            border-radius: 28px;
+        }
+        .chip {
+            border: 1px solid #c7d4e8;
+            background: #f4f7fc;
+            color: #31435f;
+            transition: all .18s ease;
+        }
+        .chip.active {
+            background: linear-gradient(135deg, var(--red) 0%, var(--red-2) 100%);
+            color: #ffffff;
+            border-color: rgba(185, 28, 28, 0.32);
+            box-shadow: 0 10px 20px rgba(185, 28, 28, 0.22);
+        }
+        .row-hover:hover { background: #f5f8fd; }
+        .btn {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .10em;
+            padding: 7px 10px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            box-shadow: 0 5px 12px rgba(15, 23, 42, 0.08);
+            transition: all .16s ease;
+        }
+        .btn-approve {
+            color: #15542f;
+            background: #ddf7e8;
+            border-color: #ace7c5;
+        }
+        .btn-reject {
+            color: #8b1c2c;
+            background: #fde3e7;
+            border-color: #f4bcc4;
+        }
+        .btn-suspend {
+            color: #7a4d11;
+            background: #ffefcf;
+            border-color: #f7d798;
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 16px rgba(15, 23, 42, 0.12);
+        }
+        .status-pill {
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            border: 1px solid transparent;
+        }
+    </style>
+</head>
+<body class="p-6 lg:p-10 text-slate-900 min-h-screen">
+    <div class="max-w-[1650px] mx-auto space-y-6">
+        <section class="panel-card p-6 lg:p-7">
+            <div class="flex flex-wrap gap-4 items-end justify-between">
+                <div>
+                    <h2 class="text-3xl lg:text-4xl font-black text-slate-900 uppercase tracking-tight">Hesap Onayları</h2>
+                    <p class="text-xs font-black text-slate-600 uppercase tracking-widest mt-1">Root ve Müdür Onay Ekranı</p>
+                </div>
+                <div class="flex gap-2">
+                    <button class="chip active px-4 py-2 rounded-full text-xs font-black" data-filter="tum" onclick="durumFiltrele('tum', this)">Tümü</button>
+                    <button class="chip px-4 py-2 rounded-full text-xs font-black" data-filter="beklemede" onclick="durumFiltrele('beklemede', this)">Beklemede</button>
+                    <button class="chip px-4 py-2 rounded-full text-xs font-black" data-filter="onayli" onclick="durumFiltrele('onayli', this)">Onaylı</button>
+                    <button class="chip px-4 py-2 rounded-full text-xs font-black" data-filter="askida" onclick="durumFiltrele('askida', this)">Askıda</button>
+                    <button class="chip px-4 py-2 rounded-full text-xs font-black" data-filter="reddedildi" onclick="durumFiltrele('reddedildi', this)">Reddedildi</button>
+                </div>
+            </div>
+
+            <div class="mt-5 relative max-w-xl">
+                <input id="aramaKutusu" onkeyup="ciz()" class="w-full p-4 pl-11 rounded-2xl border border-slate-300 outline-none focus:border-slate-500 text-sm bg-white text-slate-900" placeholder="Ad Soyad veya TC ara...">
+                <span class="absolute left-4 top-4 text-slate-400 font-bold">Q</span>
+            </div>
+        </section>
+
+        <section id="uyariPaneli" class="hidden panel-card p-4 border border-rose-300 bg-rose-100/95">
+            <p class="text-sm font-black text-rose-700 tracking-wide">Bu alanı görüntüleme yetkiniz yoktur.</p>
+        </section>
+
+        <section id="listePaneli" class="panel-card overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="text-white text-[10px] font-black uppercase tracking-widest" style="background:linear-gradient(90deg,#1b2f4d 0%, #233a5d 55%, #b91c1c 100%);">
+                        <tr>
+                            <th class="px-8 py-5">Ad Soyad</th>
+                            <th class="px-8 py-5">TC</th>
+                            <th class="px-8 py-5">Durum</th>
+                            <th class="px-8 py-5">Şifre</th>
+                            <th class="px-8 py-5 text-right">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody id="liste" class="divide-y divide-blue-100 font-bold text-slate-800 bg-white"></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        let tum = [];
+        let aktifFiltre = 'tum';
+
+        function getCurrentUser() {
+            try {
+                const raw = localStorage.getItem('kullanici');
+                return raw ? JSON.parse(raw) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function getCurrentTier() {
+            const u = getCurrentUser();
+            if (!u) return 'personel';
+            if (u.rol === 'Süper Admin') return 'root';
+            const tier = (u.perm?.yonetimSeviyesi || 'personel').toString().toLowerCase();
+            return ['root', 'mudur', 'yetkili', 'personel'].includes(tier) ? tier : 'personel';
+        }
+
+        function canManageApprovals() {
+            return ['root', 'mudur'].includes(getCurrentTier());
+        }
+
+        function enforceAccess() {
+            const user = getCurrentUser();
+            if (!user) { window.location.href = 'index.html'; return false; }
+            if (!canManageApprovals()) {
+                document.getElementById('uyariPaneli').classList.remove('hidden');
+                document.getElementById('listePaneli').classList.add('hidden');
+                return false;
+            }
+            return true;
+        }
+
+        function durumChip(status) {
+            if (status === 'onayli') return '<span class="status-pill bg-green-100 text-green-800 border-green-300">Onaylı</span>';
+            if (status === 'askida') return '<span class="status-pill bg-amber-100 text-amber-800 border-amber-300">Askıda</span>';
+            if (status === 'reddedildi') return '<span class="status-pill bg-rose-100 text-rose-800 border-rose-300">Reddedildi</span>';
+            return '<span class="status-pill bg-sky-100 text-sky-800 border-sky-300">Beklemede</span>';
+        }
+
+        function sifreChip(p) {
+            return p.sifre_var
+                ? (p.sifre_degistirmeli
+                    ? '<span class="text-[9px] font-black bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full uppercase">Sıfırlandı</span>'
+                    : '<span class="text-[9px] font-black bg-green-100 text-green-700 px-2 py-0.5 rounded-full uppercase">Aktif</span>')
+                : '<span class="text-[9px] font-black bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full uppercase">Şifre Yok</span>';
+        }
+
+        function durumFiltrele(durum, btn) {
+            aktifFiltre = durum;
+            document.querySelectorAll('[data-filter]').forEach((b) => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            ciz();
+        }
+
+        function ciz() {
+            const kelime = document.getElementById('aramaKutusu').value.toLocaleLowerCase('tr').trim();
+            const tablo = document.getElementById('liste');
+            tablo.innerHTML = '';
+
+            const filtreli = tum.filter((p) => {
+                const durum = (p.kayit_durumu || (p.onay_durumu ? 'onayli' : 'beklemede')).toString().toLowerCase();
+                const durumUygun = aktifFiltre === 'tum' ? true : durum === aktifFiltre;
+                const metinUygun =
+                    (p.ad_soyad && p.ad_soyad.toLocaleLowerCase('tr').includes(kelime)) ||
+                    (p.tc_no && String(p.tc_no).toLocaleLowerCase('tr').includes(kelime));
+                return durumUygun && metinUygun;
+            });
+
+            filtreli.forEach((p) => {
+                const adSafe = (p.ad_soyad || '').replace(/'/g, '');
+                const durum = (p.kayit_durumu || (p.onay_durumu ? 'onayli' : 'beklemede')).toString().toLowerCase();
+
+                const btnOnayla = `<button onclick="durumGuncelle(${p.id}, 'onayla', '${adSafe}')" class="btn btn-approve">Onayla</button>`;
+                const btnReddet = `<button onclick="durumGuncelle(${p.id}, 'reddet', '${adSafe}')" class="btn btn-reject">Reddet</button>`;
+                const btnAskida = `<button onclick="durumGuncelle(${p.id}, 'askiya_al', '${adSafe}')" class="btn btn-suspend">Askıya Al</button>`;
+
+                let aksiyon = '';
+                if (durum === 'beklemede') aksiyon = `${btnOnayla} ${btnReddet}`;
+                else if (durum === 'onayli') aksiyon = `${btnAskida} ${btnReddet}`;
+                else if (durum === 'askida') aksiyon = `${btnOnayla} ${btnReddet}`;
+                else aksiyon = `${btnOnayla}`;
+
+                tablo.innerHTML += `
+                    <tr class="row-hover">
+                        <td class="px-8 py-5 text-sm uppercase">${p.ad_soyad || 'Belirtilmedi'}</td>
+                        <td class="px-8 py-5 text-sm">${p.tc_no || '-'}</td>
+                        <td class="px-8 py-5">${durumChip(durum)}</td>
+                        <td class="px-8 py-5">${sifreChip(p)}</td>
+                        <td class="px-8 py-5 text-right space-x-2">${aksiyon}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function durumGuncelle(id, islem, adSoyad) {
+            if (!canManageApprovals()) { alert('Bu işlem için yetkiniz yoktur.'); return; }
+            const soru = islem === 'onayla'
+                ? `"${adSoyad}" hesabı onaylansın mı?`
+                : islem === 'reddet'
+                    ? `"${adSoyad}" hesabı reddedilsin mi?`
+                    : `"${adSoyad}" hesabı askıya alınsın mı?`;
+            if (!confirm(soru)) return;
+
+            const actor = getCurrentUser();
+            const res = await fetch('http://localhost:3000/api/auth/onay-guncelle', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ hedef_id: id, islem, onay: islem === 'onayla', actor_tc_no: actor?.tc_no || '' })
+            });
+            const data = await res.json();
+            if (!res.ok) { alert(data.mesaj || 'İşlem başarısız.'); return; }
+            alert(data.mesaj);
+            await yukle();
+        }
+
+        async function yukle() {
+            try {
+                const res = await fetch('http://localhost:3000/api/lojistik/personeller');
+                tum = await res.json();
+                ciz();
+            } catch (e) {
+                alert('Liste yüklenemedi.');
+            }
+        }
+
+        window.addEventListener('load', () => {
+            if (enforceAccess()) yukle();
+        });
+    </script>
+</body>
+</html>

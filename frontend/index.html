@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konya 112 Lojistik | Sisteme Giriş</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700;800&family=Teko:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-0: #121c32;
+            --bg-1: #202b48;
+            --bg-2: #432137;
+            --card: #f7f7f8;
+            --card-soft: #eef2f7;
+            --line: #d7e0ed;
+            --text-main: #19233a;
+            --text-sub: #6a7792;
+            --accent: #1c2437;
+            --accent-2: #111827;
+            --danger: #d62828;
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Barlow', sans-serif;
+            color: var(--text-main);
+            background:
+                radial-gradient(circle at 20% 18%, rgba(106, 40, 69, 0.34), transparent 30%),
+                radial-gradient(circle at 54% 50%, rgba(77, 92, 133, 0.16), transparent 28%),
+                linear-gradient(120deg, var(--bg-2) 0%, var(--bg-1) 38%, #0d1629 100%);
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(163, 177, 214, 0.08), transparent 36%),
+                repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px 44px);
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 392px;
+            border-radius: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.38);
+            background: linear-gradient(180deg, #fbfbfc 0%, var(--card) 100%);
+            box-shadow: 0 26px 60px rgba(5, 10, 22, 0.42);
+            padding: 34px 22px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-card::before {
+            content: none;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        .logo {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 14px;
+            border-radius: 16px;
+            border: 0;
+            background: linear-gradient(180deg, #eb2f2f 0%, #c71d1d 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 24px rgba(186, 28, 28, 0.34);
+            color: #ffffff;
+            font-family: 'Teko', sans-serif;
+            font-size: 26px;
+            line-height: 1;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .institution-title {
+            margin: 0 auto 12px;
+            max-width: 290px;
+            font-size: 11px;
+            line-height: 1.45;
+            color: #7a879f;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            margin: 0 auto 0;
+            max-width: 286px;
+            color: #51607d;
+            font-size: 13px;
+            line-height: 1.6;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .hero-title {
+            margin: 0 0 4px;
+            font-size: 27px;
+            line-height: 1;
+            color: #1a243b;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+        }
+
+        #loginForm {
+            border: 0;
+            border-radius: 0;
+            padding: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .field-wrap {
+            margin-top: 13px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .field-wrap:first-child { margin-top: 0; }
+
+        .field-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #7b88a0;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .field {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: #ffffff;
+            color: #0f172a;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 12px 14px;
+            transition: border-color .2s, box-shadow .2s, transform .2s;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+        }
+
+        .field::placeholder { color: #97a7c5; }
+
+        .field:focus {
+            outline: none;
+            border-color: #aebfdc;
+            box-shadow: 0 0 0 3px rgba(210, 219, 234, 0.44);
+            transform: translateY(-1px);
+        }
+
+        .eye {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #697caa;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .eye:hover { color: #30477f; }
+
+        .primary-btn {
+            margin-top: 16px;
+            width: 100%;
+            border: 0;
+            border-radius: 14px;
+            padding: 13px;
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 8px 18px rgba(16, 24, 39, 0.24);
+            transition: transform .18s ease, filter .18s ease;
+        }
+
+        .primary-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            filter: brightness(1.06);
+        }
+
+        .primary-btn:disabled {
+            opacity: 0.75;
+            cursor: not-allowed;
+        }
+
+        .register {
+            margin-top: 12px;
+            display: none;
+        }
+
+        .security-panel {
+            margin-top: 18px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 14px;
+            text-align: center;
+        }
+
+        .security-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #a0adbf;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .security-text {
+            margin: 10px auto 0;
+            max-width: 260px;
+            font-size: 11px;
+            line-height: 1.45;
+            color: #91a0b9;
+            font-weight: 600;
+        }
+
+        .notify {
+            margin-top: 10px;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .institution-text {
+            display: none;
+        }
+
+        @media (max-width: 520px) {
+            .page {
+                padding: 14px;
+            }
+
+            .login-card {
+                max-width: 100%;
+                padding: 28px 16px 18px;
+                border-radius: 18px;
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <section class="login-card">
+            <div class="brand">
+                <div class="logo" aria-hidden="true">112</div>
+                <h1 class="hero-title">Lojistik Yönetim</h1>
+                <p class="institution-title">T.C. Konya İl Ambulans Servisi</p>
+                <p class="subtitle">Yetkili personel erişimi için kullanıcı adı veya TC kimlik numarası ile oturum açın.</p>
+            </div>
+
+            <form id="loginForm" autocomplete="off">
+                <div class="field-wrap">
+                    <label class="field-label">Kullanıcı Adı / TC No</label>
+                    <input type="text" id="tcNo" autocomplete="username" class="field" placeholder="TC Kimlik No">
+                </div>
+
+                <div class="field-wrap">
+                    <label class="field-label">Şifre</label>
+                    <div class="relative">
+                        <input type="password" id="sifre" autocomplete="current-password" class="field pr-11" placeholder="••••••••">
+                        <span onclick="sifreGoster()" class="eye">👁</span>
+                    </div>
+                </div>
+
+                <button type="submit" id="girisBtn" class="primary-btn">
+                    <svg id="spinIcon" class="hidden h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                    </svg>
+                    Sisteme Giriş Yap
+                </button>
+            </form>
+
+            <div id="uyariMesaji" class="hidden notify"></div>
+
+            <div class="security-panel">
+                <div class="security-title">Güvenli Bağlantı</div>
+                <p class="security-text">Bu sistem yalnızca yetkili personel içindir. Tüm erişimler kayıt altına alınmaktadır.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        try {
+            const k = JSON.parse(localStorage.getItem('kullanici'));
+            if (k && k.id) window.location.href = 'main.html';
+        } catch (e) {}
+
+        function sifreGoster() {
+            const s = document.getElementById('sifre');
+            s.type = s.type === 'password' ? 'text' : 'password';
+        }
+
+        function uyariGoster(mesaj, tip) {
+            const el = document.getElementById('uyariMesaji');
+            el.className = 'notify';
+            if (tip === 'basari') {
+                el.classList.add('border', 'border-emerald-200', 'bg-emerald-50', 'text-emerald-700');
+            } else {
+                el.classList.add('border', 'border-rose-200', 'bg-rose-50', 'text-rose-700');
+            }
+            el.innerText = mesaj;
+            el.classList.remove('hidden');
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const tc_no = document.getElementById('tcNo').value.trim();
+            const sifre = document.getElementById('sifre').value;
+            const btn = document.getElementById('girisBtn');
+            const spin = document.getElementById('spinIcon');
+            if (!tc_no || !sifre) {
+                uyariGoster('Kullanıcı adı ve şifre zorunludur.', 'hata');
+                return;
+            }
+            btn.disabled = true;
+            spin.classList.remove('hidden');
+            try {
+                const res = await fetch('http://localhost:3000/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tc_no, sifre })
+                });
+                const data = await res.json();
+                if (data.ilk_giris) {
+                    sessionStorage.setItem('ilk_giris_id', data.personel_id);
+                    uyariGoster('Şifrenizi henüz belirlemediniz. Yönlendiriliyorsunuz...', 'basari');
+                    setTimeout(() => { window.location.href = 'set-password.html'; }, 1200);
+                    return;
+                }
+                if (data.sifre_degistirmeli) {
+                    localStorage.setItem('token', data.token);
+                    sessionStorage.setItem('sifre_degistirmeli', '1');
+                    uyariGoster('Şifrenizi güncellemeniz gerekiyor. Yönlendiriliyorsunuz...', 'basari');
+                    setTimeout(() => { window.location.href = 'set-password.html'; }, 1200);
+                    return;
+                }
+                if (res.ok && data.token) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('kullanici', JSON.stringify(data.kullanici));
+                    uyariGoster('Giriş başarılı! Yönlendiriliyorsunuz...', 'basari');
+                    setTimeout(() => { window.location.href = 'main.html'; }, 1000);
+                } else {
+                    uyariGoster(data.mesaj || 'Giriş başarısız.', 'hata');
+                }
+            } catch (err) {
+                uyariGoster('Sunucuya bağlanılamadı. Sistemin açık olduğundan emin olun.', 'hata');
+            } finally {
+                btn.disabled = false;
+                spin.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('tcNo').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') document.getElementById('sifre').focus();
+        });
+    </script>
+</body>
+</html>

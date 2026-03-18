@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sora', sans-serif;
+            background:
+                radial-gradient(circle at 12% 8%, rgba(14, 165, 233, 0.16), transparent 36%),
+                radial-gradient(circle at 88% 10%, rgba(239, 68, 68, 0.16), transparent 34%),
+                linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+        }
+
+        .panel-card {
+            background: rgba(255, 255, 255, 0.90);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.10);
+            border-radius: 28px;
+        }
+
+        .form-chip {
+            border: 1px solid #dbe3ef;
+            background: #ffffff;
+            transition: all .22s ease;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+        }
+
+        .form-chip:focus {
+            border-color: #0f172a;
+            box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.10);
+        }
+
+        .thead-dark {
+            background: linear-gradient(90deg, #020617 0%, #1e293b 55%, #0f172a 100%);
+        }
+
+        .table-row {
+            transition: transform .18s ease, background-color .18s ease;
+        }
+
+        .table-row:hover {
+            background: #f8fafc;
+            transform: translateY(-1px);
+        }
+
+        .delete-pill {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            padding: 7px 12px;
+            border-radius: 999px;
+            color: #b91c1c;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            transition: all .18s ease;
+        }
+
+        .delete-pill:hover {
+            transform: translateY(-1px);
+            filter: brightness(.98);
+        }
+
+        .edit-pill {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            padding: 7px 12px;
+            border-radius: 999px;
+            color: #1d4ed8;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            transition: all .18s ease;
+            margin-right: 8px;
+        }
+
+        .edit-pill:hover {
+            transform: translateY(-1px);
+            filter: brightness(.98);
+        }
+
+        .edit-mode {
+            border-color: rgba(14, 116, 144, 0.45) !important;
+            box-shadow: 0 20px 50px rgba(14, 116, 144, 0.12);
+        }
+    </style>
+</head>
+<body class="p-6 lg:p-10 text-slate-800 min-h-screen">
+    <div class="max-w-5xl mx-auto space-y-6">
+        <section class="panel-card p-6 lg:p-7">
+            <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+                <div class="border-l-4 border-red-600 pl-4 py-1">
+                    <h1 class="text-3xl lg:text-4xl font-black text-slate-900 uppercase tracking-tight">İstasyon Kayıt ve Yönetim</h1>
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">İstasyon Yönetim Paneli</p>
+                </div>
+                <div class="w-full md:w-auto flex flex-col md:items-end gap-2">
+                    <div class="relative w-full md:w-80">
+                        <input type="text" id="aramaKutusu" oninput="istasyonAraDegisti()" placeholder="İstasyon ismi giriniz" class="w-full p-3 pl-10 rounded-2xl border border-slate-300 outline-none focus:border-slate-900 text-sm bg-white/95 shadow-sm font-semibold text-slate-700">
+                        <span class="absolute left-3.5 top-3 text-slate-400">🔍</span>
+                    </div>
+                    <p id="istSayaci" class="text-[11px] font-black text-slate-500 tracking-wide">Toplam İstasyon: 0</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-6 gap-4 items-end">
+                <input type="hidden" id="editIstId">
+                <div class="md:col-span-3 flex flex-col">
+                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">İstasyon İsmi *</label>
+                    <input type="text" id="istAd" placeholder="Yeni İstasyon İsmi..." class="form-chip p-4 rounded-2xl outline-none text-base font-semibold">
+                </div>
+                <div class="md:col-span-2 flex flex-col">
+                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">Adres (Opsiyonel)</label>
+                    <input type="text" id="istAdres" placeholder="Adres girin..." class="form-chip p-4 rounded-2xl outline-none text-base font-semibold">
+                </div>
+                <div class="flex gap-2">
+                    <button id="islemBtn" onclick="kaydetIstasyon()" class="w-full bg-slate-900 text-white px-8 py-4 rounded-2xl font-black shadow-lg hover:bg-black transition uppercase text-[10px] tracking-widest">EKLE</button>
+                    <button id="iptalBtn" onclick="formSifirla()" class="hidden bg-white text-slate-700 px-4 py-4 rounded-2xl font-bold transition border border-slate-300 hover:bg-slate-100">✖</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel-card overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="thead-dark text-white text-[10px] uppercase font-black tracking-widest">
+                        <tr><th onclick="siralaIstasyonTikla('istasyon_adi')" class="px-8 py-5 cursor-pointer select-none">İstasyon İsmi <span id="sort_istasyon_adi" class="text-slate-300">↕</span></th><th onclick="siralaIstasyonTikla('istasyon_adresi')" class="px-8 py-5 cursor-pointer select-none">Adres <span id="sort_istasyon_adresi" class="text-slate-300">↕</span></th><th class="px-8 py-5 text-right">Eylem</th></tr>
+                    </thead>
+                    <tbody id="liste" class="divide-y divide-slate-100 bg-white/90"></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        let tumIstasyonlar = [];
+        let istSortState = { alan: 'istasyon_adi', yon: 'asc' };
+        let istAramaKelime = '';
+
+        function getCurrentUser() {
+            try {
+                const raw = localStorage.getItem('kullanici');
+                return raw ? JSON.parse(raw) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function getCurrentTier() {
+            const user = getCurrentUser();
+            if (!user) return 'personel';
+            if (user.rol === 'Süper Admin') return 'root';
+            const tier = (user.perm?.yonetimSeviyesi || 'personel').toString().toLowerCase();
+            return ['root', 'mudur', 'yetkili', 'personel'].includes(tier) ? tier : 'personel';
+        }
+
+        function getActorPayload() {
+            const user = getCurrentUser() || {};
+            return {
+                ad_soyad: user.ad_soyad || null,
+                tc_no: user.tc_no || null,
+                seviye: getCurrentTier()
+            };
+        }
+
+        async function yukle() {
+            try {
+                const res = await fetch('http://localhost:3000/api/lojistik/istasyonlar');
+                if (!res.ok) throw new Error('İstasyon listesi alınamadı.');
+
+                const data = await res.json();
+                tumIstasyonlar = Array.isArray(data) ? data : [];
+                document.getElementById('istSayaci').innerText = `Toplam İstasyon: ${data.length}`;
+                tabloyuCiz();
+            } catch (error) {
+                alert('İstasyon listesi yüklenemedi.');
+            }
+        }
+
+        function siralaIstasyonTikla(alan) {
+            if (istSortState.alan === alan) {
+                istSortState.yon = istSortState.yon === 'asc' ? 'desc' : 'asc';
+            } else {
+                istSortState = { alan, yon: 'asc' };
+            }
+            tabloyuCiz();
+        }
+
+        function siraliIstasyonlarGetir(liste) {
+            const carpan = istSortState.yon === 'asc' ? 1 : -1;
+            return [...(liste || [])].sort((a, b) => {
+                const ai = String(a?.[istSortState.alan] || '');
+                const bi = String(b?.[istSortState.alan] || '');
+                return ai.localeCompare(bi, 'tr') * carpan;
+            });
+        }
+
+        function guncelleIstasyonSortRozeti() {
+            const alanlar = ['istasyon_adi', 'istasyon_adresi'];
+            alanlar.forEach((alan) => {
+                const el = document.getElementById(`sort_${alan}`);
+                if (!el) return;
+                if (istSortState.alan === alan) {
+                    el.innerText = istSortState.yon === 'asc' ? '↑' : '↓';
+                    el.className = 'text-white';
+                } else {
+                    el.innerText = '↕';
+                    el.className = 'text-slate-300';
+                }
+            });
+        }
+
+        function filtreliIstasyonlarGetir() {
+            const q = (istAramaKelime || '').toString().trim().toLocaleLowerCase('tr');
+            if (!q) return [...tumIstasyonlar];
+            return tumIstasyonlar.filter((i) => String(i?.istasyon_adi || '').toLocaleLowerCase('tr').includes(q));
+        }
+
+        function tabloyuCiz() {
+            const l = document.getElementById('liste');
+            l.innerHTML = '';
+            const sirali = siraliIstasyonlarGetir(filtreliIstasyonlarGetir());
+            sirali.forEach(i => {
+                const temizAd = String(i.istasyon_adi || '').replace(/'/g, "\\'");
+                const temizAdres = String(i.istasyon_adresi || '').replace(/'/g, "\\'");
+                l.innerHTML += `<tr class="table-row"><td class="px-8 py-5 text-sm font-bold text-slate-700 uppercase tracking-tight">${i.istasyon_adi}</td><td class="px-8 py-5 text-sm font-semibold text-slate-500">${i.istasyon_adresi || '-'}</td><td class="px-8 py-5 text-right"><button onclick="duzenleHazirla(${i.id}, '${temizAd}', '${temizAdres}')" class="edit-pill">DÜZENLE</button><button onclick="sil(${i.id})" class="delete-pill">SİL</button></td></tr>`;
+            });
+            guncelleIstasyonSortRozeti();
+        }
+
+        function istasyonAraDegisti() {
+            istAramaKelime = document.getElementById('aramaKutusu')?.value || '';
+            tabloyuCiz();
+        }
+
+        async function kaydetIstasyon() {
+            const editId = document.getElementById('editIstId').value;
+            const ad = document.getElementById('istAd').value.trim().toLocaleUpperCase('tr');
+            const adres = document.getElementById('istAdres').value.trim();
+            if(!ad) return;
+
+            let res;
+            if (editId) {
+                res = await fetch(`http://localhost:3000/api/lojistik/istasyon-guncelle/${editId}`, {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({istasyon_adi: ad, istasyon_adresi: adres || null, actor: getActorPayload()})
+                });
+            } else {
+                res = await fetch('http://localhost:3000/api/lojistik/istasyon-ekle', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({istasyon_adi: ad, istasyon_adresi: adres || null, actor: getActorPayload()})
+                });
+            }
+
+            const data = await res.json();
+            if (!res.ok) {
+                alert(data.mesaj || 'İşlem yapılamadı.');
+                return;
+            }
+
+            formSifirla();
+            yukle();
+        }
+
+        function duzenleHazirla(id, ad, adres) {
+            document.getElementById('editIstId').value = id;
+            document.getElementById('istAd').value = (ad || '').toLocaleUpperCase('tr');
+            document.getElementById('istAdres').value = adres || '';
+            document.getElementById('islemBtn').innerText = 'GÜNCELLE';
+            document.getElementById('iptalBtn').classList.remove('hidden');
+            document.querySelector('section.panel-card').classList.add('edit-mode');
+        }
+
+        function formSifirla() {
+            document.getElementById('editIstId').value = '';
+            document.getElementById('istAd').value = '';
+            document.getElementById('istAdres').value = '';
+            document.getElementById('islemBtn').innerText = 'EKLE';
+            document.getElementById('iptalBtn').classList.add('hidden');
+            document.querySelector('section.panel-card').classList.remove('edit-mode');
+        }
+
+        async function sil(id) {
+            if(confirm("Bu istasyonu silmek istediğinizden emin misiniz?")) {
+                const res = await fetch(`http://localhost:3000/api/lojistik/istasyon-sil/${id}`, {
+                    method:'DELETE',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ actor: getActorPayload() })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.mesaj || 'İstasyon silinemedi.');
+                    return;
+                }
+                yukle();
+            }
+        }
+
+        document.getElementById('istAd').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                kaydetIstasyon();
+            }
+        });
+
+        document.getElementById('istAd').addEventListener('input', (e) => {
+            e.target.value = e.target.value.toLocaleUpperCase('tr');
+        });
+        yukle();
+    </script>
+</body>
+</html>

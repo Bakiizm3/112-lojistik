@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white p-8 font-sans">
+    <div id="aracSayfasi">
+    <div class="flex justify-between items-center mb-8 gap-4">
+        <div class="border-l-4 border-[#cc1923] pl-4">
+            <h2 class="text-2xl font-black text-[#1e293b] uppercase tracking-tight">Konya Ambulans Filosu</h2>
+        </div>
+        <div class="flex items-center gap-3">
+            <div class="relative w-80 max-w-[50vw]">
+                <input id="aramaKutusu" oninput="aramaDegisti()" type="text" placeholder="Plaka, istasyon, durum, muayene, km..." class="w-full bg-white border border-slate-300 rounded-lg pl-10 pr-3 py-2 text-sm font-semibold text-slate-700 outline-none focus:border-slate-900">
+                <span class="absolute left-3 top-2.5 text-slate-400">🔍</span>
+            </div>
+            <button id="yenileBtn" onclick="yenileTikla()" class="bg-[#1e293b] text-white px-8 py-2 rounded-lg text-sm font-bold shadow-md hover:bg-black transition uppercase tracking-widest">
+                Yenile
+            </button>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.05)] border border-slate-100 overflow-hidden">
+        <table class="w-full text-left">
+            <thead class="bg-slate-50 border-b border-slate-200 text-slate-400 text-[10px] uppercase font-black tracking-widest">
+                <tr>
+                    <th onclick="siralaTikla('plaka')" class="px-6 py-5 cursor-pointer select-none">Plaka <span id="sort_plaka" class="text-slate-300">↕</span></th>
+                    <th onclick="siralaTikla('istasyon_adi')" class="px-6 py-5 cursor-pointer select-none">İstasyon <span id="sort_istasyon_adi" class="text-slate-300">↕</span></th>
+                    <th onclick="siralaTikla('muayene_tarihi')" class="px-6 py-5 cursor-pointer select-none">Muayene Tarihi <span id="sort_muayene_tarihi" class="text-slate-300">↕</span></th>
+                    <th onclick="siralaTikla('kilometre')" class="px-6 py-5 cursor-pointer select-none">Kilometre <span id="sort_kilometre" class="text-slate-300">↕</span></th>
+                    <th onclick="siralaTikla('durum')" class="px-6 py-5 cursor-pointer select-none">Durum <span id="sort_durum" class="text-slate-300">↕</span></th>
+                    <th class="px-6 py-5 text-center">İşlem Bildirimi</th>
+                </tr>
+            </thead>
+            <tbody id="aracTablosu" class="divide-y divide-slate-100 text-sm font-bold text-slate-700">
+            </tbody>
+        </table>
+    </div>
+
+    </div>
+
+    <div id="kayitPaneli" class="hidden fixed inset-0 z-50 bg-slate-900/50 p-2 sm:p-4 overflow-y-auto">
+        <div class="w-full max-w-[1200px] mx-auto my-2 sm:my-4 bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden max-h-[94vh] flex flex-col">
+            <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+                <div>
+                    <h3 class="text-xl font-black text-slate-900 uppercase tracking-wide">Araç Kayıt Paneli</h3>
+                    <p id="kayitPanelBaslik" class="text-xs font-bold text-slate-500 mt-1">-</p>
+                </div>
+                <button onclick="kayitPanelKapat()" class="text-slate-500 hover:text-slate-900 text-2xl leading-none">×</button>
+            </div>
+
+            <div class="p-4 sm:p-6 grid grid-cols-1 xl:grid-cols-2 gap-6 overflow-y-auto">
+                <section class="space-y-4">
+                    <h4 class="text-[11px] font-black uppercase tracking-widest text-slate-500">Yeni Kayıt Ekle</h4>
+                    <div>
+                        <label class="text-xs font-bold text-slate-500">Kayıt Tipi</label>
+                        <select id="kayitTipi" class="mt-1 w-full border border-slate-300 rounded-xl px-4 py-3 font-bold text-slate-700 outline-none focus:border-slate-900">
+                            <option value="ariza">Arıza Kaydı</option>
+                            <option value="kaza">Kaza Kaydı</option>
+                            <option value="servis">Servis Kaydı</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-slate-500">Kayıt Tarihi ve Saati</label>
+                        <input id="kayitTarihi" type="datetime-local" class="mt-1 w-full border border-slate-300 rounded-xl px-4 py-3 font-bold text-slate-700 outline-none focus:border-slate-900">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-slate-500">Personel Seçimi</label>
+                        <button id="personelSecBtn" type="button" onclick="personelSecimToggle()" class="mt-1 w-full border border-slate-300 rounded-xl px-4 py-3 font-bold text-slate-700 text-left hover:border-slate-900 transition">Personel Seç (0)</button>
+                        <div id="personelSecimPanel" class="hidden mt-2 border border-slate-200 rounded-xl p-3 bg-slate-50">
+                            <input id="personelArama" oninput="personelAramaDegisti()" type="text" placeholder="Ad soyad ile ara..." class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 outline-none focus:border-slate-900">
+                            <div id="personelSecimListe" class="mt-2 max-h-40 overflow-y-auto bg-white border border-slate-200 rounded-lg divide-y divide-slate-100"></div>
+                        </div>
+                        <p id="personelSeciliBilgi" class="mt-1 text-[11px] font-semibold text-slate-500">Seçili personel yok.</p>
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-slate-500">Açıklama</label>
+                        <textarea id="kayitAciklama" rows="5" class="mt-1 w-full border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-700 outline-none focus:border-slate-900" placeholder="Araca dair detayları yazın..."></textarea>
+                    </div>
+                    <button onclick="kayitEkle()" class="w-full bg-slate-900 text-white py-3 rounded-xl font-black uppercase text-[11px] tracking-widest hover:bg-black transition">Kaydı Ekle</button>
+                    <p id="kayitMesaj" class="text-xs font-bold text-slate-500"></p>
+                </section>
+
+                <section>
+                    <h4 class="text-[11px] font-black uppercase tracking-widest text-slate-500 mb-4">Geçmiş Kayıtlar</h4>
+                    <div class="border border-slate-200 rounded-xl overflow-auto max-h-[56vh]">
+                        <table class="w-full min-w-[760px] text-left">
+                            <thead class="bg-slate-50 text-[10px] uppercase tracking-widest text-slate-400 font-black">
+                                <tr>
+                                    <th class="px-4 py-3">Tarih - Saat</th>
+                                    <th class="px-4 py-3">Tip</th>
+                                    <th class="px-4 py-3">Giren Personel</th>
+                                    <th class="px-4 py-3">Personeller</th>
+                                    <th class="px-4 py-3">Açıklama</th>
+                                    <th class="px-4 py-3 text-right">İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody id="kayitGecmisi" class="divide-y divide-slate-100 text-sm text-slate-700"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let aktifKayitArac = null;
+        let tumAraclar = [];
+        let tumIstasyonlar = [];
+        let tumPersoneller = [];
+        let yonetilenPersoneller = [];
+        let seciliPersonelIdleri = [];
+        let personelAramaKelime = '';
+        let sortState = { alan: null, yon: null };
+        let aramaKelime = '';
+        const DURUM_SECENEKLERI = [
+            { key: 'aktif', label: 'Aktif' },
+            { key: 'bakimda', label: 'Bakımda' },
+            { key: 'arizali', label: 'Arızalı' },
+            { key: 'pasif', label: 'Pasif' }
+        ];
+        const pageParams = new URLSearchParams(window.location.search || '');
+        const dashboardModalMode = pageParams.get('dashboardModal') === '1';
+        const queryOpenPlaka = (pageParams.get('openPlaka') || '').toString().trim().toUpperCase();
+
+        function normalizeIstasyon(v) {
+            return (v || '').toString().trim().toLocaleUpperCase('tr');
+        }
+
+        function nowDateTimeLocal() {
+            const d = new Date();
+            const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+            return local.toISOString().slice(0, 16);
+        }
+
+        function formatDateTR(value) {
+            if (!value) return '-';
+            const d = new Date(value);
+            if (Number.isNaN(d.getTime())) return '-';
+            return d.toLocaleDateString('tr-TR');
+        }
+
+        function formatDateTimeTR(value) {
+            if (!value) return '-';
+            const d = new Date(value);
+            if (Number.isNaN(d.getTime())) return '-';
+            const tarih = d.toLocaleDateString('tr-TR');
+            const saat = d.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+            return `${tarih} ${saat}`;
+        }
+
+        function formatKayitDateTime(kayit) {
+            const d = new Date(kayit?.kayit_tarihi);
+            if (Number.isNaN(d.getTime())) return '-';
+            const tarih = d.toLocaleDateString('tr-TR');
+
+            let saat = d.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+            if (saat === '00:00' && kayit?.created_at) {
+                const c = new Date(kayit.created_at);
+                if (!Number.isNaN(c.getTime())) {
+                    saat = c.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+                }
+            }
+            return `${tarih} ${saat}`;
+        }
+
+        function kayitTipiEtiket(tip) {
+            if (tip === 'ariza') return 'Arıza';
+            if (tip === 'kaza') return 'Kaza';
+            if (tip === 'servis') return 'Servis';
+            return tip || '-';
+        }
+
+        function getCurrentUser() {
+            try {
+                const raw = localStorage.getItem('kullanici');
+                return raw ? JSON.parse(raw) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function getCurrentTier() {
+            const user = getCurrentUser();
+            if (!user) return 'personel';
+            if (user.rol === 'Süper Admin') return 'root';
+            const tier = (user.perm?.yonetimSeviyesi || 'personel').toString().toLowerCase();
+            return ['root', 'mudur', 'yetkili', 'personel'].includes(tier) ? tier : 'personel';
+        }
+
+        function canEditDeleteKayit() {
+            return ['root', 'mudur'].includes(getCurrentTier());
+        }
+
+        function getActorPayload() {
+            const user = getCurrentUser() || {};
+            return {
+                ad_soyad: user.ad_soyad || null,
+                tc_no: user.tc_no || null,
+                seviye: getCurrentTier()
+            };
+        }
+
+        function seciliPersonelGuncelle() {
+            const secilenler = yonetilenPersoneller.filter((p) => seciliPersonelIdleri.includes(Number(p.id)));
+            const btn = document.getElementById('personelSecBtn');
+            const bilgi = document.getElementById('personelSeciliBilgi');
+            if (btn) btn.innerText = `Personel Seç (${secilenler.length})`;
+            if (bilgi) {
+                bilgi.innerText = secilenler.length
+                    ? secilenler.map((p) => p.ad_soyad).join(', ')
+                    : 'Seçili personel yok.';
+            }
+        }
+
+        function personelSecimListeCiz() {
+            const liste = document.getElementById('personelSecimListe');
+            if (!liste) return;
+
+            const q = normalizeText(personelAramaKelime);
+            const filtreli = q
+                ? yonetilenPersoneller.filter((p) => normalizeText(p.ad_soyad).includes(q))
+                : yonetilenPersoneller;
+
+            if (!filtreli.length) {
+                liste.innerHTML = '<p class="px-3 py-3 text-xs font-semibold text-slate-400">Personel bulunamadı.</p>';
+                return;
+            }
+
+            liste.innerHTML = filtreli.map((p) => {
+                const secili = seciliPersonelIdleri.includes(Number(p.id));
+                return `
+                    <label class="flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-slate-50">
+                        <input type="checkbox" data-id="${Number(p.id)}" ${secili ? 'checked' : ''} onchange="personelSecimDegistir(${Number(p.id)}, this.checked)">
+                        <span class="text-xs font-bold text-slate-700">${p.ad_soyad || '-'}</span>
+                    </label>`;
+            }).join('');
+        }
+
+        function personelSecimToggle() {
+            const panel = document.getElementById('personelSecimPanel');
+            if (!panel) return;
+            panel.classList.toggle('hidden');
+            if (!panel.classList.contains('hidden')) personelSecimListeCiz();
+        }
+
+        function personelAramaDegisti() {
+            personelAramaKelime = document.getElementById('personelArama')?.value || '';
+            personelSecimListeCiz();
+        }
+
+        function personelSecimDegistir(id, checked) {
+            const numericId = Number(id);
+            if (!numericId) return;
+            if (checked && !seciliPersonelIdleri.includes(numericId)) {
+                seciliPersonelIdleri.push(numericId);
+            }
+            if (!checked) {
+                seciliPersonelIdleri = seciliPersonelIdleri.filter((x) => x !== numericId);
+            }
+            seciliPersonelGuncelle();
+        }
+
+        async function yonetilenPersonelleriYukle() {
+            try {
+                const res = await fetch('http://localhost:3000/api/lojistik/personeller', { cache: 'no-store' });
+                const rows = await res.json();
+                if (!res.ok) throw new Error();
+
+                tumPersoneller = Array.isArray(rows) ? rows : [];
+                const user = getCurrentUser() || {};
+                const myTc = (user.tc_no || '').toString().trim();
+                const me = tumPersoneller.find((p) => String(p.tc_no || '').trim() === myTc);
+                const myIstasyon = (me?.istasyon_adi || '').toString().trim();
+
+                if (myIstasyon) {
+                    yonetilenPersoneller = tumPersoneller.filter((p) => (p.istasyon_adi || '').toString().trim() === myIstasyon);
+                } else {
+                    yonetilenPersoneller = [...tumPersoneller];
+                }
+
+                personelSecimListeCiz();
+                seciliPersonelGuncelle();
+            } catch (e) {
+                yonetilenPersoneller = [];
+                personelSecimListeCiz();
+                seciliPersonelGuncelle();
+            }
+        }
+
+        // Renk Belirleme Fonksiyonu
+        function getDurumStil(durum) {
+            switch(normalizeDurumAnahtari(durum)) {
+                case 'aktif': return 'bg-green-100 text-green-700 border border-green-200';
+                case 'bakimda': return 'bg-yellow-100 text-yellow-700 border border-yellow-200';
+                case 'arizali': return 'bg-red-100 text-red-700 border border-red-200';
+                case 'pasif': return 'bg-slate-100 text-slate-500 border border-slate-200';
+                default: return 'bg-slate-50 text-slate-400';
+            }
+        }
+
+        function getDurumPasifStil() {
+            return 'bg-white text-slate-500 border border-slate-200 hover:border-slate-400 hover:text-slate-700';
+        }
+
+        function normalizeDurumAnahtari(value) {
+            return String(value || '')
+                .trim()
+                .toLocaleLowerCase('tr')
+                .replaceAll('ı', 'i')
+                .replaceAll('ğ', 'g')
+                .replaceAll('ü', 'u')
+                .replaceAll('ş', 's')
+                .replaceAll('ö', 'o')
+                .replaceAll('ç', 'c');
+        }
+
+        function parseDurumlar(value) {
+            const liste = Array.isArray(value)
+                ? value
+                : String(value || '').split(/[,|\n]+/);
+
+            return DURUM_SECENEKLERI
+                .filter((durum) =>
+                    liste.some((x) => {
+                        const key = normalizeDurumAnahtari(x);
+                        return key === normalizeDurumAnahtari(durum.key) || key === normalizeDurumAnahtari(durum.label);
+                    })
+                )
+                .map((durum) => durum.key);
+        }
+
+        function serializeDurumlar(value) {
+            return parseDurumlar(value).join(',');
+        }
+
+        function durumEtiketi(key) {
+            const secenek = DURUM_SECENEKLERI.find((x) => x.key === normalizeDurumAnahtari(key));
+            return secenek?.label || String(key || '');
+        }
+
+        function durumSecenekHtml(id, secenek, aktifDurumlar) {
+            const secili = aktifDurumlar.includes(secenek.key);
+            const butonSinif = secili
+                ? `${getDurumStil(secenek.key)} shadow-sm`
+                : getDurumPasifStil();
+            const ikonSinif = secili
+                ? 'border-current bg-white/70 text-current'
+                : 'border-slate-300 text-transparent';
+
+            return `<button type="button" onclick="durumSec(${id}, '${secenek.key}')" data-durum="${secenek.key}" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-black tracking-widest transition-all ${butonSinif}"><span class="inline-flex items-center justify-center w-4 h-4 rounded-full border text-[10px] leading-none ${ikonSinif}">✓</span><span>${durumEtiketi(secenek.key).toLocaleUpperCase('tr')}</span></button>`;
+        }
+
+        function durumSecenekleriHtml(id, aktifDurumlar) {
+            const seciliDurumlar = parseDurumlar(aktifDurumlar);
+            return DURUM_SECENEKLERI.map((durum) => durumSecenekHtml(id, durum, seciliDurumlar)).join('');
+        }
+
+        function guncelleDurumSecenekleri(id, aktifDurumlar) {
+            const grup = document.getElementById(`durum-grup-${id}`);
+            if (!grup) return;
+            grup.innerHTML = durumSecenekleriHtml(id, aktifDurumlar);
+        }
+
+        function durumSec(id, durum) {
+            const input = document.getElementById(`dur-${id}`);
+            const oncekiDurum = input?.value || '';
+            if (!input) return;
+
+            const seciliDurumlar = parseDurumlar(input.value);
+            const yeniDurumlar = seciliDurumlar.includes(durum)
+                ? seciliDurumlar.filter((x) => x !== durum)
+                : [...seciliDurumlar, durum];
+            const yeniDurum = serializeDurumlar(yeniDurumlar);
+
+            input.value = yeniDurum;
+            guncelleDurumSecenekleri(id, yeniDurumlar);
+
+            if (oncekiDurum === yeniDurum) return;
+            satirGuncelle(id, null, yeniDurum, oncekiDurum);
+        }
+
+        function siralaTikla(alan) {
+            const ilkYon = (alan === 'kilometre' || alan === 'muayene_tarihi') ? 'desc' : 'asc';
+            if (sortState.alan !== alan) {
+                sortState = { alan, yon: ilkYon };
+            } else {
+                sortState.yon = sortState.yon === 'asc' ? 'desc' : 'asc';
+            }
+            tabloCiz();
+        }
+
+        function siralaListe(liste) {
+            if (!sortState.alan || !sortState.yon) return [...liste];
+            const carpan = sortState.yon === 'asc' ? 1 : -1;
+
+            return [...liste].sort((a, b) => {
+                if (sortState.alan === 'kilometre') {
+                    const akm = Number(a.kilometre || 0);
+                    const bkm = Number(b.kilometre || 0);
+                    return (akm - bkm) * carpan;
+                }
+                if (sortState.alan === 'muayene_tarihi') {
+                    const at = a.muayene_tarihi ? new Date(a.muayene_tarihi).getTime() : 0;
+                    const bt = b.muayene_tarihi ? new Date(b.muayene_tarihi).getTime() : 0;
+                    return (at - bt) * carpan;
+                }
+                if (sortState.alan === 'plaka') {
+                    return String(a.plaka || '').localeCompare(String(b.plaka || ''), 'tr') * carpan;
+                }
+                if (sortState.alan === 'istasyon_adi') {
+                    return String(a.istasyon_adi || '').localeCompare(String(b.istasyon_adi || ''), 'tr') * carpan;
+                }
+                if (sortState.alan === 'durum') {
+                    return serializeDurumlar(a.durum || '').localeCompare(serializeDurumlar(b.durum || ''), 'tr') * carpan;
+                }
+                return 0;
+            });
+        }
+
+        function guncelleSortRozeti() {
+            const alanlar = ['plaka', 'istasyon_adi', 'muayene_tarihi', 'kilometre', 'durum'];
+            alanlar.forEach((k) => {
+                const el = document.getElementById(`sort_${k}`);
+                if (!el) return;
+                if (sortState.alan === k) {
+                    el.innerText = sortState.yon === 'asc' ? '↑' : '↓';
+                    el.className = 'text-slate-700';
+                } else {
+                    el.innerText = '↕';
+                    el.className = 'text-slate-300';
+                }
+            });
+        }
+
+        function normalizeText(v) {
+            return (v || '').toString().toLocaleLowerCase('tr').trim();
+        }
+
+        function escapeHtml(value) {
+            return (value || '').toString()
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#39;');
+        }
+
+        function aramaDegisti() {
+            aramaKelime = document.getElementById('aramaKutusu').value || '';
+            tabloCiz();
+        }
+
+        function filtreliAraclarGetir() {
+            const q = normalizeText(aramaKelime);
+            if (!q) return [...tumAraclar];
+
+            return tumAraclar.filter((a) => {
+                const alan = [
+                    a.plaka,
+                    a.istasyon_adi,
+                    a.durum,
+                    a.muayene_tarihi ? String(a.muayene_tarihi).slice(0, 10) : '',
+                    formatDateTR(a.muayene_tarihi),
+                    a.kilometre,
+                    a.arac_tipi,
+                    a.model_yili
+                ].map(normalizeText).join(' ');
+                return alan.includes(q);
+            });
+        }
+
+        function tabloCiz() {
+            const tablo = document.getElementById('aracTablosu');
+            tablo.innerHTML = '';
+
+            const cizilecek = siralaListe(filtreliAraclarGetir());
+            cizilecek.forEach(arac => {
+                const mevcutIstasyon = (arac.istasyon_adi || '').toString();
+                const mevcutNorm = normalizeIstasyon(mevcutIstasyon);
+                const seciliOption = mevcutIstasyon
+                    ? `<option value="${mevcutIstasyon}" selected>${mevcutIstasyon}</option>`
+                    : '<option value="" selected>İstasyon Seçilmedi</option>';
+
+                const digerOptions = tumIstasyonlar
+                    .filter(i => normalizeIstasyon(i.istasyon_adi) !== mevcutNorm)
+                    .map(i => `<option value="${i.istasyon_adi}">${i.istasyon_adi}</option>`)
+                    .join('');
+
+                const istOptions = seciliOption + digerOptions;
+                const muayene = formatDateTR(arac.muayene_tarihi);
+
+                tablo.innerHTML += `
+                    <tr class="hover:bg-slate-50/50 transition">
+                        <td class="px-6 py-5">
+                            <button onclick='kayitPanelAc(${JSON.stringify(arac)})' class="font-black text-slate-800 hover:text-blue-700 underline-offset-4 hover:underline transition">${arac.plaka}</button>
+                        </td>
+                        <td class="px-6 py-5">
+                            <select id="ist-${arac.id}" onchange="satirGuncelle(${arac.id})" 
+                                    class="bg-transparent border-none outline-none cursor-pointer hover:text-blue-600">
+                                ${istOptions}
+                            </select>
+                        </td>
+                        <td class="px-6 py-5 text-slate-500 text-xs font-black">${muayene}</td>
+                        <td class="px-6 py-5 flex items-center space-x-2">
+                            <span id="km-text-${arac.id}">${Number(arac.kilometre || 0).toLocaleString()} KM</span>
+                            <button onclick="kmSor(${arac.id}, ${Number(arac.kilometre || 0)})" class="text-slate-300 hover:text-blue-500 transition">✎</button>
+                        </td>
+                        <td class="px-6 py-5">
+                            <input id="dur-${arac.id}" type="hidden" value="${escapeHtml(serializeDurumlar(arac.durum || ''))}">
+                            <div id="durum-grup-${arac.id}" class="flex flex-wrap gap-2">
+                                ${durumSecenekleriHtml(arac.id, arac.durum || '')}
+                            </div>
+                        </td>
+                        <td class="px-6 py-5 text-center">
+                            <span id="bildirim-${arac.id}" class="text-[10px] text-slate-300 italic font-medium">Hazır</span>
+                        </td>
+                    </tr>`;
+            });
+
+            guncelleSortRozeti();
+        }
+
+        async function araclariYukle(forceFresh = false) {
+            try {
+                const query = forceFresh ? `?t=${Date.now()}` : '';
+                const iRes = await fetch(`http://localhost:3000/api/lojistik/istasyonlar${query}`, {
+                    cache: 'no-store'
+                });
+                tumIstasyonlar = await iRes.json();
+                const res = await fetch(`http://localhost:3000/api/lojistik/araclar${query}`, {
+                    cache: 'no-store'
+                });
+                tumAraclar = await res.json();
+                tabloCiz();
+                dashboardBekleyenAraciAc();
+            } catch (err) {
+                console.error("Hata:", err);
+            }
+        }
+
+        function dashboardBekleyenAraciAc() {
+            const plaka = queryOpenPlaka || (localStorage.getItem('dashboard_open_arac_plaka') || '').toString().trim().toUpperCase();
+            if (!plaka) return;
+
+            const arac = (tumAraclar || []).find((a) => String(a?.plaka || '').toUpperCase() === plaka);
+            localStorage.removeItem('dashboard_open_arac_plaka');
+            if (!arac) return;
+
+            kayitPanelAc(arac);
+        }
+
+        function dashboardModalGorunumuHazirla() {
+            if (!dashboardModalMode) return;
+
+            document.body.classList.remove('bg-white', 'p-8');
+            document.body.classList.add('bg-transparent', 'p-0', 'overflow-hidden');
+
+            const sayfa = document.getElementById('aracSayfasi');
+            const panel = document.getElementById('kayitPaneli');
+
+            if (sayfa) sayfa.classList.add('hidden');
+            if (panel) {
+                panel.classList.remove('bg-slate-900/50', 'overflow-y-auto');
+                panel.classList.add('bg-transparent');
+            }
+        }
+
+        async function yenileTikla() {
+            const btn = document.getElementById('yenileBtn');
+            if (!btn) {
+                await araclariYukle(true);
+                return;
+            }
+
+            const eskiMetin = btn.innerText;
+            btn.disabled = true;
+            btn.innerText = 'Yükleniyor...';
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+
+            try {
+                await araclariYukle(true);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = eskiMetin;
+                btn.classList.remove('opacity-70', 'cursor-not-allowed');
+            }
+        }
+
+        async function kmSor(id, eskikm) {
+            const yeni = prompt("Güncel Kilometre Girin:", eskikm);
+            if(yeni !== null && yeni !== "" && !isNaN(yeni)) {
+                const kmText = document.getElementById(`km-text-${id}`);
+                if (kmText) kmText.innerText = `${Number(yeni).toLocaleString()} KM`;
+                satirGuncelle(id, Number(yeni));
+            }
+        }
+
+        function satirGuncelle(id, kmOverride = null, durOverride = null, oncekiDurum = null) {
+            const ist = document.getElementById(`ist-${id}`)?.value || null;
+            const dur = durOverride !== null ? durOverride : (document.getElementById(`dur-${id}`)?.value || '');
+            let km = kmOverride;
+            if (km === null) {
+                const text = document.getElementById(`km-text-${id}`)?.innerText || '0';
+                km = Number(String(text).replace(/[^0-9]/g, '')) || 0;
+            }
+            return guncelle(id, ist, km, dur, oncekiDurum);
+        }
+
+        async function guncelle(id, ist, km, dur, oncekiDurum = null) {
+            const bildirim = document.getElementById(`bildirim-${id}`);
+            bildirim.innerText = "Kaydediliyor...";
+            bildirim.className = "text-[10px] text-blue-500 font-bold animate-pulse";
+
+            try {
+                const res = await fetch('http://localhost:3000/api/lojistik/arac-guncelle', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({id, istasyon_adi: ist, kilometre: km, durum: dur, actor: getActorPayload()})
+                });
+
+                if(res.ok) {
+                    const arac = tumAraclar.find((x) => Number(x.id) === Number(id));
+                    if (arac) {
+                        arac.istasyon_adi = ist;
+                        arac.kilometre = km;
+                        arac.durum = dur;
+                    }
+
+                    try {
+                        localStorage.setItem('lojistik_dashboard_refresh', String(Date.now()));
+                    } catch (e) {}
+
+                    bildirim.innerText = "✓ GÜNCELLENDİ";
+                    bildirim.className = "text-[10px] text-green-600 font-black tracking-tighter";
+                    
+                    // 2 saniye sonra tabloyu yenile ve bildirimi sıfırla
+                    setTimeout(() => {
+                        araclariYukle();
+                    }, 1500);
+                } else {
+                    throw new Error();
+                }
+            } catch (err) {
+                if (oncekiDurum) {
+                    const input = document.getElementById(`dur-${id}`);
+                    if (input) input.value = oncekiDurum;
+                    guncelleDurumSecenekleri(id, oncekiDurum);
+                }
+                bildirim.innerText = "✕ HATA OLUŞTU";
+                bildirim.className = "text-[10px] text-red-600 font-black";
+            }
+        }
+
+        function kayitPanelAc(arac) {
+            aktifKayitArac = arac;
+            document.getElementById('kayitPanelBaslik').innerText = `${arac.plaka} | ${arac.istasyon_adi || 'İstasyon Belirtilmedi'}`;
+            document.getElementById('kayitTarihi').value = nowDateTimeLocal();
+            document.getElementById('kayitAciklama').value = '';
+            document.getElementById('kayitMesaj').innerText = '';
+            personelAramaKelime = '';
+            seciliPersonelIdleri = [];
+            const personelArama = document.getElementById('personelArama');
+            if (personelArama) personelArama.value = '';
+            const panel = document.getElementById('personelSecimPanel');
+            if (panel) panel.classList.add('hidden');
+            seciliPersonelGuncelle();
+            document.getElementById('kayitPaneli').classList.remove('hidden');
+            yonetilenPersonelleriYukle();
+            kayitGecmisiYukle();
+        }
+
+        function kayitPanelKapat() {
+            aktifKayitArac = null;
+            document.getElementById('kayitPaneli').classList.add('hidden');
+            if (dashboardModalMode && window.parent && window.parent !== window) {
+                window.parent.postMessage({ type: 'closeAracOverlay' }, '*');
+            }
+        }
+
+        async function kayitGecmisiYukle() {
+            if (!aktifKayitArac) return;
+            const tbody = document.getElementById('kayitGecmisi');
+            tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-slate-400 text-xs">Yükleniyor...</td></tr>';
+            try {
+                const res = await fetch(`http://localhost:3000/api/lojistik/arac-kayitlari/${aktifKayitArac.id}?t=${Date.now()}`, { cache: 'no-store' });
+                const kayitlar = await res.json();
+                if (!res.ok) throw new Error();
+
+                if (!kayitlar.length) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-slate-400 text-xs">Kayıt bulunamadı.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                const isAuthorized = canEditDeleteKayit();
+                kayitlar.forEach(k => {
+                    const islemButtons = isAuthorized
+                        ? `<div class="flex justify-end gap-2">
+                                <button onclick="kayitDuzenle(${k.id})" class="text-[10px] font-black uppercase px-2 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Düzenle</button>
+                                <button onclick="kayitSil(${k.id})" class="text-[10px] font-black uppercase px-2 py-1 rounded-full bg-red-50 text-red-700 border border-red-200">Sil</button>
+                           </div>`
+                        : '<span class="text-[10px] text-slate-300">-</span>';
+                    const girenPersonel = (k.giren_ad_soyad || '').toString().trim() || '-';
+                    const personelRaw = (k.personel_adlari || '').toString().trim();
+                    const personellerHtml = personelRaw
+                        ? personelRaw
+                            .split(/\n+|\s*,\s*/)
+                            .map((x) => x.trim())
+                            .filter(Boolean)
+                            .map((x) => escapeHtml(x))
+                            .join('<br>')
+                        : '-';
+                    tbody.innerHTML += `
+                        <tr>
+                            <td class="px-4 py-3 font-bold text-slate-500">${formatKayitDateTime(k)}</td>
+                            <td class="px-4 py-3 font-black text-slate-700">${kayitTipiEtiket(k.kayit_tipi)}</td>
+                            <td class="px-4 py-3 text-xs font-semibold text-slate-600">${escapeHtml(girenPersonel)}</td>
+                            <td class="px-4 py-3 text-xs font-semibold text-slate-600 leading-5">${personellerHtml}</td>
+                            <td class="px-4 py-3">${k.aciklama}</td>
+                            <td class="px-4 py-3 text-right">${islemButtons}</td>
+                        </tr>`;
+                });
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-red-500 text-xs">Geçmiş kayıtlar yüklenemedi.</td></tr>';
+            }
+        }
+
+        async function kayitDuzenle(kayitId) {
+            if (!canEditDeleteKayit()) {
+                alert('Bu işlem için yetkiniz yoktur.');
+                return;
+            }
+
+            const onay = confirm('DÜZENLEME işlemi loglara kaydedilecektir. Devam etmek istiyor musunuz?');
+            if (!onay) return;
+
+            const tip = prompt('Kayıt tipi girin (ariza/kaza/servis):', 'ariza');
+            if (!tip) return;
+            const tarih = prompt('Kayıt tarihi ve saati girin (YYYY-MM-DD HH:mm):', nowDateTimeLocal().replace('T', ' '));
+            if (!tarih) return;
+            const aciklama = prompt('Yeni açıklama girin:');
+            if (!aciklama) return;
+
+            try {
+                const res = await fetch(`http://localhost:3000/api/lojistik/arac-kayit-guncelle/${kayitId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ kayit_tipi: tip.toLowerCase(), kayit_tarihi: tarih, aciklama, actor: getActorPayload() })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.mesaj || 'Kayıt güncellenemedi.');
+                await kayitGecmisiYukle();
+            } catch (e) {
+                alert('Kayıt güncellenemedi.');
+            }
+        }
+
+        async function kayitSil(kayitId) {
+            if (!canEditDeleteKayit()) {
+                alert('Bu işlem için yetkiniz yoktur.');
+                return;
+            }
+
+            const onay = confirm('SİLME işlemi loglara kaydedilecektir. Devam etmek istiyor musunuz?');
+            if (!onay) return;
+
+            try {
+                const res = await fetch(`http://localhost:3000/api/lojistik/arac-kayit-sil/${kayitId}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ actor: getActorPayload() })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.mesaj || 'Kayıt silinemedi.');
+                await kayitGecmisiYukle();
+            } catch (e) {
+                alert('Kayıt silinemedi.');
+            }
+        }
+
+        async function kayitEkle() {
+            if (!aktifKayitArac) return;
+            const kayit_tipi = document.getElementById('kayitTipi').value;
+            const kayit_tarihi = document.getElementById('kayitTarihi').value;
+            const aciklama = document.getElementById('kayitAciklama').value.trim();
+            const checkedIds = [...document.querySelectorAll('#personelSecimListe input[type="checkbox"]:checked')]
+                .map((el) => Number(el.getAttribute('data-id')))
+                .filter((v) => Number.isInteger(v) && v > 0);
+            const selected_personel_ids = [...new Set([...seciliPersonelIdleri, ...checkedIds])];
+            let selected_personel_adlari = yonetilenPersoneller
+                .filter((p) => selected_personel_ids.includes(Number(p.id)))
+                .map((p) => p.ad_soyad)
+                .filter(Boolean)
+                .join('\n');
+            if (!selected_personel_adlari) {
+                const infoText = (document.getElementById('personelSeciliBilgi')?.innerText || '').trim();
+                if (infoText && infoText !== 'Seçili personel yok.') selected_personel_adlari = infoText.replace(/\s*,\s*/g, '\n');
+            }
+            const mesaj = document.getElementById('kayitMesaj');
+            const actor = getActorPayload();
+
+            if (!kayit_tipi || !kayit_tarihi || !aciklama) {
+                mesaj.innerText = 'Lütfen tüm alanları doldurun.';
+                mesaj.className = 'text-xs font-bold text-red-600';
+                return;
+            }
+
+            try {
+                const res = await fetch('http://localhost:3000/api/lojistik/arac-kayit-ekle', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        arac_id: aktifKayitArac.id,
+                        kayit_tipi,
+                        kayit_tarihi,
+                        aciklama,
+                        selected_personel_ids,
+                        selected_personel_adlari,
+                        actor,
+                        giren_ad_soyad: actor.ad_soyad || null,
+                        giren_tc_no: actor.tc_no || null
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.mesaj || 'Kayıt eklenemedi.');
+
+                mesaj.innerText = 'Kayıt başarıyla eklendi.';
+                mesaj.className = 'text-xs font-bold text-green-600';
+                document.getElementById('kayitAciklama').value = '';
+                seciliPersonelIdleri = [];
+                seciliPersonelGuncelle();
+                await kayitGecmisiYukle();
+            } catch (e) {
+                mesaj.innerText = 'Kayıt eklenemedi.';
+                mesaj.className = 'text-xs font-bold text-red-600';
+            }
+        }
+
+        dashboardModalGorunumuHazirla();
+        araclariYukle();
+    </script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sora', sans-serif;
+            background:
+                radial-gradient(circle at 12% 8%, rgba(14, 165, 233, 0.16), transparent 36%),
+                radial-gradient(circle at 88% 10%, rgba(239, 68, 68, 0.16), transparent 34%),
+                linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+        }
+
+        .panel-card {
+            background: rgba(255, 255, 255, 0.90);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.10);
+            border-radius: 28px;
+        }
+
+        .form-chip {
+            border: 1px solid #dbe3ef;
+            background: #ffffff;
+            transition: all .22s ease;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+        }
+
+        .form-chip:focus {
+            border-color: #0f172a;
+            box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.10);
+        }
+
+        .thead-dark {
+            background: linear-gradient(90deg, #020617 0%, #1e293b 55%, #0f172a 100%);
+        }
+
+        .table-row {
+            transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+        }
+
+        .table-row:hover {
+            background: #f8fafc;
+            transform: translateY(-1px);
+        }
+
+        .action-link {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            padding: 7px 10px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            transition: all .18s ease;
+        }
+
+        .action-link.perm {
+            color: #1d4ed8;
+            background: #eff6ff;
+            border-color: #bfdbfe;
+        }
+
+        .action-link.delete {
+            color: #b91c1c;
+            background: #fef2f2;
+            border-color: #fecaca;
+        }
+
+        .action-link:hover {
+            transform: translateY(-1px);
+            filter: brightness(.98);
+        }
+    </style>
+</head>
+<body class="p-6 lg:p-10 font-sans text-slate-800 min-h-screen">
+    <div class="max-w-[1600px] mx-auto space-y-6">
+        <section class="panel-card p-6 lg:p-7">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <div class="lg:col-span-7">
+                    <div class="border-l-4 border-red-600 pl-4 py-1">
+                        <h2 class="text-3xl lg:text-4xl font-black text-slate-900 uppercase tracking-tight">Personel Kayıt ve Yetkilendirme</h2>
+                        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Personel Yönetim Paneli</p>
+                    </div>
+                </div>
+                <div class="lg:col-span-5 flex flex-col gap-3 lg:items-end">
+                    <div class="relative w-full lg:max-w-md">
+                        <input type="text" id="aramaKutusu" onkeyup="tabloFiltrele()" placeholder="Ad Soyad, TC No veya İstasyon Ara..."
+                            class="w-full p-4 pl-11 rounded-2xl border border-slate-300 outline-none focus:border-slate-900 text-sm bg-white/95 shadow-sm">
+                        <span class="absolute left-4 top-4 text-slate-400">🔍</span>
+                    </div>
+                    <p id="sayac" class="text-[11px] font-black text-slate-500 tracking-wide">Görünen: 0 / Toplam: 0</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="uyariPaneli" class="hidden panel-card p-4 lg:p-5 border border-red-200 bg-red-50/90">
+            <p id="uyariMetni" class="text-sm font-black text-red-700 tracking-wide">Burayı Kullanmak İçin Yetkiniz Yoktur!</p>
+        </section>
+
+        <section id="personelYonetimPanel" class="panel-card p-6 lg:p-7">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+                <h3 id="formBaslik" class="text-[11px] font-black text-slate-500 uppercase tracking-[0.18em]">Yeni Personel Ekle</h3>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">* Zorunlu Alan</span>
+            </div>
+
+            <input type="hidden" id="editId">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 items-end">
+                <div class="flex flex-col">
+                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">Ad Soyad *</label>
+                    <input type="text" id="adSoyad" placeholder="Zorunlu Alan" class="form-chip p-4 rounded-2xl font-black uppercase outline-none">
+                </div>
+
+                <div class="flex flex-col">
+                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">TC No (Opsiyonel)</label>
+                    <input type="text" id="tcNo" placeholder="Opsiyonel" class="form-chip p-4 rounded-2xl font-black outline-none">
+                </div>
+
+                <div class="flex flex-col">
+                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">Görev (Opsiyonel)</label>
+                    <select id="gorev" class="form-chip p-4 rounded-2xl font-bold text-slate-600 outline-none">
+                        <option value="">-- Görev Seçilmedi --</option>
+                        <option value="ATT">ATT</option>
+                        <option value="Paramedik">Paramedik</option>
+                        <option value="Şoför">Şoför</option>
+                        <option value="Doktor">Doktor</option>
+                        <option value="Hemşire">Hemşire</option>
+                        <option value="Diğer">Diğer</option>
+                    </select>
+                </div>
+
+                <div class="flex flex-col">
+                    <label class="text-[10px] font-bold text-slate-500 mb-2 uppercase ml-2">İstasyon (Opsiyonel)</label>
+                    <select id="istasyon" class="form-chip p-4 rounded-2xl font-bold text-slate-600 outline-none">
+                        <option value="">-- İstasyon Seçilmedi --</option>
+                    </select>
+                </div>
+
+                <div class="flex gap-2">
+                    <button id="islemBtn" onclick="kaydet()" class="w-full bg-slate-900 text-white px-6 py-4 rounded-2xl font-black shadow-lg hover:bg-black transition uppercase text-[10px] tracking-widest">KAYDET</button>
+                    <button id="iptalBtn" onclick="formSifirla()" class="hidden bg-white text-slate-700 px-4 py-4 rounded-2xl font-bold transition border border-slate-300 hover:bg-slate-100">✖</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="personelListesiPanel" class="panel-card overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left" id="anaTablo">
+                    <thead class="thead-dark text-white text-[10px] font-black uppercase tracking-widest">
+                        <tr>
+                            <th onclick="siralamayiDegistir('ad_soyad')" class="px-8 py-5 cursor-pointer select-none">Ad Soyad <span id="sort_ad_soyad" class="text-slate-300">↕</span></th>                            <th onclick="siralamayiDegistir('gorev')" class="px-8 py-5 cursor-pointer select-none">Görev <span id="sort_gorev" class="text-slate-300">⇕</span></th>                            <th onclick="siralamayiDegistir('tc_no')" class="px-8 py-5 cursor-pointer select-none">TC No <span id="sort_tc_no" class="text-slate-300">↕</span></th>
+                            <th onclick="siralamayiDegistir('istasyon_adi')" class="px-8 py-5 cursor-pointer select-none">İstasyon <span id="sort_istasyon_adi" class="text-slate-300">↕</span></th>
+                            <th class="px-8 py-5">Şifre</th>
+                            <th id="yonetimBasligi" class="px-8 py-5 text-right">Yönetim</th>
+                        </tr>
+                    </thead>
+                    <tbody id="liste" class="divide-y divide-slate-100 font-bold text-slate-700 bg-white/90"></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <div id="permModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 p-4 overflow-y-auto">
+        <div class="max-w-xl mx-auto mt-10 panel-card p-6 lg:p-7">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-black text-slate-900 uppercase tracking-wide">Yetki Düzenleme</h3>
+                <button onclick="kapatPerm()" class="text-slate-500 hover:text-slate-900 text-xl leading-none">×</button>
+            </div>
+            <p id="permBaslik" class="text-sm text-slate-600 font-bold mb-4" style="word-break: break-all;">-</p>
+
+            <div class="grid grid-cols-1 gap-4 text-sm font-semibold text-slate-700">
+                <div>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 mb-2 block">Yönetim Kademesi</label>
+                    <select id="p_yonetimSeviyesi" class="form-chip w-full rounded-xl px-4 py-3 font-bold outline-none" onchange="yonetimKademeDegisti()">
+                        <option value="personel">Personel</option>
+                        <option value="yetkili">Yetkili</option>
+                        <option value="mudur">Müdür</option>
+                        <option value="root">Sistem Üst Yetkili</option>
+                    </select>
+                </div>
+                <p class="text-xs text-slate-500 font-semibold">
+                    Modüller (Ana Sayfa, Filo ve Araç, Tutanak) tüm personel tarafından görülebilir.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <label class="form-chip rounded-xl px-4 py-3 flex items-center gap-3"><input id="p_istasyonYonetim" type="checkbox" class="w-4 h-4"> İstasyon Ekle/Sil</label>
+                    <label class="form-chip rounded-xl px-4 py-3 flex items-center gap-3"><input id="p_aracYonetim" type="checkbox" class="w-4 h-4"> Araç Ekle/Sil</label>
+                    <label class="form-chip rounded-xl px-4 py-3 flex items-center gap-3"><input id="p_personelYonetim" type="checkbox" class="w-4 h-4"> Personel Ekle/Sil</label>
+                </div>
+            </div>
+
+            <div class="mt-6 flex gap-2 justify-end">
+                <button onclick="kapatPerm()" class="bg-white text-slate-700 px-4 py-3 rounded-xl font-bold transition border border-slate-300 hover:bg-slate-100">İptal</button>
+                <button onclick="permKaydet()" class="bg-slate-900 text-white px-6 py-3 rounded-xl font-black shadow-lg hover:bg-black transition uppercase text-[10px] tracking-widest">Yetkileri Kaydet</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tumPersoneller = [];
+        let aktifPersonelId = null;
+        let aktifSiralama = { alan: 'ad_soyad', yon: 'asc' };
+
+        function defaultPerm() {
+            return {
+                dashboard: true,
+                araclar: true,
+                tutanak: true,
+                istasyonYonetim: false,
+                aracYonetim: false,
+                personelYonetim: false,
+                yonetimSeviyesi: 'personel'
+            };
+        }
+
+        function getCurrentUser() {
+            try {
+                const raw = localStorage.getItem('kullanici');
+                return raw ? JSON.parse(raw) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function getCurrentTier() {
+            const user = getCurrentUser();
+            if (!user) return 'personel';
+            if (user.rol === 'Süper Admin') return 'root';
+            const tier = (user.perm?.yonetimSeviyesi || 'personel').toString().toLowerCase();
+            return ['root', 'mudur', 'yetkili', 'personel'].includes(tier) ? tier : 'personel';
+        }
+
+        function canManagePanel() {
+            const tier = getCurrentTier();
+            return ['root', 'mudur', 'yetkili'].includes(tier);
+        }
+
+        function canManagePermissions() {
+            const tier = getCurrentTier();
+            return ['root', 'mudur'].includes(tier);
+        }
+
+        function canManageRowButtons() {
+            return canManagePanel();
+        }
+
+        function getActorPayload() {
+            const user = getCurrentUser() || {};
+            return {
+                ad_soyad: user.ad_soyad || null,
+                tc_no: user.tc_no || null,
+                seviye: getCurrentTier()
+            };
+        }
+
+        function showUyari(text) {
+            const panel = document.getElementById('uyariPaneli');
+            const metin = document.getElementById('uyariMetni');
+            if (metin) metin.innerText = text;
+            if (panel) panel.classList.remove('hidden');
+        }
+
+        function hideUyari() {
+            const panel = document.getElementById('uyariPaneli');
+            if (panel) panel.classList.add('hidden');
+        }
+
+        function enforcePageAccess() {
+            const user = getCurrentUser();
+            if (!user) {
+                window.location.href = 'index.html';
+                return false;
+            }
+
+            const perm = Object.assign(defaultPerm(), user.perm || {});
+            const tier = getCurrentTier();
+            const hasPersonelPanel = ['root', 'mudur', 'yetkili'].includes(tier) || !!perm.personelYonetim;
+
+            if (!hasPersonelPanel) {
+                showUyari('Burayı Kullanmak İçin Yetkiniz Yoktur!');
+                const panel = document.getElementById('personelYonetimPanel');
+                if (panel) panel.classList.add('hidden');
+                return false;
+            }
+            hideUyari();
+            return true;
+        }
+
+        function buildPermByTier(tier) {
+            if (tier === 'yetkili' || tier === 'mudur' || tier === 'root') {
+                return {
+                    dashboard: true,
+                    araclar: true,
+                    tutanak: true,
+                    istasyonYonetim: true,
+                    aracYonetim: true,
+                    personelYonetim: true,
+                    yonetimSeviyesi: tier
+                };
+            }
+
+            return {
+                dashboard: true,
+                araclar: true,
+                tutanak: true,
+                istasyonYonetim: false,
+                aracYonetim: false,
+                personelYonetim: false,
+                yonetimSeviyesi: 'personel'
+            };
+        }
+
+        function yonetimKademeDegisti() {
+            const tier = document.getElementById('p_yonetimSeviyesi').value;
+            const tierPerm = buildPermByTier(tier);
+            document.getElementById('p_istasyonYonetim').checked = !!tierPerm.istasyonYonetim;
+            document.getElementById('p_aracYonetim').checked = !!tierPerm.aracYonetim;
+            document.getElementById('p_personelYonetim').checked = !!tierPerm.personelYonetim;
+        }
+
+        function kontrolEt() {
+            if (!enforcePageAccess()) return;
+
+            const yonetimBasligi = document.getElementById('yonetimBasligi');
+            if (!canManageRowButtons()) {
+                yonetimBasligi.classList.add('hidden');
+            } else {
+                yonetimBasligi.classList.remove('hidden');
+            }
+        }
+
+        function gosterimDegeri(p, alan) {
+            const val = p?.[alan];
+            if (val === null || val === undefined) return '';
+            return String(val).trim();
+        }
+
+        function siralamayiUygula(liste) {
+            const alan = aktifSiralama.alan;
+            const yonCarpan = aktifSiralama.yon === 'asc' ? 1 : -1;
+
+            return [...liste].sort((a, b) => {
+                const va = gosterimDegeri(a, alan);
+                const vb = gosterimDegeri(b, alan);
+
+                if (alan === 'tc_no') {
+                    const na = Number(va || 0);
+                    const nb = Number(vb || 0);
+                    if (na !== nb) return (na - nb) * yonCarpan;
+                    return gosterimDegeri(a, 'ad_soyad').localeCompare(gosterimDegeri(b, 'ad_soyad'), 'tr') * yonCarpan;
+                }
+
+                const cmp = va.localeCompare(vb, 'tr');
+                if (cmp !== 0) return cmp * yonCarpan;
+                return gosterimDegeri(a, 'ad_soyad').localeCompare(gosterimDegeri(b, 'ad_soyad'), 'tr') * yonCarpan;
+            });
+        }
+
+        function siralamaIkonlariniGuncelle() {
+            const alanlar = ['ad_soyad', 'gorev', 'tc_no', 'istasyon_adi'];
+            alanlar.forEach((alan) => {
+                const el = document.getElementById(`sort_${alan}`);
+                if (!el) return;
+                if (alan !== aktifSiralama.alan) {
+                    el.innerText = '↕';
+                    el.className = 'text-slate-300';
+                    return;
+                }
+                el.innerText = aktifSiralama.yon === 'asc' ? '↑' : '↓';
+                el.className = 'text-white';
+            });
+        }
+
+        function siralamayiDegistir(alan) {
+            if (aktifSiralama.alan === alan) {
+                aktifSiralama.yon = aktifSiralama.yon === 'asc' ? 'desc' : 'asc';
+            } else {
+                aktifSiralama.alan = alan;
+                aktifSiralama.yon = 'asc';
+            }
+            tabloFiltrele();
+        }
+
+        async function yukle() {
+            try {
+                const iRes = await fetch('http://localhost:3000/api/lojistik/istasyonlar');
+                const istasyonlar = await iRes.json();
+                const sortedIst = [...istasyonlar].sort((a, b) => String(a.istasyon_adi || '').localeCompare(String(b.istasyon_adi || ''), 'tr'));
+                document.getElementById('istasyon').innerHTML = '<option value="">-- İstasyon Seçilmedi --</option>' +
+                    sortedIst.map(i => `<option value="${i.istasyon_adi}">${i.istasyon_adi}</option>`).join('');
+
+                const pRes = await fetch('http://localhost:3000/api/lojistik/personeller');
+                tumPersoneller = await pRes.json();
+                tabloCiz(tumPersoneller);
+            } catch (error) {
+                alert('Personel listesi yüklenemedi.');
+            }
+        }
+
+        function tabloCiz(liste) {
+            const tablo = document.getElementById('liste');
+            const showActions = canManageRowButtons();
+            const showPermButton = canManagePermissions();
+            const showResetPasswordButton = canManagePermissions();
+            const sirali = siralamayiUygula(liste);
+
+            tablo.innerHTML = '';
+            sirali.forEach((p) => {
+                const adSoyadSafe = (p.ad_soyad || '').replace(/'/g, '');
+                const sifreEtiketi = p.sifre_var
+                    ? (p.sifre_degistirmeli
+                        ? '<span class="text-[9px] font-black bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full uppercase">Sıfırlandı</span>'
+                        : '<span class="text-[9px] font-black bg-green-100 text-green-700 px-2 py-0.5 rounded-full uppercase">Aktif</span>')
+                    : '<span class="text-[9px] font-black bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full uppercase">Şifre Yok</span>';
+
+                const yonetimKolonu = showActions ? `
+                        <td class="px-8 py-5 text-right space-x-2">
+                            <button onclick="duzenleHazirla(${p.id})" class="action-link perm">Düzenle</button>
+                            ${showPermButton ? `<button onclick="permAcById(${p.id})" class="action-link perm">Yetki</button>` : ''}
+                            ${showResetPasswordButton ? `<button onclick="sifreSifirla(${p.id}, '${adSoyadSafe}')" class="action-link" style="color:#92400e;background:#fffbeb;border-color:#fde68a">Şifre Sıfırla</button>` : ''}
+                            <button onclick="sil(${p.id})" class="action-link delete">Kaldır</button>
+                        </td>` : '';
+
+                tablo.innerHTML += `
+                    <tr class="table-row">
+                        <td class="px-8 py-5 text-sm uppercase">${p.ad_soyad || 'Belirtilmedi'}</td>
+                        <td class="px-8 py-5 text-sm">${p.gorev || '<span class="text-slate-400 italic text-xs">-</span>'}</td>
+                        <td class="px-8 py-5 text-sm">${p.tc_no || '<span class="text-slate-400 italic text-xs">-</span>'}</td>
+                        <td class="px-8 py-5 text-sm text-slate-500">${p.istasyon_adi || 'Belirtilmedi'}</td>
+                        <td class="px-8 py-5">${sifreEtiketi}</td>
+                        ${yonetimKolonu}
+                    </tr>`;
+            });
+
+                    document.getElementById('sayac').innerText = `Görünen: ${sirali.length} / Toplam: ${tumPersoneller.length}`;
+                    siralamaIkonlariniGuncelle();
+        }
+
+        async function kaydet() {
+            if (!canManagePanel()) {
+                alert('Bu işlem için yetkiniz yoktur.');
+                return;
+            }
+
+            const id = document.getElementById('editId').value;
+            const ad_soyad = document.getElementById('adSoyad').value.trim().toLocaleUpperCase('tr');
+            const tc_no = document.getElementById('tcNo').value.trim();
+            const gorev = document.getElementById('gorev').value;
+            const istasyon_adi = document.getElementById('istasyon').value;
+
+            if (!ad_soyad) {
+                alert('Ad soyad zorunludur.');
+                return;
+            }
+
+            const res = await fetch('http://localhost:3000/api/lojistik/personel-kaydet', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id || null, ad_soyad, tc_no: tc_no || null, gorev: gorev || null, istasyon_adi: istasyon_adi || null, actor: getActorPayload() })
+            });
+
+            const data = await res.json();
+            if (!res.ok) {
+                alert(data.mesaj || 'Kayıt yapılamadı.');
+                return;
+            }
+
+            formSifirla();
+            yukle();
+        }
+
+        async function duzenleHazirla(id) {
+            if (!canManagePanel()) {
+                alert('Bu işlem için yetkiniz yoktur.');
+                return;
+            }
+
+            const personel = tumPersoneller.find((p) => Number(p.id) === Number(id));
+            if (!personel) return;
+
+            document.getElementById('formBaslik').innerText = 'Personel Düzenle: ' + personel.ad_soyad;
+            document.getElementById('editId').value = id;
+            document.getElementById('adSoyad').value = personel.ad_soyad || '';
+            document.getElementById('tcNo').value = personel.tc_no || '';
+            document.getElementById('gorev').value = personel.gorev || '';
+            document.getElementById('istasyon').value = personel.istasyon_adi || '';
+            document.getElementById('islemBtn').innerText = 'GÜNCELLE';
+            document.getElementById('iptalBtn').classList.remove('hidden');
+        }
+
+        function formSifirla() {
+            document.getElementById('formBaslik').innerText = 'Yeni Personel Ekle';
+            document.getElementById('editId').value = '';
+            document.getElementById('adSoyad').value = '';
+            document.getElementById('tcNo').value = '';
+            document.getElementById('gorev').value = '';
+            document.getElementById('istasyon').value = '';
+            document.getElementById('islemBtn').innerText = 'KAYDET';
+            document.getElementById('iptalBtn').classList.add('hidden');
+        }
+
+        async function sil(id) {
+            if (!canManagePanel()) {
+                alert('Bu işlem için yetkiniz yoktur.');
+                return;
+            }
+
+            if (!confirm('Personel silinsin mi?')) return;
+            const res = await fetch(`http://localhost:3000/api/lojistik/personel-sil/${id}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ actor: getActorPayload() })
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                alert(data.mesaj || 'Silme işlemi başarısız.');
+                return;
+            }
+            yukle();
+        }
+
+        function tabloFiltrele() {
+            const kelime = document.getElementById('aramaKutusu').value.toLocaleLowerCase('tr').trim();
+            const filtreli = tumPersoneller.filter((p) =>
+                (p.ad_soyad && p.ad_soyad.toLocaleLowerCase('tr').includes(kelime)) ||
+                (p.tc_no && String(p.tc_no).toLocaleLowerCase('tr').includes(kelime)) ||
+                (p.gorev && p.gorev.toLocaleLowerCase('tr').includes(kelime)) ||
+                (p.istasyon_adi && p.istasyon_adi.toLocaleLowerCase('tr').includes(kelime))
+            );
+            tabloCiz(filtreli);
+        }
+
+        async function sifreSifirla(id, adSoyad) {
+            if (!canManagePermissions()) { alert('Bu işlem için yetkiniz yoktur.'); return; }
+            if (!confirm(`"${adSoyad}" adlı personelin şifresi sıfırlansın mı?\nPersonel bir sonraki girişte yeni şifre belirleyecektir.`)) return;
+            const actor = getCurrentUser();
+            const res = await fetch('http://localhost:3000/api/auth/sifre-sifirla', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ hedef_id: id, actor_tc_no: actor?.tc_no || '' })
+            });
+            const data = await res.json();
+            if (!res.ok) { alert(data.mesaj || 'Şifre sıfırlanamadı.'); return; }
+            alert(data.mesaj);
+            yukle();
+        }
+
+        function permAcById(id) {
+            const personel = tumPersoneller.find((p) => Number(p.id) === Number(id));
+            if (!personel) return;
+            permAc(personel);
+        }
+
+        function permAc(personel) {
+            if (!canManagePermissions()) {
+                showUyari('Burayı Kullanmak İçin Yetkiniz Yoktur!');
+                return;
+            }
+
+            const myTier = getCurrentTier();
+            const tierSelect = document.getElementById('p_yonetimSeviyesi');
+
+            if (myTier === 'mudur') {
+                [...tierSelect.options].forEach((o) => {
+                    if (o.value === 'mudur' || o.value === 'root') o.disabled = true;
+                    else o.disabled = false;
+                });
+            } else {
+                [...tierSelect.options].forEach((o) => { o.disabled = false; });
+            }
+
+            aktifPersonelId = personel.id;
+            const perm = Object.assign(defaultPerm(), personel.perm || {});
+            document.getElementById('permBaslik').innerText = `${personel.ad_soyad} (${personel.tc_no})`;
+
+            const currentTier = (perm.yonetimSeviyesi || 'personel').toString().toLowerCase();
+            tierSelect.value = ['root', 'mudur', 'yetkili', 'personel'].includes(currentTier) ? currentTier : 'personel';
+            document.getElementById('p_istasyonYonetim').checked = !!perm.istasyonYonetim;
+            document.getElementById('p_aracYonetim').checked = !!perm.aracYonetim;
+            document.getElementById('p_personelYonetim').checked = !!perm.personelYonetim;
+
+            document.getElementById('permModal').classList.remove('hidden');
+        }
+
+        function kapatPerm() {
+            aktifPersonelId = null;
+            document.getElementById('permModal').classList.add('hidden');
+        }
+
+        async function permKaydet() {
+            if (!canManagePermissions()) {
+                alert('Bu işlem için yetkiniz yoktur.');
+                return;
+            }
+
+            if (!aktifPersonelId) return;
+
+            const myTier = getCurrentTier();
+            const selectedTier = document.getElementById('p_yonetimSeviyesi').value;
+
+            if (myTier === 'mudur' && (selectedTier === 'mudur' || selectedTier === 'root')) {
+                alert('Müdür seviyesi için bu kademe atanamaz.');
+                return;
+            }
+
+            const base = buildPermByTier(selectedTier);
+            const perm = {
+                dashboard: true,
+                araclar: true,
+                tutanak: true,
+                istasyonYonetim: base.istasyonYonetim,
+                aracYonetim: base.aracYonetim,
+                personelYonetim: base.personelYonetim,
+                yonetimSeviyesi: selectedTier
+            };
+
+            const res = await fetch(`http://localhost:3000/api/lojistik/personel-perm/${aktifPersonelId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ perm, actor: getActorPayload() })
+            });
+
+            const data = await res.json();
+            if (!res.ok) {
+                alert(data.mesaj || 'Yetki güncellenemedi.');
+                return;
+            }
+
+            kapatPerm();
+            yukle();
+        }
+
+        document.getElementById('adSoyad').addEventListener('input', (e) => {
+            e.target.value = e.target.value.toLocaleUpperCase('tr');
+        });
+
+        window.addEventListener('load', () => {
+            kontrolEt();
+            if (enforcePageAccess()) {
+                yukle();
+            }
+        });
+    </script>
+</body>
+</html>
