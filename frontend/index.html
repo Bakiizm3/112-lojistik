@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
+<script src="config.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Konya 112 Lojistik | Sisteme GiriÅŸ</title>
@@ -356,7 +357,7 @@
             btn.disabled = true;
             spin.classList.remove('hidden');
             try {
-                const res = await fetch('https://112-lojistik-production.up.railway.app/api/auth/login', {
+                const res = await fetch('${API_BASE}/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ tc_no, sifre })
@@ -397,5 +398,7 @@
     </script>
 </body>
 </html>
+
+
 
 
