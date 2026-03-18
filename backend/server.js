@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const db = require('./config/db');
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
 const app = express();
@@ -17,8 +18,14 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(frontendPath, 'main.html'));
 });
 
-app.get('/health', (req, res) => {
-    res.status(200).json({ ok: true });
+app.get('/health', async (req, res) => {
+    try {
+        await db.query('SELECT 1');
+        res.status(200).json({ ok: true });
+    } catch (error) {
+        console.error('Health check database error:', error.message);
+        res.status(503).json({ ok: false, error: error.message });
+    }
 });
 
 // --- DİĞER API ROTALARI ---
