@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const db = require('./config/db');
+const authRoutes = require('./routes/authRoutes');
+const lojistikRoutes = require('./routes/lojistikRoutes');
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
 const app = express();
@@ -29,8 +31,8 @@ app.get('/health', async (req, res) => {
 });
 
 // --- DİĞER API ROTALARI ---
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/lojistik', require('./routes/lojistikRoutes'));
+app.use('/api/auth', authRoutes);
+app.use('/api/lojistik', lojistikRoutes);
 
 const PORT = process.env.PORT || 3000;
 

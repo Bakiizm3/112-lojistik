@@ -122,22 +122,20 @@ async function ensureRootUser() {
 
         const [rows] = await db.query("SELECT id, sifre_hash FROM tbl_personeller WHERE tc_no = 'root' LIMIT 1");
         if (rows.length > 0) {
-            // Eski kayıtlarda root var ama şifre yoksa onar.
-            if (!rows[0].sifre_hash) {
-                const hash = await bcrypt.hash('Konya112!', 10);
-                const rootPerm = {
-                    dashboard: true, araclar: true, tutanak: true,
-                    istasyonYonetim: true, aracYonetim: true, personelYonetim: true,
-                    yonetimSeviyesi: 'root'
-                };
-                await db.query(
-                    `UPDATE tbl_personeller
-                     SET ad_soyad = ?, gorev = ?, sifre_hash = ?, onay_durumu = 1, sifre_degistirmeli = 0, perm_json = ?
-                     WHERE id = ?`,
-                    ['SİSTEM YÖNETİCİSİ', 'Sistem Yöneticisi', hash, JSON.stringify(rootPerm), rows[0].id]
-                );
-                console.log('✅ Root kullanıcı onarıldı. TC: root  Şifre: Konya112!');
-            }
+            // Her startup'ta root şifresini Konya112! olarak zorla (eski/farklı hash varsa düzelt)
+            const hash = await bcrypt.hash('Konya112!', 10);
+            const rootPerm = {
+                dashboard: true, araclar: true, tutanak: true,
+                istasyonYonetim: true, aracYonetim: true, personelYonetim: true,
+                yonetimSeviyesi: 'root'
+            };
+            await db.query(
+                `UPDATE tbl_personeller
+                 SET ad_soyad = ?, gorev = ?, sifre_hash = ?, onay_durumu = 1, sifre_degistirmeli = 0, kayit_durumu = 'onayli', perm_json = ?
+                 WHERE id = ?`,
+                ['SİSTEM YÖNETİCİSİ', 'Sistem Yöneticisi', hash, JSON.stringify(rootPerm), rows[0].id]
+            );
+            console.log('✅ Root kullanıcı güncellendi. TC: root  Şifre: Konya112!');
             return true;
         }
 
