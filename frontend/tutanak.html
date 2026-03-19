@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
-<script src="config.js"></script>
     <meta charset="UTF-8">
+    <script src="config.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .doc-sheet {
@@ -50,7 +50,7 @@
     <div class="max-w-7xl mx-auto space-y-6">
         <div class="border-l-4 border-red-600 pl-4">
             <h2 class="text-2xl font-black text-slate-800 uppercase tracking-tight">Tutanak İşlemleri</h2>
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">�ablon Seç, Doldur, Hazır Belgeyi Yazdır</p>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Şablon Seç, Doldur, Hazır Belgeyi Yazdır</p>
         </div>
 
         <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
@@ -79,7 +79,7 @@
                     <span id="hazirDurum" class="text-xs font-bold text-slate-400">Henüz oluşturulmadı</span>
                 </div>
                 <div id="onizleme" class="min-h-[240px] bg-slate-50 border border-dashed border-slate-300 rounded-xl p-4 text-sm text-slate-400 flex items-center justify-center">
-                    �ablon seçip bilgileri girerek "Belgeyi Hazırla" butonuna basın.
+                    Şablon seçip bilgileri girerek "Belgeyi Hazırla" butonuna basın.
                 </div>
             </section>
         </div>
@@ -122,9 +122,9 @@
                     return `
                         <div class="doc-sheet">
                             <h3>T.C.</h3>
-                            <h3>KONYA İL SA�LIK MÜDÜRLÜ�Ü</h3>
+                            <h3>KONYA İL SAĞLIK MÜDÜRLÜĞÜ</h3>
                             <h3>Lojistik Birimi</h3>
-                            <h4 style="margin-top:10px;">MALZEME TESLİM TUTANA�I</h4>
+                            <h4 style="margin-top:10px;">MALZEME TESLİM TUTANAĞI</h4>
                             <p style="margin-top:18px; text-align:justify; text-indent:36px;">
                                 ${escapeHtml(formatDateTR(v.tarih))} tarihinde saat ${escapeHtml(v.saat)} itibarıyla ${escapeHtml(v.istasyon)} biriminde,
                                 aşağıda belirtilen malzemeler ${escapeHtml(v.teslimEden)} tarafından ${escapeHtml(v.teslimAlan)} personeline teslim edilmiştir.
@@ -155,8 +155,8 @@
                 build: (v) => `
                     <div class="doc-sheet">
                         <h3>T.C.</h3>
-                        <h3>KONYA İL SA�LIK MÜDÜRLÜ�Ü</h3>
-                        <h4 style="margin-top:10px;">ARAÇ ${escapeHtml(v.olayTipi).toUpperCase()} TUTANA�I</h4>
+                        <h3>KONYA İL SAĞLIK MÜDÜRLÜĞÜ</h3>
+                        <h4 style="margin-top:10px;">ARAÇ ${escapeHtml(v.olayTipi).toUpperCase()} TUTANAĞI</h4>
                         <p style="margin-top:18px; text-align:justify; text-indent:36px;">
                             ${escapeHtml(v.plaka)} plakalı araç ile ${escapeHtml(v.istasyon)} istasyonuna bağlı ekip tarafından
                             ${escapeHtml(formatDateTR(v.tarih))} ${escapeHtml(v.saat)} tarihinde ${escapeHtml(v.yer)} mevkiinde ${escapeHtml(v.olayTipi.toLowerCase())} olayı meydana gelmiştir.
@@ -190,8 +190,8 @@
                     return `
                         <div class="doc-sheet">
                             <h3>T.C.</h3>
-                            <h3>KONYA İL SA�LIK MÜDÜRLÜ�Ü</h3>
-                            <h4 style="margin-top:10px;">NÖBET DEVİR TESLİM TUTANA�I</h4>
+                            <h3>KONYA İL SAĞLIK MÜDÜRLÜĞÜ</h3>
+                            <h4 style="margin-top:10px;">NÖBET DEVİR TESLİM TUTANAĞI</h4>
                             <p style="margin-top:18px; text-align:justify; text-indent:36px;">
                                 ${escapeHtml(v.istasyon)} istasyonunda ${escapeHtml(formatDateTR(v.tarih))} ${escapeHtml(v.saat)} tarihinde,
                                 nöbet devir işlemi ${escapeHtml(v.devreden)} tarafından ${escapeHtml(v.devralan)} personeline yapılmıştır.
@@ -221,8 +221,8 @@
                 build: (v) => `
                     <div class="doc-sheet">
                         <h3>T.C.</h3>
-                        <h3>KONYA İL SA�LIK MÜDÜRLÜ�Ü</h3>
-                        <h4 style="margin-top:10px;">EKSİK MALZEME BİLDİRİM TUTANA�I</h4>
+                        <h3>KONYA İL SAĞLIK MÜDÜRLÜĞÜ</h3>
+                        <h4 style="margin-top:10px;">EKSİK MALZEME BİLDİRİM TUTANAĞI</h4>
                         <table>
                             <tr><th style="width:220px;">Bildirimi Yapan</th><td>${escapeHtml(v.bildiren)}</td></tr>
                             <tr><th>İstasyon</th><td>${escapeHtml(v.istasyon)}</td></tr>
@@ -478,7 +478,6 @@
             win.document.write(`
                 <html>
                     <head>
-<script src="config.js"></script>
                         <title>Tutanak Yazdır</title>
                         <style>
                             body { background: #f3f4f6; padding: 24px; }
