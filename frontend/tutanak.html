@@ -85,9 +85,20 @@
         </div>
     </div>
 
+    <datalist id="aracPlakaList"></datalist>
+    <datalist id="istasyonList"></datalist>
+
     <script>
         let tumPersoneller = [];
+        let tumAraclar = [];
+        let tumIstasyonlar = [];
         let sonBelgeHtml = '';
+        const apiBase = (typeof API_BASE === 'string' ? API_BASE : '').replace(/\/$/, '');
+
+        function apiUrl(pathname) {
+            const pathText = String(pathname || '');
+            return `${apiBase}${pathText.startsWith('/') ? '' : '/'}${pathText}`;
+        }
 
         const MALZEME_LISTESI = [
             'Oksijen Maskesi (Yetişkin) - 5 Adet',
@@ -144,8 +155,8 @@
             arac_olay: {
                 fields: [
                     { key: 'olayTipi', type: 'select', label: 'Olay Tipi', options: ['Kaza', 'Arıza'], required: true },
-                    { key: 'plaka', type: 'text', label: 'Araç Plakası', required: true },
-                    { key: 'istasyon', type: 'text', label: 'İstasyon', required: true },
+                    { key: 'plaka', type: 'arac_plaka', label: 'Araç Plakası', required: true },
+                    { key: 'istasyon', type: 'istasyon_sec', label: 'İstasyon', required: true },
                     { key: 'surucu', type: 'personel', label: 'Sürücü/Personel', required: true },
                     { key: 'tarih', type: 'date', label: 'Olay Tarihi', required: true },
                     { key: 'saat', type: 'time', label: 'Olay Saati', required: true },
@@ -179,7 +190,7 @@
                 fields: [
                     { key: 'devreden', type: 'personel', label: 'Devreden Personel', required: true },
                     { key: 'devralan', type: 'personel', label: 'Devralan Personel', required: true },
-                    { key: 'istasyon', type: 'text', label: 'İstasyon', required: true },
+                    { key: 'istasyon', type: 'istasyon_sec', label: 'İstasyon', required: true },
                     { key: 'tarih', type: 'date', label: 'Devir Tarihi', required: true },
                     { key: 'saat', type: 'time', label: 'Devir Saati', required: true },
                     { key: 'devirMaddeleri', type: 'checklist', label: 'Devir Teslim Kalemleri', options: DEVIR_LISTESI, required: true },
@@ -211,7 +222,7 @@
             eksik_malzeme: {
                 fields: [
                     { key: 'bildiren', type: 'personel', label: 'Bildirimi Yapan Personel', required: true },
-                    { key: 'istasyon', type: 'text', label: 'İstasyon', required: true },
+                    { key: 'istasyon', type: 'istasyon_sec', label: 'İstasyon', required: true },
                     { key: 'tarih', type: 'date', label: 'Tarih', required: true },
                     { key: 'saat', type: 'time', label: 'Saat', required: true },
                     { key: 'oncelik', type: 'select', label: 'Aciliyet', options: ['Normal', 'Öncelikli', 'Acil'], required: true },
@@ -305,6 +316,38 @@
             return tumPersoneller.some((p) => (p?.ad_soyad || '').toString().trim().toLocaleUpperCase('tr-TR') === aranan);
         }
 
+        function aracListedeVarMi(plaka) {
+            const aranan = (plaka || '').toString().trim().toUpperCase();
+            if (!aranan) return false;
+            return tumAraclar.some((a) => (a?.plaka || '').toString().trim().toUpperCase() === aranan);
+        }
+
+        function istasyonListedeVarMi(istasyonAdi) {
+            const aranan = (istasyonAdi || '').toString().trim().toLocaleUpperCase('tr-TR');
+            if (!aranan) return false;
+            return tumIstasyonlar.some((s) => (s?.istasyon_adi || '').toString().trim().toLocaleUpperCase('tr-TR') === aranan);
+        }
+
+        function renderVeriListeleri() {
+            const aracList = document.getElementById('aracPlakaList');
+            const istasyonList = document.getElementById('istasyonList');
+            if (aracList) {
+                const plakalar = [...new Set(tumAraclar
+                    .map((a) => (a?.plaka || '').toString().trim().toUpperCase())
+                    .filter(Boolean))]
+                    .sort((a, b) => a.localeCompare(b, 'tr'));
+                aracList.innerHTML = plakalar.map((plaka) => `<option value="${escapeHtml(plaka)}"></option>`).join('');
+            }
+
+            if (istasyonList) {
+                const istasyonlar = [...new Set(tumIstasyonlar
+                    .map((s) => (s?.istasyon_adi || '').toString().trim().toLocaleUpperCase('tr'))
+                    .filter(Boolean))]
+                    .sort((a, b) => a.localeCompare(b, 'tr'));
+                istasyonList.innerHTML = istasyonlar.map((ad) => `<option value="${escapeHtml(ad)}"></option>`).join('');
+            }
+        }
+
         function renderField(field) {
             const req = field.required ? '<span class="text-red-600">*</span>' : '';
 
@@ -315,6 +358,24 @@
                         <input id="f_${field.key}" type="text" data-personel-field="1" autocomplete="off" class="w-full border-2 p-3 rounded-xl outline-none focus:border-red-500 bg-slate-50 font-semibold text-slate-700" placeholder="En az 2 harf ile personel ara...">
                         <div id="f_${field.key}_oneriler" class="hidden absolute z-20 mt-1 w-full bg-white border border-slate-200 rounded-xl shadow-lg max-h-44 overflow-y-auto"></div>
                         <p class="mt-1 text-[11px] text-slate-400 font-semibold">Liste, yazdıkça daraltılır.</p>
+                    </div>`;
+            }
+
+            if (field.type === 'arac_plaka') {
+                return `
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-2">${field.label} ${req}</label>
+                        <input id="f_${field.key}" type="text" list="aracPlakaList" class="w-full border-2 p-3 rounded-xl outline-none focus:border-red-500 bg-slate-50 font-semibold text-slate-700" placeholder="Plaka ara veya seç...">
+                        <p class="mt-1 text-[11px] text-slate-400 font-semibold">Araç listesinden plaka önerileri gelir.</p>
+                    </div>`;
+            }
+
+            if (field.type === 'istasyon_sec') {
+                return `
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-2">${field.label} ${req}</label>
+                        <input id="f_${field.key}" type="text" list="istasyonList" class="w-full border-2 p-3 rounded-xl outline-none focus:border-red-500 bg-slate-50 font-semibold text-slate-700" placeholder="İstasyon ara veya seç...">
+                        <p class="mt-1 text-[11px] text-slate-400 font-semibold">İstasyon listesi yazdıkça filtrelenir.</p>
                     </div>`;
             }
 
@@ -446,6 +507,14 @@
                     throw new Error(`${f.label} için listeden geçerli bir personel seçin.`);
                 }
 
+                if (f.type === 'arac_plaka' && val && !aracListedeVarMi(val)) {
+                    throw new Error(`${f.label} için listeden geçerli bir araç plakası seçin.`);
+                }
+
+                if (f.type === 'istasyon_sec' && val && !istasyonListedeVarMi(val)) {
+                    throw new Error(`${f.label} için listeden geçerli bir istasyon seçin.`);
+                }
+
                 values[f.key] = val;
             }
 
@@ -507,7 +576,7 @@
 
         async function personelleriYukle() {
             try {
-                const res = await fetch('/api/lojistik/personeller', { cache: 'no-store' });
+                const res = await fetch(apiUrl('/api/lojistik/personeller'), { cache: 'no-store' });
                 const data = await res.json();
                 if (!res.ok) throw new Error();
                 tumPersoneller = Array.isArray(data) ? data : [];
@@ -518,8 +587,31 @@
             }
         }
 
+        async function araclariYukle() {
+            try {
+                const res = await fetch(apiUrl('/api/lojistik/araclar'), { cache: 'no-store' });
+                const data = await res.json();
+                if (!res.ok) throw new Error();
+                tumAraclar = Array.isArray(data) ? data : [];
+            } catch (e) {
+                tumAraclar = [];
+            }
+        }
+
+        async function istasyonlariYukle() {
+            try {
+                const res = await fetch(apiUrl('/api/lojistik/istasyonlar'), { cache: 'no-store' });
+                const data = await res.json();
+                if (!res.ok) throw new Error();
+                tumIstasyonlar = Array.isArray(data) ? data : [];
+            } catch (e) {
+                tumIstasyonlar = [];
+            }
+        }
+
         window.addEventListener('load', async () => {
-            await personelleriYukle();
+            await Promise.all([personelleriYukle(), araclariYukle(), istasyonlariYukle()]);
+            renderVeriListeleri();
             sablonDegisti();
         });
     </script>
