@@ -256,6 +256,19 @@
             letter-spacing: -0.02em;
             font-weight: 800;
             color: var(--ink);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-pulse {
+            flex: 0 0 auto;
+            width: 12px;
+            height: 12px;
+            border-radius: 999px;
+            background: #f43f5e;
+            box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.55);
+            animation: pulse 1.8s ease-out infinite;
         }
 
         .form-sub {
@@ -413,7 +426,6 @@
                     </div>
                 </div>
 
-                <span class="badge"><span class="pulse-dot"></span> Yeni Başvuru</span>
                 <h1>Kayıt<br>Portalı</h1>
                 <p>Yetkili personel için kayıt başvurusu burada alınır. Onaydan sonra sisteme erişim açılır.</p>
 
@@ -425,7 +437,7 @@
             </div>
 
             <div class="form-wrap">
-                <h1 class="form-title">Yeni Başvuru</h1>
+                <h1 class="form-title"><span class="form-pulse" aria-hidden="true"></span>Yeni Başvuru</h1>
                 <p class="form-sub">Kayıt sonrası otomatik olarak giriş ekranına yönlendirilirsin.</p>
 
                 <form id="registerForm" autocomplete="off">
