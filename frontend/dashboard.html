@@ -244,7 +244,7 @@
         async function durumdakiAraclariGetir(durum) {
             if (Array.isArray(aracDurumCache[durum])) return aracDurumCache[durum];
 
-            const res = await fetch(\'\/api/lojistik/araclar', { cache: 'no-store' });
+            const res = await fetch('/api/lojistik/araclar', { cache: 'no-store' });
             if (!res.ok) throw new Error();
 
             const araclar = await res.json();
@@ -464,6 +464,7 @@
     </script>
 </body>
 </html>
+
 
 
 

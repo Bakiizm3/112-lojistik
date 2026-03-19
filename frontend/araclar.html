@@ -265,7 +265,7 @@
 
         async function yonetilenPersonelleriYukle() {
             try {
-                const res = await fetch(\'\/api/lojistik/personeller', { cache: 'no-store' });
+                const res = await fetch('/api/lojistik/personeller', { cache: 'no-store' });
                 const rows = await res.json();
                 if (!res.ok) throw new Error();
 
@@ -615,7 +615,7 @@
             bildirim.className = "text-[10px] text-blue-500 font-bold animate-pulse";
 
             try {
-                const res = await fetch(\'\/api/lojistik/arac-guncelle', {
+                const res = await fetch('/api/lojistik/arac-guncelle', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({id, istasyon_adi: ist, kilometre: km, durum: dur, actor: getActorPayload()})
@@ -809,7 +809,7 @@
             }
 
             try {
-                const res = await fetch(\'\/api/lojistik/arac-kayit-ekle', {
+                const res = await fetch('/api/lojistik/arac-kayit-ekle', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -844,6 +844,7 @@
     </script>
 </body>
 </html>
+
 
 
 

@@ -213,13 +213,13 @@
         }
 
         async function yukle() {
-            const iRes = await fetch(\'\/api/lojistik/istasyonlar');
+            const iRes = await fetch('/api/lojistik/istasyonlar');
             const istasyonlar = await iRes.json();
             const sortedIstasyonlar = [...istasyonlar].sort((a, b) => String(a.istasyon_adi || '').localeCompare(String(b.istasyon_adi || ''), 'tr'));
             document.getElementById('istasyon').innerHTML = '<option value="">-- İstasyon Seçilmedi --</option>' + 
                 sortedIstasyonlar.map(i => `<option value="${i.istasyon_adi}">${i.istasyon_adi}</option>`).join('');
 
-            const aRes = await fetch(\'\/api/lojistik/araclar');
+            const aRes = await fetch('/api/lojistik/araclar');
             tumAraclar = await aRes.json();
             tabloCiz(tumAraclar);
         }
@@ -334,7 +334,7 @@
             };
 
             try {
-                const res = await fetch(\'\/api/lojistik/arac-kaydet', {
+                const res = await fetch('/api/lojistik/arac-kaydet', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(veri)
@@ -417,6 +417,7 @@
     </script>
 </body>
 </html>
+
 
 
 

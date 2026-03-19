@@ -249,7 +249,7 @@
             btn.disabled = true;
             spin.classList.remove('hidden');
             try {
-                const res = await fetch(\'\/api/auth/kayit-ol', {
+                const res = await fetch('/api/auth/kayit-ol', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ ad_soyad, tc_no, sifre, sifre_tekrar })
@@ -273,6 +273,7 @@
     </script>
 </body>
 </html>
+
 
 
 

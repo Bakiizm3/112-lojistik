@@ -171,7 +171,7 @@
 
         async function yukle() {
             try {
-                const res = await fetch(\'\/api/lojistik/istasyonlar');
+                const res = await fetch('/api/lojistik/istasyonlar');
                 if (!res.ok) throw new Error('İstasyon listesi alınamadı.');
 
                 const data = await res.json();
@@ -253,7 +253,7 @@
                     body: JSON.stringify({istasyon_adi: ad, istasyon_adresi: adres || null, actor: getActorPayload()})
                 });
             } else {
-                res = await fetch(\'\/api/lojistik/istasyon-ekle', {
+                res = await fetch('/api/lojistik/istasyon-ekle', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({istasyon_adi: ad, istasyon_adresi: adres || null, actor: getActorPayload()})
@@ -318,6 +318,7 @@
     </script>
 </body>
 </html>
+
 
 
 
