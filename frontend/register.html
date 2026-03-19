@@ -470,6 +470,8 @@
     </main>
 
     <script>
+        const apiBase = (typeof API_BASE === 'string' ? API_BASE : '').replace(/\/$/, '');
+
         function uyariGoster(mesaj, tip) {
             const el = document.getElementById('uyariMesaji');
             el.className = 'notify';
@@ -519,12 +521,12 @@
             btn.disabled = true;
             spin.classList.remove('hidden');
             try {
-                const res = await fetch('/api/auth/kayit-ol', {
+                const res = await fetch(`${apiBase}/api/auth/kayit-ol`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ ad_soyad, tc_no, sifre, sifre_tekrar })
                 });
-                const data = await res.json();
+                const data = await res.json().catch(() => ({}));
                 if (!res.ok) {
                     uyariGoster(data.mesaj || 'Kayıt oluşturulamadı.', 'hata');
                     return;
