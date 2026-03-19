@@ -8,201 +8,410 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700;800&family=Teko:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Sora', sans-serif; }
-        .auth-bg {
+        :root {
+            --bg-0: #0d1b2f;
+            --bg-1: #1a2740;
+            --bg-2: #3b2142;
+            --ink: #17233c;
+            --ink-soft: #5c6c88;
+            --line: #cfdae9;
+            --card: rgba(248, 250, 253, 0.9);
+            --accent: #c21f2f;
+            --accent-2: #111c33;
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Barlow', sans-serif;
+            color: var(--ink);
             background:
-                radial-gradient(circle at 0% 0%, rgba(220, 38, 38, 0.18), transparent 26%),
-                radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.14), transparent 24%),
-                linear-gradient(135deg, #eff4fb 0%, #e2e8f0 100%);
+                radial-gradient(circle at 16% 12%, rgba(194, 31, 47, 0.28), transparent 28%),
+                radial-gradient(circle at 84% 10%, rgba(64, 155, 255, 0.16), transparent 25%),
+                linear-gradient(140deg, var(--bg-2) 0%, var(--bg-1) 44%, var(--bg-0) 100%);
+            overflow-x: hidden;
         }
-        .surface {
-            background: rgba(255,255,255,0.84);
-            border: 1px solid rgba(148,163,184,0.20);
-            box-shadow: 0 30px 80px rgba(15,23,42,0.12);
-            backdrop-filter: blur(22px);
+
+        .scene {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
         }
-        .brand-panel {
+
+        .orb {
+            position: absolute;
+            border-radius: 999px;
+            filter: blur(6px);
+            opacity: 0.65;
+            pointer-events: none;
+            animation: drift 10s ease-in-out infinite;
+        }
+
+        .orb.a {
+            width: 220px;
+            height: 220px;
+            top: 8%;
+            left: 9%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 122, 122, 0.55), rgba(183, 28, 28, 0.12));
+        }
+
+        .orb.b {
+            width: 180px;
+            height: 180px;
+            top: 62%;
+            left: 72%;
+            animation-delay: -2.5s;
+            background: radial-gradient(circle at 40% 30%, rgba(136, 209, 255, 0.46), rgba(26, 92, 164, 0.12));
+        }
+
+        .orb.c {
+            width: 130px;
+            height: 130px;
+            top: 76%;
+            left: 14%;
+            animation-delay: -4.4s;
+            background: radial-gradient(circle at 40% 35%, rgba(255, 209, 102, 0.44), rgba(149, 97, 20, 0.12));
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-14px) translateX(10px); }
+        }
+
+        .card {
+            width: 100%;
+            max-width: 960px;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            box-shadow: 0 32px 76px rgba(5, 10, 22, 0.45);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1.03fr 0.97fr;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+        }
+
+        .hero {
+            position: relative;
+            padding: 30px;
+            color: #eff5ff;
             background:
-                radial-gradient(circle at 18% 16%, rgba(248,113,113,0.18), transparent 28%),
-                radial-gradient(circle at 80% 30%, rgba(56,189,248,0.12), transparent 24%),
-                linear-gradient(155deg, #020617 0%, #0f172a 42%, #111827 100%);
+                linear-gradient(165deg, rgba(16, 30, 56, 0.96) 0%, rgba(17, 29, 50, 0.88) 100%);
         }
-        .grid-overlay {
-            background-image:
-                linear-gradient(rgba(148,163,184,0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px);
-            background-size: 26px 26px;
-            mask-image: linear-gradient(180deg, rgba(0,0,0,0.92), rgba(0,0,0,0.22));
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                repeating-linear-gradient(90deg, rgba(180, 198, 224, 0.05) 0 1px, transparent 1px 30px),
+                repeating-linear-gradient(0deg, rgba(180, 198, 224, 0.04) 0 1px, transparent 1px 30px);
+            opacity: 0.35;
+            pointer-events: none;
         }
-        .brand-video {
+
+        .hero > * { position: relative; }
+
+        .hero h1 {
+            margin: 10px 0 0;
+            font-family: 'Teko', sans-serif;
+            font-size: 62px;
+            line-height: 0.88;
+            letter-spacing: 0.015em;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            margin: 12px 0 0;
+            max-width: 370px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #c9d5e8;
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #dbe7ff;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #f43f5e;
+            box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.6);
+            animation: pulse 1.8s ease-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.6); }
+            100% { box-shadow: 0 0 0 14px rgba(244, 63, 94, 0); }
+        }
+
+        .steps {
+            margin-top: 24px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .step {
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+            padding: 10px 12px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #d6e2f4;
             opacity: 0;
-            transition: opacity .25s ease;
+            transform: translateX(-10px);
+            animation: reveal .45s ease forwards;
         }
-        .brand-video.ready {
-            opacity: 1;
+
+        .step:nth-child(2) { animation-delay: .12s; }
+        .step:nth-child(3) { animation-delay: .24s; }
+
+        @keyframes reveal {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
-        .media-frame {
-            background: linear-gradient(180deg, rgba(15,23,42,0.2), rgba(15,23,42,0.42));
-            box-shadow: 0 24px 60px rgba(2,6,23,0.30);
+
+        .form-wrap {
+            background: var(--card);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-        .metric-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+
+        .form-title {
+            margin: 0;
+            font-size: 37px;
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+            font-weight: 800;
+            color: var(--ink);
         }
+
+        .form-sub {
+            margin: 12px 0 0;
+            color: var(--ink-soft);
+            font-size: 14px;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        .field-wrap {
+            margin-top: 14px;
+            display: grid;
+            gap: 6px;
+        }
+
+        .field-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #6b7b97;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+        }
+
         .field {
-            border: 1.5px solid #dbe4ee;
-            background: rgba(248,250,252,0.92);
-            transition: border-color .2s, box-shadow .2s, background .2s;
+            width: 100%;
+            border-radius: 15px;
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--ink);
+            padding: 12px 13px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: border-color .2s, box-shadow .2s, transform .2s;
         }
+
+        .field::placeholder { color: #98a7c3; }
+
         .field:focus {
             outline: none;
-            border-color: #dc2626;
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(220,38,38,0.10);
-        }
-        .primary-btn {
-            background: linear-gradient(135deg, #111827 0%, #0f172a 100%);
-            transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
-        }
-        .primary-btn:hover:not(:disabled) {
-            filter: brightness(1.08);
+            border-color: #a8bad8;
+            box-shadow: 0 0 0 3px rgba(173, 191, 221, 0.4);
             transform: translateY(-1px);
-            box-shadow: 0 18px 28px rgba(15,23,42,0.18);
         }
+
+        .double {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .primary-btn {
+            margin-top: 16px;
+            width: 100%;
+            border: 0;
+            border-radius: 15px;
+            padding: 13px;
+            background: linear-gradient(135deg, var(--accent-2) 0%, #0a1328 100%);
+            color: #fff;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.22);
+            transition: transform .18s ease, filter .18s ease;
+        }
+
+        .primary-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            filter: brightness(1.08);
+        }
+
         .primary-btn:disabled {
-            opacity: 0.72;
+            opacity: .75;
             cursor: not-allowed;
+        }
+
+        .notify {
+            margin-top: 12px;
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .foot {
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid #d9e2ef;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #7c8ba3;
+        }
+
+        .foot a {
+            color: #1e293b;
+            text-decoration: none;
+        }
+
+        .foot a:hover { color: #1d4ed8; }
+
+        @media (max-width: 900px) {
+            .scene { padding: 14px; }
+
+            .card {
+                grid-template-columns: 1fr;
+                max-width: 560px;
+            }
+
+            .hero { padding: 22px; }
+            .hero h1 { font-size: 52px; }
+            .form-wrap { padding: 22px; }
+        }
+
+        @media (max-width: 520px) {
+            .double { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 46px; }
         }
     </style>
 </head>
-<body class="auth-bg min-h-screen p-4 lg:p-6">
-    <div class="mx-auto grid min-h-[calc(100vh-2rem)] max-w-7xl gap-5 lg:grid-cols-[1.02fr_0.98fr] lg:gap-6">
-        <section class="brand-panel relative overflow-hidden rounded-[34px] border border-slate-800/40 px-6 py-6 text-white shadow-[0_35px_100px_rgba(2,6,23,0.38)] lg:px-8 lg:py-8">
-            <div class="absolute inset-0 opacity-80">
-                <div class="absolute -left-12 top-10 h-40 w-40 rounded-full bg-red-500/20 blur-3xl"></div>
-                <div class="absolute right-0 top-0 h-52 w-52 rounded-full bg-sky-400/10 blur-3xl"></div>
-                <div class="grid-overlay absolute inset-0"></div>
+<body>
+    <main class="scene">
+        <div class="orb a"></div>
+        <div class="orb b"></div>
+        <div class="orb c"></div>
+
+        <section class="card">
+            <div class="hero">
+                <span class="badge"><span class="pulse-dot"></span> Yeni Başvuru</span>
+                <h1>Kayıt<br>Portalı</h1>
+                <p>Yetkili personel için kayıt başvurusu burada alınır. Onaydan sonra sisteme erişim açılır.</p>
+
+                <div class="steps">
+                    <div class="step">1. Kimlik bilgilerini gir.</div>
+                    <div class="step">2. Güvenli şifreni belirle.</div>
+                    <div class="step">3. Onay sonrası giriş ekranına dön.</div>
+                </div>
             </div>
-            <div class="relative flex h-full flex-col">
-                <div>
-                    <p class="text-[11px] font-black uppercase tracking-[0.26em] text-slate-400">Yeni Başvuru</p>
-                    <div class="mt-3 grid gap-5 xl:grid-cols-[1.1fr_0.9fr] xl:items-start">
-                        <div>
-                            <h1 class="text-3xl font-black tracking-tight lg:text-5xl">Personel Kayıt</h1>
-                            <p class="mt-4 max-w-xl text-sm leading-7 text-slate-300">Sol blok artık sadece karanlık bir zemin değil; başvuru akışını anlatan, videoyu taşıyan ve arayüzü dolduran bir hero alanı olarak çalışıyor.</p>
+
+            <div class="form-wrap">
+                <h1 class="form-title">Yeni Başvuru</h1>
+                <p class="form-sub">Kayıt sonrası otomatik olarak giriş ekranına yönlendirilirsin.</p>
+
+                <form id="registerForm" autocomplete="off">
+                    <div class="field-wrap">
+                        <label class="field-label">Ad Soyad</label>
+                        <input type="text" id="adSoyad" class="field" placeholder="Ad Soyad">
+                    </div>
+
+                    <div class="field-wrap">
+                        <label class="field-label">TC No</label>
+                        <input type="text" id="tcNo" class="field" maxlength="11" placeholder="11 haneli TC No">
+                    </div>
+
+                    <div class="double">
+                        <div class="field-wrap">
+                            <label class="field-label">Şifre</label>
+                            <input type="password" id="sifre" class="field" placeholder="En az 6 karakter">
                         </div>
-                        <div class="media-frame relative overflow-hidden rounded-[30px] border border-white/10 p-3">
-                            <div class="relative aspect-[16/10] overflow-hidden rounded-[22px] border border-white/10 bg-slate-900/70">
-                                <div id="brandVideoFallback" class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-red-600 via-red-700 to-slate-950 text-4xl font-black tracking-tight text-white">112</div>
-                                <video id="brandVideo" class="brand-video absolute inset-0 h-full w-full object-cover" autoplay muted loop playsinline preload="auto">
-                                    <source src="assets/konya112-loop.mp4" type="video/mp4">
-                                </video>
-                                <div class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/45 to-transparent px-4 pb-4 pt-10">
-                                    <p class="text-[10px] font-black uppercase tracking-[0.24em] text-red-200">Başvuru Loop Video</p>
-                                    <p class="mt-2 text-xs font-semibold leading-5 text-slate-200">Video burada daha doğru çalışıyor; sol üst karakterini koruyor ama boşluğu taşıyan ana görsel ögeye dönüşüyor.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-8 grid gap-4 text-sm text-slate-300 lg:grid-cols-2">
-                    <div class="metric-card rounded-[26px] p-5">
-                        <p class="text-[10px] font-black uppercase tracking-[0.22em] text-red-200">Başvuru Akışı</p>
-                        <p class="mt-3 leading-7">1. Kimlik bilgileri girilir. 2. �ifre belirlenir. 3. Müdür veya Root hesabı başvuruyu inceler.</p>
-                    </div>
-                    <div class="metric-card rounded-[26px] p-5">
-                        <p class="text-[10px] font-black uppercase tracking-[0.22em] text-red-200">Yerleşim Kararı</p>
-                        <p class="mt-3 leading-7">Küçük ikon yerleşimi yerine geniş medya kartı, bu ekranda hem boşluğu dolduruyor hem de yön duygusu veriyor.</p>
-                    </div>
-                </div>
-
-                <div class="metric-card mt-6 rounded-[28px] p-5 text-sm text-slate-300">
-                    <p class="text-[10px] font-black uppercase tracking-[0.22em] text-slate-400">Tasarım Notu</p>
-                    <p class="mt-3 leading-7">Daha az görsel gürültü, daha belirgin form hiyerarşisi ve daha rahat okunabilir alan yapısı hedeflendi.</p>
-                </div>
-
-                <div class="mt-auto pt-8 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">T.C. Konya İl Ambulans Servisi</div>
-            </div>
-        </section>
-
-        <section class="surface flex items-center rounded-[34px] px-5 py-6 lg:px-8 lg:py-8">
-            <div class="mx-auto w-full max-w-md">
-                <div class="mb-8">
-                    <p class="text-[11px] font-black uppercase tracking-[0.24em] text-slate-400">Kayıt Formu</p>
-                    <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900">Yeni başvuru oluşturun</h2>
-                    <p class="mt-3 text-sm leading-6 text-slate-500">Bilgileriniz sisteme kaydedilir ve onay sonrasında giriş hakkı tanımlanır.</p>
-                </div>
-
-                <form id="registerForm" class="space-y-4" autocomplete="off">
-                    <div class="flex flex-col gap-1.5">
-                        <label class="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-slate-500">Ad Soyad</label>
-                        <input type="text" id="adSoyad" class="field w-full rounded-[22px] px-4 py-4 text-sm font-bold uppercase text-slate-800" placeholder="Ad Soyad">
-                    </div>
-                    <div class="flex flex-col gap-1.5">
-                        <label class="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-slate-500">TC No</label>
-                        <input type="text" id="tcNo" class="field w-full rounded-[22px] px-4 py-4 text-sm font-bold text-slate-800" maxlength="11" placeholder="11 haneli TC No">
-                    </div>
-                    <div class="grid gap-4 sm:grid-cols-2">
-                        <div class="flex flex-col gap-1.5">
-                            <label class="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-slate-500">�ifre</label>
-                            <input type="password" id="sifre" class="field w-full rounded-[22px] px-4 py-4 text-sm font-bold text-slate-800" placeholder="En az 6 karakter">
-                        </div>
-                        <div class="flex flex-col gap-1.5">
-                            <label class="ml-1 text-[10px] font-black uppercase tracking-[0.22em] text-slate-500">�ifre Tekrar</label>
-                            <input type="password" id="sifreTekrar" class="field w-full rounded-[22px] px-4 py-4 text-sm font-bold text-slate-800" placeholder="�ifre tekrar">
+                        <div class="field-wrap">
+                            <label class="field-label">Şifre Tekrar</label>
+                            <input type="password" id="sifreTekrar" class="field" placeholder="Şifre tekrar">
                         </div>
                     </div>
 
-                    <button type="submit" id="kayitBtn" class="primary-btn flex w-full items-center justify-center gap-2 rounded-[22px] py-4 text-[11px] font-black uppercase tracking-[0.22em] text-white">
+                    <button type="submit" id="kayitBtn" class="primary-btn">
                         <svg id="spinIcon" class="hidden h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
                         </svg>
                         Kaydı Tamamla
                     </button>
                 </form>
 
-                <div id="uyariMesaji" class="hidden mt-4 rounded-[22px] px-4 py-3 text-center text-sm font-bold"></div>
+                <div id="uyariMesaji" class="hidden notify"></div>
 
-                <div class="mt-6 flex items-center justify-between gap-3 border-t border-slate-200 pt-5 text-[11px] font-bold text-slate-500">
-                    <a href="index.html" class="transition hover:text-slate-900">Giriş ekranına dön</a>
-                    <span class="uppercase tracking-[0.18em] text-slate-400">Onay Gereklidir</span>
+                <div class="foot">
+                    <a href="index.html">Giriş ekranına dön</a>
+                    <span>Onay gereklidir</span>
                 </div>
             </div>
         </section>
-    </div>
+    </main>
 
     <script>
-        function initBrandVideo() {
-            const video = document.getElementById('brandVideo');
-            const fallback = document.getElementById('brandVideoFallback');
-            if (!video || !fallback) return;
-
-            const showFallback = () => {
-                fallback.classList.remove('hidden');
-                video.classList.remove('ready');
-            };
-
-            const showVideo = () => {
-                fallback.classList.add('hidden');
-                video.classList.add('ready');
-            };
-
-            video.addEventListener('loadeddata', showVideo);
-            video.addEventListener('canplay', showVideo);
-            video.addEventListener('error', showFallback);
-
-            const playResult = video.play();
-            if (playResult && typeof playResult.catch === 'function') playResult.catch(showFallback);
-        }
-
         function uyariGoster(mesaj, tip) {
             const el = document.getElementById('uyariMesaji');
-            el.className = 'mt-4 rounded-[22px] px-4 py-3 text-center text-sm font-bold';
+            el.className = 'notify';
             if (tip === 'basari') {
                 el.classList.add('border', 'border-emerald-200', 'bg-emerald-50', 'text-emerald-700');
             } else {
@@ -238,11 +447,11 @@
                 return;
             }
             if (sifre.length < 6) {
-                uyariGoster('�ifre en az 6 karakter olmalıdır.', 'hata');
+                uyariGoster('Şifre en az 6 karakter olmalıdır.', 'hata');
                 return;
             }
             if (sifre !== sifre_tekrar) {
-                uyariGoster('�ifreler eşleşmiyor.', 'hata');
+                uyariGoster('Şifreler eşleşmiyor.', 'hata');
                 return;
             }
 
@@ -259,7 +468,7 @@
                     uyariGoster(data.mesaj || 'Kayıt oluşturulamadı.', 'hata');
                     return;
                 }
-                uyariGoster(data.mesaj || 'Kaydınız alındı. Onay sonrası giriş yapabilirsiniz.', 'basari');
+                uyariGoster(data.mesaj || 'Kaydınız alındı. Giriş ekranına yönlendiriliyorsunuz.', 'basari');
                 setTimeout(() => { window.location.href = 'index.html'; }, 1600);
             } catch (err) {
                 uyariGoster('Sunucuya bağlanılamadı.', 'hata');
@@ -268,8 +477,6 @@
                 spin.classList.add('hidden');
             }
         });
-
-        initBrandVideo();
     </script>
 </body>
 </html>
