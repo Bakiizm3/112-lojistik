@@ -296,10 +296,10 @@
                 </div>
 
                 <div class="field-wrap">
-                    <label class="field-label">�ifre</label>
+                    <label class="field-label">Şifre</label>
                     <div class="relative">
                         <input type="password" id="sifre" autocomplete="current-password" class="field pr-11" placeholder="••••••••">
-                        <span onclick="sifreGoster()" class="eye">ğ���</span>
+                        <span onclick="sifreGoster()" class="eye">👁</span>
                     </div>
                 </div>
 
@@ -322,6 +322,8 @@
     </main>
 
     <script>
+        const apiBase = (typeof API_BASE === 'string' ? API_BASE : '').replace(/\/$/, '');
+
         try {
             const k = JSON.parse(localStorage.getItem('kullanici'));
             if (k && k.id) window.location.href = 'main.html';
@@ -338,7 +340,7 @@
             if (tip === 'basari') {
                 el.classList.add('border', 'border-emerald-200', 'bg-emerald-50', 'text-emerald-700');
             } else {
-                el.classList.add('border', 'border-rose-200', 'bg-rose-50', 'text-rose-700');
+                const res = await fetch(`${apiBase}/api/auth/login`, {
             }
             el.innerText = mesaj;
             el.classList.remove('hidden');
@@ -346,14 +348,14 @@
 
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const tc_no = document.getElementById('tcNo').value.trim();
+                    uyariGoster('Şifrenizi henüz belirlemediniz. Yönlendiriliyorsunuz...', 'basari');
             const sifre = document.getElementById('sifre').value;
             const btn = document.getElementById('girisBtn');
             const spin = document.getElementById('spinIcon');
             if (!tc_no || !sifre) {
                 uyariGoster('Kullanıcı adı ve şifre zorunludur.', 'hata');
                 return;
-            }
+                    uyariGoster('Şifrenizi güncellemeniz gerekiyor. Yönlendiriliyorsunuz...', 'basari');
             btn.disabled = true;
             spin.classList.remove('hidden');
             try {
