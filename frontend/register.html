@@ -531,7 +531,7 @@
                     uyariGoster(data.mesaj || 'Kayıt oluşturulamadı.', 'hata');
                     return;
                 }
-                uyariGoster(data.mesaj || 'Kaydınız alındı. Giriş ekranına yönlendiriliyorsunuz.', 'basari');
+                uyariGoster('Kaydınız alındı. Hesabınız onaylandıktan sonra sisteme giriş yapabileceksiniz.', 'basari');
                 setTimeout(() => { window.location.href = 'index.html'; }, 1600);
             } catch (err) {
                 uyariGoster('Sunucuya bağlanılamadı.', 'hata');
