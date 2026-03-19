@@ -125,6 +125,47 @@
 
         .hero > * { position: relative; }
 
+        .official-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .official-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .official-copy {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .official-kicker {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #9fb4d3;
+        }
+
+        .official-title {
+            font-size: 17px;
+            line-height: 1;
+            font-weight: 800;
+            color: #edf4ff;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
         .hero h1 {
             margin: 10px 0 0;
             font-family: 'Teko', sans-serif;
@@ -318,6 +359,12 @@
             color: #7c8ba3;
         }
 
+        .foot-note {
+            text-align: right;
+            color: #60738f;
+            font-weight: 700;
+        }
+
         .foot a {
             color: #1e293b;
             text-decoration: none;
@@ -352,6 +399,20 @@
 
         <section class="card">
             <div class="hero">
+                <div class="official-head">
+                    <div class="official-logo" aria-hidden="true">
+                        <svg viewBox="0 0 64 64" width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="32" cy="32" r="29" stroke="#ef4444" stroke-width="3"/>
+                            <path d="M30 19C24.9 19 20.8 23.1 20.8 28.2C20.8 33.4 24.9 37.5 30 37.5C31.8 37.5 33.4 37 34.8 36.1C32.6 39.4 28.8 41.6 24.5 41.6C17.7 41.6 12.2 36.1 12.2 29.3C12.2 22.5 17.7 17 24.5 17C28.8 17 32.6 19.2 34.8 22.5C33.4 21.6 31.8 21.1 30 21.1V19Z" fill="#ef4444"/>
+                            <path d="M40.5 23.8L42 28.4L46.7 28.4L42.9 31.2L44.3 35.8L40.5 33L36.8 35.8L38.2 31.2L34.4 28.4L39.1 28.4L40.5 23.8Z" fill="#ef4444"/>
+                        </svg>
+                    </div>
+                    <div class="official-copy">
+                        <div class="official-kicker">T.C. Sağlık Bakanlığı</div>
+                        <div class="official-title">Konya 112 Lojistik</div>
+                    </div>
+                </div>
+
                 <span class="badge"><span class="pulse-dot"></span> Yeni Başvuru</span>
                 <h1>Kayıt<br>Portalı</h1>
                 <p>Yetkili personel için kayıt başvurusu burada alınır. Onaydan sonra sisteme erişim açılır.</p>
@@ -402,7 +463,7 @@
 
                 <div class="foot">
                     <a href="index.html">Giriş ekranına dön</a>
-                    <span>Onay gereklidir</span>
+                    <span class="foot-note">Hesabınız onaylandıktan sonra sisteme giriş yapabilirsiniz.</span>
                 </div>
             </div>
         </section>

@@ -39,6 +39,13 @@
                 radial-gradient(circle at 20% 18%, rgba(106, 40, 69, 0.34), transparent 30%),
                 radial-gradient(circle at 54% 50%, rgba(77, 92, 133, 0.16), transparent 28%),
                 linear-gradient(120deg, var(--bg-2) 0%, var(--bg-1) 38%, #0d1629 100%);
+            background-size: 120% 120%;
+            animation: bgShift 14s ease-in-out infinite;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .page {
@@ -62,6 +69,37 @@
             opacity: 0.6;
         }
 
+        .bg-orb {
+            position: absolute;
+            border-radius: 999px;
+            pointer-events: none;
+            filter: blur(4px);
+            opacity: 0.55;
+            animation: floatOrb 9s ease-in-out infinite;
+        }
+
+        .bg-orb.one {
+            width: 170px;
+            height: 170px;
+            top: 12%;
+            left: 10%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 120, 120, 0.58), rgba(170, 28, 44, 0.12));
+        }
+
+        .bg-orb.two {
+            width: 130px;
+            height: 130px;
+            top: 70%;
+            left: 76%;
+            animation-delay: -2.8s;
+            background: radial-gradient(circle at 30% 30%, rgba(114, 194, 255, 0.48), rgba(18, 70, 140, 0.1));
+        }
+
+        @keyframes floatOrb {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-10px) translateX(7px); }
+        }
+
         .login-card {
             width: 100%;
             max-width: 392px;
@@ -72,6 +110,18 @@
             padding: 34px 22px 20px;
             position: relative;
             z-index: 1;
+            animation: cardIn .55s cubic-bezier(.2,.8,.2,1);
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(14px) scale(0.985);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .login-card::before {
@@ -100,6 +150,12 @@
             line-height: 1;
             font-weight: 700;
             letter-spacing: 0.02em;
+            animation: logoFloat 3.8s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
         }
 
         .institution-title {
@@ -298,6 +354,9 @@
 </head>
 <body>
     <main class="page">
+        <div class="bg-orb one" aria-hidden="true"></div>
+        <div class="bg-orb two" aria-hidden="true"></div>
+
         <section class="login-card">
             <div class="brand">
                 <div class="logo" aria-hidden="true">112</div>
